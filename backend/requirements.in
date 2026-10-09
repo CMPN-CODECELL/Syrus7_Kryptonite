@@ -1,0 +1,30 @@
+# Direct dependencies. Pins for the quantum/optimisation stack match the SYRUS 7 setup kit
+# (verified working on this laptop 2026-10-08). Full resolved set: requirements.lock.txt
+qiskit==2.5.2
+qiskit-aer==0.17.2
+qiskit-ibm-runtime==0.50.0
+qiskit-algorithms==0.4.0
+cvxpy==1.9.3
+clarabel==0.11.1
+highspy==1.15.1
+yfinance==1.7.0
+numpy==2.5.3
+scipy==1.18.1
+pandas==3.0.6
+scikit-learn==1.9.1
+pyarrow==25.0.1
+fastapi==0.143.0
+uvicorn==0.54.0
+sse-starlette==3.5.0
+pydantic==2.14.0
+python-multipart
+python-dotenv
+psutil==7.2.2
+# dev / test
+pytest==9.1.1
+pytest-timeout
+hypothesis
+httpx
+ruff
+pip-audit
+locust
