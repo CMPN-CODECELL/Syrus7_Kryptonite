@@ -1,0 +1,214 @@
+{
+  "machine": "i5-1135G7 4C/8T, 16 GB",
+  "pipeline": "real (local Aer simulator; no IBM, no network)",
+  "boot_to_ready_s": 7.46,
+  "gap_s": 0.0,
+  "runs": [
+    {
+      "label": "default example (seed 7)",
+      "run_id": "run-20261008-3ebe745e",
+      "status": "succeeded",
+      "wall_s": 10.18,
+      "first_iteration_s": 7.34,
+      "sse_events": 24,
+      "cached_from": null,
+      "evaluations": 25,
+      "qubits": null,
+      "solvers": {
+        "qaoa": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "exact": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "relaxation_rounding": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "simulated_annealing": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "greedy": {
+          "status": "skipped",
+          "objective": null
+        }
+      },
+      "reports_ok": true,
+      "peak": {
+        "cpu_pct": 308.4,
+        "rss_mb": 495.4
+      }
+    },
+    {
+      "label": "cache replay of default",
+      "run_id": "run-20261008-5ebc6002",
+      "status": "succeeded",
+      "wall_s": 0.34,
+      "first_iteration_s": null,
+      "sse_events": 3,
+      "cached_from": "run-20261008-3ebe745e",
+      "evaluations": 25,
+      "qubits": null,
+      "solvers": {
+        "qaoa": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "exact": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "relaxation_rounding": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "simulated_annealing": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "greedy": {
+          "status": "skipped",
+          "objective": null
+        }
+      },
+      "reports_ok": true,
+      "peak": {
+        "cpu_pct": 0.0,
+        "rss_mb": 0.0
+      }
+    },
+    {
+      "label": "quick variant seed 100",
+      "run_id": "run-20261008-d818e65b",
+      "status": "succeeded",
+      "wall_s": 13.57,
+      "first_iteration_s": 9.71,
+      "sse_events": 26,
+      "cached_from": null,
+      "evaluations": 25,
+      "qubits": null,
+      "solvers": {
+        "qaoa": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "exact": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "relaxation_rounding": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "simulated_annealing": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "greedy": {
+          "status": "skipped",
+          "objective": null
+        }
+      },
+      "reports_ok": true,
+      "peak": {
+        "cpu_pct": 213.6,
+        "rss_mb": 496.0
+      }
+    },
+    {
+      "label": "quick variant seed 101",
+      "run_id": "run-20261008-c251256a",
+      "status": "succeeded",
+      "wall_s": 11.25,
+      "first_iteration_s": 8.19,
+      "sse_events": 25,
+      "cached_from": null,
+      "evaluations": 25,
+      "qubits": null,
+      "solvers": {
+        "qaoa": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "exact": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "relaxation_rounding": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "simulated_annealing": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "greedy": {
+          "status": "skipped",
+          "objective": null
+        }
+      },
+      "reports_ok": true,
+      "peak": {
+        "cpu_pct": 222.9,
+        "rss_mb": 495.9
+      }
+    },
+    {
+      "label": "quick variant seed 102",
+      "run_id": "run-20261008-e2b3f2f4",
+      "status": "succeeded",
+      "wall_s": 12.13,
+      "first_iteration_s": 9.24,
+      "sse_events": 26,
+      "cached_from": null,
+      "evaluations": 25,
+      "qubits": null,
+      "solvers": {
+        "qaoa": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "exact": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "relaxation_rounding": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "simulated_annealing": {
+          "status": "ok",
+          "objective": -0.18991959276728027
+        },
+        "greedy": {
+          "status": "skipped",
+          "objective": null
+        }
+      },
+      "reports_ok": true,
+      "peak": {
+        "cpu_pct": 255.4,
+        "rss_mb": 496.6
+      }
+    }
+  ],
+  "stop": {
+    "graceful": true,
+    "stop_s": 3.44,
+    "orphans_killed": [],
+    "exit_code": 0
+  },
+  "fresh_wall_s": {
+    "n": 4,
+    "median": 11.690000000000001,
+    "max": 13.57
+  },
+  "max_qubits": 24,
+  "peak_tree": {
+    "cpu_pct": 308.4,
+    "rss_mb": 496.6
+  }
+}
