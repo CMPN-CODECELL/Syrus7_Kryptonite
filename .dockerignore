@@ -1,0 +1,33 @@
+# Docker build context for backend/Dockerfile (context = repository root). Allow-list: only what the image needs.
+*
+!backend/
+!data/
+
+# never in an image: environments, secrets, caches, local state, uploads, outputs
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*service-account*.json
+**/*credentials*.json
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.ruff_cache/
+**/.mypy_cache/
+backend/.venv/
+backend/tests/
+backend/loadtest/
+backend/scripts/
+data/state/
+data/runs/
+data/logs/
+data/uploads/
+data/fixtures/
+data/cache/*
+!data/cache/datasets/
+data/cache/datasets/*
+!data/cache/datasets/default.txt
+!data/cache/datasets/nifty50-yahoo-aaa53c0c94ef.parquet
+!data/cache/datasets/nifty50-yahoo-aaa53c0c94ef.close.parquet
+!data/cache/datasets/nifty50-yahoo-aaa53c0c94ef.json

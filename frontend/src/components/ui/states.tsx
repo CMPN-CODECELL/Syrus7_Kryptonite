@@ -20,7 +20,7 @@ export function LoadingBlock({ label = 'Loading…', rows = 3 }: { label?: strin
 
 export function EmptyState({ title, children, action, icon, className = '' }: { title: ReactNode; children?: ReactNode; action?: ReactNode; icon?: ReactNode; className?: string }) {
   return (
-    <div className={`flex flex-col items-center gap-3 rounded-lg border border-dashed border-line-strong bg-mist px-6 py-10 text-center ${className}`}>
+    <div className={`flex flex-col items-center gap-2.5 rounded-lg border border-dashed border-line-strong bg-mist px-5 py-8 text-center ${className}`}>
       {icon ? <div className="text-faint">{icon}</div> : null}
       <h3 className="text-base font-semibold text-ink">{title}</h3>
       {children ? <div className="max-w-lg text-sm leading-relaxed text-muted">{children}</div> : null}

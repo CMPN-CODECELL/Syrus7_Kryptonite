@@ -19,6 +19,8 @@ htmlcov/
 node_modules/
 dist/
 build/
+# Firebase CLI deploy cache
+.firebase/
 .eslintcache
 *.log
 

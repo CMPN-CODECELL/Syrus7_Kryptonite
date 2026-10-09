@@ -6,9 +6,12 @@
 //  - After repeated SSE failures it falls back to polling /events/snapshot?after= every 2 s.
 //  - Goes quiet while the browser is offline and resumes from the last id when it is back.
 //  - Closes on a terminal `status` event. Listener notifications are coalesced.
+//  - Cloud build: polling only, as the Hosting proxy ends any request after 60 s. Polls start 2 s apart and slow to
+//    10 s while nothing changes, as each one is a billed request.
 
 import type { IterationPoint, JobError, JobStatus, RunEvent, Stage } from './contract.gen'
 import { EVENT_TYPE_VALUES } from './contract.gen'
+import { CLOUD } from '../lib/cloud'
 import { api, isTerminal } from './client'
 
 export type Transport = 'sse' | 'polling' | 'none'
@@ -43,6 +46,8 @@ export interface RunStreamDeps {
   /** ms without any event before the SSE connection is considered dead. */
   watchdogMs?: number
   pollMs?: number
+  /** Polling slows from `pollMs` to this while nothing new arrives. Equal to `pollMs` (no slowing) outside the cloud build. */
+  maxPollMs?: number
   notifyMs?: number
   /** SSE failures (without a single event) before switching to polling. */
   maxSseFailures?: number
@@ -75,11 +80,12 @@ export class RunStream {
 
   constructor(runId: string, deps: RunStreamDeps = {}) {
     this.deps = {
-      EventSource: deps.EventSource ?? (typeof EventSource !== 'undefined' ? EventSource : (undefined as unknown as typeof EventSource)),
+      EventSource: deps.EventSource ?? (!CLOUD && typeof EventSource !== 'undefined' ? EventSource : (undefined as unknown as typeof EventSource)),
       fetchStatus: deps.fetchStatus ?? api.run,
       fetchSnapshot: deps.fetchSnapshot ?? api.eventsSnapshot,
       watchdogMs: deps.watchdogMs ?? 25_000,
       pollMs: deps.pollMs ?? 2_000,
+      maxPollMs: deps.maxPollMs ?? (CLOUD ? 10_000 : (deps.pollMs ?? 2_000)),
       notifyMs: deps.notifyMs ?? 120,
       maxSseFailures: deps.maxSseFailures ?? 3,
     }
@@ -313,6 +319,8 @@ export class RunStream {
   private startPolling(): void {
     this.teardownTransport()
     this.patch({ transport: 'polling', connection: 'open' })
+    let delay = this.deps.pollMs
+    let seen = ''
     const tick = async () => {
       this.pollTimer = null
       if (this.stopped) return
@@ -328,7 +336,11 @@ export class RunStream {
         if (this.stopped) return
         this.patch({ connection: navigator.onLine === false ? 'offline' : 'reconnecting' })
       }
-      if (!this.stopped && !isTerminal(this.state.status?.status)) this.pollTimer = setTimeout(tick, this.deps.pollMs)
+      // Anything new (an event, a status or a stage) polls quickly again; a quiet poll waits longer, up to maxPollMs.
+      const now = `${this.state.status?.status}:${this.state.status?.progress?.stage}:${this.state.lastEventId}`
+      delay = now === seen ? Math.min(this.deps.maxPollMs, delay * 1.5) : this.deps.pollMs
+      seen = now
+      if (!this.stopped && !isTerminal(this.state.status?.status)) this.pollTimer = setTimeout(tick, delay)
       else this.close('closed')
     }
     void tick()

@@ -1,0 +1,30 @@
+# Runtime dependencies of the Cloud Run image (API service and worker job). Linux, Python 3.13.
+# Same pins as requirements.in for the app itself; no dev/test tools. Resolved set: requirements.cloud.txt
+# (regenerate with scripts\gcp\lock-cloud-deps.ps1; never from the Windows venv).
+qiskit==2.5.2
+qiskit-aer==0.17.2
+qiskit-ibm-runtime==0.50.0
+qiskit-algorithms==0.4.0
+cvxpy==1.9.3
+clarabel==0.11.1
+highspy==1.15.1
+yfinance==1.7.0
+numpy==2.5.3
+scipy==1.18.1
+pandas==3.0.6
+scikit-learn==1.9.1
+pyarrow==25.0.1
+fastapi==0.143.0
+uvicorn==0.54.0
+sse-starlette==3.5.0
+pydantic==2.14.0
+python-multipart
+python-dotenv
+psutil==7.2.2
+# Google Cloud adapters (quantfolio.cloud)
+google-cloud-firestore
+google-cloud-storage
+google-auth
+requests
+PyJWT
+cryptography

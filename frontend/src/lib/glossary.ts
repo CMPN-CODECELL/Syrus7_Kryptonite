@@ -1,6 +1,8 @@
 // Plain-language explanations for the terms the app shows, written for someone seeing them for the first time.
 // Used by the (i) help buttons next to metrics and controls.
 
+import { SIMULATOR_PLACE } from './cloud'
+
 export const GLOSSARY = {
   qubits:
     'A qubit is the quantum version of a bit. Here each stock you select gets one qubit: measured as 1 it is bought, as 0 it is skipped. Extra "slack" qubits help enforce rules such as sector caps.',
@@ -31,8 +33,8 @@ export const GLOSSARY = {
   trainingWindow: 'The past period used to estimate returns and risk. Results are then checked on later data the optimiser did not see.',
   baselines:
     'Classical methods that solve the same problem for comparison: exact search (the true best when it is small enough), a relaxation, simulated annealing and a greedy pick.',
-  simulator: 'The circuit runs on Qiskit Aer, a quantum simulator on this computer. No real quantum hardware is used.',
-  price: 'Closing price on the National Stock Exchange (NSE), in rupees per share.',
+  simulator: `The circuit runs on Qiskit Aer, a quantum simulator ${SIMULATOR_PLACE}. No real quantum hardware is used.`,
+  price: 'Price on the National Stock Exchange (NSE), in rupees per share: live while the market feed is on, otherwise the last close. Runs always use the stored closing prices.',
   change1y: 'Change in the adjusted closing price over the last year, including dividends.',
 } as const
 

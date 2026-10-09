@@ -2,23 +2,20 @@
 // Limits that the server reports (GET /api/capabilities) are filled in live; the rest are fixed in the backend code.
 
 import type { Capabilities } from '../api/contract.gen'
+import { CLOUD } from './cloud'
 import { formatInt } from './format'
 
 export interface GuardItem {
   title: string
   body: string
-  /** The code a check reports, for readers who want to match it in the API or the logs. */
-  code?: string
 }
 
 export interface GuardFamily {
   id: string
   letter: string
   title: string
-  /** One line for the landing page. */
+  /** One line under the family's title. */
   short: string
-  /** Two or three sentences at the top of the family's card. */
-  intro: string
   items: GuardItem[]
 }
 
@@ -72,139 +69,58 @@ export function guardrailFamilies(L: LiveLimits): GuardFamily[] {
       id: 'preflight',
       letter: 'A',
       title: 'Checks before a run',
-      short: 'A run that cannot work is stopped before it starts, with a plain reason.',
-      intro:
-        'Every change in the Portfolio Lab is checked live. An error blocks the run, a warning lets it run with a note, and an info line is just a hint. The Run button stays off while any error remains.',
+      short: 'A run that cannot work is stopped first, with a reason.',
       items: [
-        {
-          title: 'The problem fits this computer',
-          body: `More than ${L.qubits} qubits (${L.noiseQubits} with simulated hardware noise), or a memory estimate above ${L.memory}, blocks the run.`,
-          code: 'too_many_qubits · noise_too_many_qubits · memory_limit',
-        },
-        {
-          title: 'The rules can all be met together',
-          body: 'Holdings count, sector caps, target return and lot budget are checked against each other. If no portfolio can satisfy them all, it says so, for example "proven infeasible: 0 of 70 combinations".',
-          code: 'sector_caps_infeasible · target_return_unreachable · lot_budget_infeasible',
-        },
-        {
-          title: 'Enough clean price history',
-          body: 'Each stock needs at least 95 % price coverage in the training window, and the window needs at least 60 trading days and 2 stocks.',
-          code: 'insufficient_history · insufficient_training_data · too_few_assets',
-        },
-        {
-          title: 'Only valid inputs',
-          body: 'Unknown stocks or datasets, dates outside the data, and settings a mode does not support are rejected with the reason.',
-          code: 'unknown_symbols · dates_outside_dataset · unsupported_constraint_for_mode',
-        },
-        {
-          title: 'Exact search only where it is possible',
-          body: `Exact search, which tries every valid option, runs for up to ${L.exact} stocks. Beyond that it is skipped and labelled, never faked.`,
-          code: 'exact_unsupported',
-        },
+        { title: CLOUD ? 'Fits the server' : 'Fits this computer', body: `Up to ${L.qubits} qubits (${L.noiseQubits} with noise) and ${L.memory} of memory.` },
+        { title: 'Rules can all be met', body: 'Holdings, sector caps, target return and budget are checked together.' },
+        { title: 'Enough price history', body: '95 % coverage per stock, at least 60 trading days and 2 stocks.' },
+        { title: 'Valid inputs only', body: 'Unknown stocks, out-of-range dates and unsupported settings are rejected.' },
+        { title: 'Exact search where possible', body: `Up to ${L.exact} stocks. Beyond that it is skipped, never faked.` },
       ],
     },
     {
       id: 'fairness',
       letter: 'B',
-      title: 'A fair, honest comparison',
-      short: 'The quantum answer is its own: nothing classical is swapped in.',
-      intro: 'QAOA and the four classical methods solve exactly the same problem and are scored by the same code, so the comparison means something.',
+      title: 'A fair comparison',
+      short: 'The quantum answer is its own. Nothing classical is swapped in.',
       items: [
-        {
-          title: 'QAOA answers for itself',
-          body: 'Its portfolio is the best valid sample from its own final measurements. The classical methods run afterwards and cannot change it.',
-        },
-        {
-          title: 'No silent substitution',
-          body: 'If no measured sample follows every rule, the result says "no feasible sample" instead of borrowing a classical answer.',
-          code: 'no_feasible_sample',
-        },
-        {
-          title: 'Every answer is re-checked',
-          body: 'Each portfolio is decoded and checked against every rule again, and one shared function scores all methods.',
-        },
-        {
-          title: 'An honest gap',
-          body: 'The gap always names its reference: the proven best (exact search) or only the best known answer. Time-limited solvers are labelled.',
-          code: 'time_limited',
-        },
-        {
-          title: 'Reproducible',
-          body: 'Seeds, SHA-256 hashes of the data and settings, and library versions are stored. Reports are rendered from the stored result.',
-        },
-        {
-          title: 'No hype',
-          body: 'There is no claim of quantum advantage. Circuits run on a simulator, and every page says so.',
-        },
+        { title: 'QAOA answers for itself', body: 'Its pick comes from its own measurements only.' },
+        { title: 'No silent swaps', body: 'No valid sample? It says so instead of borrowing an answer.' },
+        { title: 'Same scoring', body: 'Every answer is re-checked and scored by the same code.' },
+        { title: 'An honest gap', body: 'The gap always names what it is measured against.' },
+        { title: 'Reproducible', body: 'Seeds, data hashes and versions are saved with every run.' },
+        { title: 'No hype', body: 'No claim of quantum advantage. Circuits run on a simulator.' },
       ],
     },
     {
       id: 'data',
       letter: 'C',
       title: 'Data integrity',
-      short: 'No peeking at the future; gaps and fixes are disclosed.',
-      intro: 'Prices are real NSE closes. They are cleaned in ways that cannot leak future information, and every correction is shown.',
+      short: 'No peeking at the future. Every fix is shown.',
       items: [
-        {
-          title: 'No look-ahead',
-          body: 'Risk and return are estimated from the training window only. Later prices are used once, at the end, to test the picks.',
-        },
-        {
-          title: 'Careful gap filling',
-          body: 'A missing day is filled from the previous close for at most 5 days and never from the future. Stocks under 95 % coverage are dropped.',
-        },
-        {
-          title: 'Stable risk estimates',
-          body: 'Ledoit-Wolf shrinkage keeps the risk matrix well behaved, and any numerical fix is reported in the result.',
-        },
-        {
-          title: 'Traceable data',
-          body: 'Each dataset is hashed. Corporate-action corrections, and stale or synthetic data, are flagged on screen.',
-        },
-        {
-          title: 'Short tests are labelled',
-          body: 'Fewer than 20 days of later prices is marked "insufficient" rather than reported as a result.',
-        },
-        {
-          title: 'Strict uploads',
-          body: `CSV uploads must be UTF-8, up to ${L.upload}, 60 to 20,000 rows and up to 50 stocks with positive prices. Spreadsheet formulas are rejected.`,
-          code: 'invalid_upload',
-        },
+        { title: 'No look-ahead', body: 'Picks use training data only. Later prices test them once.' },
+        { title: 'Careful gap filling', body: 'Gaps are filled from the past, for at most 5 days.' },
+        { title: 'Stable risk estimates', body: 'Shrinkage keeps the risk model stable. Fixes are reported.' },
+        { title: 'Traceable data', body: 'Every dataset is hashed. Stale or synthetic data is flagged.' },
+        { title: 'Short tests labelled', body: 'Under 20 days of later prices is marked "insufficient".' },
+        { title: 'Strict uploads', body: `UTF-8 CSV, up to ${L.upload} and 50 stocks. No formulas.` },
+        { title: 'Live prices are display only', body: 'The ticker and price chart never feed a run. Runs use the stored dataset.' },
       ],
     },
     {
       id: 'runtime',
       letter: 'D',
       title: 'Reliable runs',
-      short: 'Runs are queued, time-limited, cancellable and isolated.',
-      intro: 'One worker runs one job at a time in its own process, so a slow or broken run never takes the app down with it.',
+      short: 'Queued, time-limited, cancellable and isolated.',
       items: [
+        { title: 'A bounded queue', body: `Up to ${L.queue} jobs wait. A full queue says "try again shortly".` },
+        { title: 'Time limits', body: `Quick 90 s, Balanced 5 min, Research 20 min, experiments ${L.experiment}.` },
+        { title: 'Cancel at any time', body: 'The worker stops within 3 seconds.' },
+        { title: 'Crashes stay contained', body: 'Only that run fails. The app keeps working.' },
+        { title: 'Restarts and repeats', body: 'Interrupted runs are marked. Repeats replay a labelled cached result.' },
         {
-          title: 'A bounded queue',
-          body: `Up to ${L.queue} jobs wait in line. When the queue is full the server answers "try again shortly" instead of overloading.`,
-          code: 'queue_full (429)',
-        },
-        {
-          title: 'Time limits',
-          body: `Quick runs stop after 90 s, Balanced after 5 min, Research after 20 min, and experiments after ${L.experiment}. A run that hits its limit is marked timed out.`,
-        },
-        {
-          title: 'Cancel at any time',
-          body: 'Cancelling stops the worker within a 3-second grace period.',
-        },
-        {
-          title: 'Crashes stay contained',
-          body: 'A crash marks only that run as failed; the app keeps working and the next run starts normally.',
-          code: 'worker_crashed',
-        },
-        {
-          title: 'Restarts and repeats',
-          body: 'Runs cut off by a restart are marked as such. A repeated submission is recognised, and identical settings replay a stored result that is labelled as cached.',
-          code: 'interrupted_by_restart · cached_from',
-        },
-        {
-          title: 'Steady live progress',
-          body: 'Progress streams at most 4 updates a second with a heartbeat, resumes after a dropped connection, and falls back to polling.',
+          title: 'Steady progress',
+          body: CLOUD ? 'Checked every few seconds. Resumes after a dropped connection.' : 'Resumes after a dropped connection, or falls back to polling.',
         },
       ],
     },
@@ -212,29 +128,16 @@ export function guardrailFamilies(L: LiveLimits): GuardFamily[] {
       id: 'security',
       letter: 'E',
       title: 'Security',
-      short: 'Local only, strict inputs, secrets kept out of sight.',
-      intro: 'QuantFolio runs on your own computer and accepts only small, well-formed requests.',
+      // The hosted demo is public, so it is guarded by daily limits rather than by staying on one machine.
+      short: CLOUD ? 'Daily limits, strict inputs, secrets kept out of sight.' : 'Local only, strict inputs, secrets kept out of sight.',
       items: [
-        {
-          title: 'Local only',
-          body: 'The server listens on 127.0.0.1 with a host allow-list, CORS rules and strict security headers, including a content security policy.',
-        },
-        {
-          title: 'Size limits',
-          body: `Requests are limited to ${L.body} of JSON and ${L.upload} of CSV. Not-a-number and infinite values are rejected.`,
-        },
-        {
-          title: 'No code, paths or links accepted',
-          body: 'Inputs never take file paths, URLs or expressions, and run IDs must match a strict pattern.',
-        },
-        {
-          title: 'Secrets stay secret',
-          body: 'The IBM Quantum token is read from the environment only. It is never logged, stored in results or sent to the browser.',
-        },
-        {
-          title: 'Clean errors',
-          body: 'Every error has the same shape: a code and a plain message, with no stack traces.',
-        },
+        CLOUD
+          ? { title: 'Daily limits', body: 'New runs count against a daily limit for the whole demo and for each visitor. Security headers are strict.' }
+          : { title: 'Local only', body: 'Listens on 127.0.0.1 with strict security headers.' },
+        { title: 'Size limits', body: `${L.body} of JSON, ${L.upload} of CSV. No NaN or infinity.` },
+        { title: 'No paths or links', body: 'Inputs never accept file paths, URLs or code.' },
+        { title: 'Secrets stay secret', body: 'The IBM token is never logged, stored or sent to the browser.' },
+        { title: 'Clean errors', body: 'A code and a plain message. No stack traces.' },
       ],
     },
     {
@@ -242,14 +145,13 @@ export function guardrailFamilies(L: LiveLimits): GuardFamily[] {
       letter: 'F',
       title: 'On screen',
       short: 'The interface never hides a problem.',
-      intro: 'What you see always matches what happened, and nothing you typed is lost.',
       items: [
-        { title: 'Run blocked on errors', body: 'The Run button stays disabled while the check shows an error, and says why.' },
-        { title: 'Disclaimer everywhere', body: '"Not investment advice" appears on every page and in every report.' },
-        { title: 'Data warnings', body: 'Amber banners flag synthetic, stale or uploaded data.' },
-        { title: 'Honest labels', body: 'Cached replays and the recorded example are labelled as such.' },
-        { title: 'Nothing lost', body: 'Going offline keeps your inputs. Failed runs offer Retry and Edit.' },
-        { title: 'Cost shown first', body: 'Experiments show how many runs and how long before they start.' },
+        { title: 'Run blocked on errors', body: 'The Run button says why it is off.' },
+        { title: 'Disclaimer everywhere', body: '"Not investment advice" on every page.' },
+        { title: 'Data warnings', body: 'Synthetic, stale or uploaded data is flagged.' },
+        { title: 'Honest labels', body: 'Cached and example runs are labelled.' },
+        { title: 'Nothing lost', body: 'Going offline keeps your inputs. Failed runs offer Retry.' },
+        { title: 'Cost shown first', body: 'Experiments show run count and time before they start.' },
       ],
     },
   ]

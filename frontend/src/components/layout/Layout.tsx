@@ -1,16 +1,17 @@
-import { useEffect, useRef, useState, type ComponentType } from 'react'
+import { useState, type ComponentType } from 'react'
 import { Link, NavLink, Outlet, ScrollRestoration, isRouteErrorResponse, useLocation, useNavigate, useNavigation, useRouteError } from 'react-router'
 import { DISCLAIMER } from '../../api/contract.gen'
 import { useDataStatus, useHealth, useOnline } from '../../api/hooks'
+import { CLOUD } from '../../lib/cloud'
 import { formatDate } from '../../lib/format'
 import {
   Badge,
   ButtonLink,
   ErrorState,
   IconAlert,
-  IconArrowRight,
   IconCalendar,
-  IconCheck,
+  IconChevronLeft,
+  IconChevronRight,
   IconClock,
   IconDatabase,
   IconGrid,
@@ -92,6 +93,7 @@ function NavItems({ rail }: { rail?: { open: boolean; fade: string } }) {
                 <NavLink
                   to={to}
                   end={end}
+                  title={rail && !rail.open ? label : undefined}
                   className={({ isActive }) =>
                     `relative flex min-h-11 items-center gap-3 rounded-md text-sm font-medium transition-colors pointer-fine:min-h-10 ${rail ? 'px-[11px]' : 'px-3'} ${
                       isActive
@@ -128,63 +130,68 @@ function ApiDot() {
   )
 }
 
-/**
- * The wide-screen menu: a slim rail of icons that opens over the page while the mouse is on it or keyboard focus
- * is inside it, and closes again when either leaves. The page itself never moves.
- */
-function SidebarRail() {
-  const [open, setOpen] = useState(false)
-  const timer = useRef<number | undefined>(undefined)
-  // A short delay on the way in, so the rail does not flash open when the pointer only crosses it.
-  const later = (next: boolean, ms: number) => {
-    window.clearTimeout(timer.current)
-    timer.current = window.setTimeout(() => setOpen(next), ms)
-  }
-  useEffect(() => () => window.clearTimeout(timer.current), [])
-  const fade = `transition-opacity duration-150 ${open ? 'opacity-100 delay-75' : 'opacity-0'}`
+const SIDEBAR_KEY = 'qf.sidebar'
+
+/** Whether the wide-screen menu is open, remembered in this browser. Closed by default so the page has the room. */
+function useSidebar(): [boolean, () => void] {
+  const [open, setOpen] = useState(() => {
+    try {
+      return localStorage.getItem(SIDEBAR_KEY) === 'open'
+    } catch {
+      return false
+    }
+  })
+  const toggle = () =>
+    setOpen((o) => {
+      try {
+        localStorage.setItem(SIDEBAR_KEY, o ? 'closed' : 'open')
+      } catch {
+        /* storage blocked: the choice lasts until reload */
+      }
+      return !o
+    })
+  return [open, toggle]
+}
+
+/** The wide-screen menu: a slim rail of icons, opened and closed with the arrow button on its edge. */
+function SidebarRail({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+  const fade = `transition-opacity duration-150 ${open ? 'opacity-100 delay-75' : 'pointer-events-none opacity-0'}`
 
   return (
     <aside
       aria-label="Sidebar"
       data-testid="sidebar"
       data-open={open ? 'true' : 'false'}
-      onPointerEnter={(e) => {
-        if (e.pointerType === 'mouse') later(true, 90)
-      }}
-      onPointerLeave={(e) => {
-        if (e.pointerType === 'mouse') later(false, 140)
-      }}
-      onFocus={(e) => {
-        try {
-          if (e.target.matches(':focus-visible')) later(true, 0)
-        } catch {
-          /* :focus-visible unsupported: leave the rail as it is */
-        }
-      }}
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) later(false, 0)
-      }}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') later(false, 0)
-      }}
-      className={`fixed inset-y-0 left-0 z-40 hidden flex-col overflow-hidden border-r border-line bg-canvas transition-[width,box-shadow] duration-200 ease-out lg:flex ${
-        open ? 'w-60 shadow-float' : 'w-16'
-      }`}
+      className={`fixed inset-y-0 left-0 z-40 hidden border-r border-line bg-canvas transition-[width] duration-200 ease-out lg:block ${open ? 'w-60' : 'w-16'}`}
     >
-      <div className="flex h-16 shrink-0 items-center px-[18px]">
-        <Brand labelClassName={fade} />
-      </div>
-      <nav aria-label="Main" className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-3 pt-3 pb-4">
-        <NavItems rail={{ open, fade }} />
-      </nav>
-      <div className="relative shrink-0 p-3">
-        <div className={`w-[13.5rem] ${fade}`}>
-          <SidebarStatus />
+      <div className="flex h-full flex-col overflow-hidden">
+        <div className="flex h-16 shrink-0 items-center px-[18px]">
+          <Brand labelClassName={fade} />
         </div>
-        <span className={`absolute bottom-3 left-3 transition-opacity duration-150 ${open ? 'opacity-0' : 'opacity-100'}`}>
-          <ApiDot />
-        </span>
+        <nav id="sidebar-nav" aria-label="Main" className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-3 pt-3 pb-4">
+          <NavItems rail={{ open, fade }} />
+        </nav>
+        <div className="relative shrink-0 p-3">
+          <div className={`w-[13.5rem] ${fade}`} aria-hidden={open ? undefined : true}>
+            <SidebarStatus />
+          </div>
+          <span className={`absolute bottom-3 left-3 transition-opacity duration-150 ${open ? 'opacity-0' : 'opacity-100'}`}>
+            <ApiDot />
+          </span>
+        </div>
       </div>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls="sidebar-nav"
+        title={open ? 'Collapse menu' : 'Expand menu'}
+        data-testid="sidebar-toggle"
+        className="absolute top-5 -right-3.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-line-strong bg-canvas text-ink-2 shadow-card transition-colors hover:border-cobalt-200 hover:bg-cobalt-50 hover:text-cobalt"
+      >
+        {open ? <IconChevronLeft size={15} /> : <IconChevronRight size={15} />}
+        <span className="sr-only">{open ? 'Collapse menu' : 'Expand menu'}</span>
+      </button>
     </aside>
   )
 }
@@ -194,7 +201,8 @@ export function ApiBadge() {
   const online = useOnline()
   if (!online) return <Badge tone="amber" icon={<IconWifiOff size={13} />}>Offline</Badge>
   if (health.isError) return <Badge tone="danger" icon={<IconX size={13} />}>API unreachable</Badge>
-  if (health.isPending) return null
+  // Cloud build: the first request may wake an idle server, which takes a few seconds. Say so instead of showing nothing.
+  if (health.isPending) return CLOUD ? <Badge tone="neutral">Waking the API…</Badge> : null
   return (
     <Badge tone="teal" icon={<span className="qf-pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-teal" aria-hidden="true" />} title={`API ${health.data.version}, schema ${health.data.schema_version}`}>
       API online
@@ -259,7 +267,8 @@ export function Banners({ wide = false }: { wide?: boolean }) {
         </Notice>
       ) : health.isError ? (
         <Notice tone="danger" icon={<IconAlert size={18} />} title="The QuantFolio API is not reachable">
-          Requests to <code className="font-mono text-xs">/api</code> are failing. Start the backend and this page will reconnect on its own.
+          Requests to <code className="font-mono text-xs">/api</code> are failing.{' '}
+          {CLOUD ? 'The server may be starting after being idle, which can take up to a minute. This page reconnects on its own.' : 'Start the backend and this page will reconnect on its own.'}
         </Notice>
       ) : null}
       {active?.stale ? (
@@ -286,89 +295,22 @@ export function NavigationProgress() {
   )
 }
 
-const GUIDE = [
-  { to: '/dashboard', label: 'Start', match: /^\/dashboard/ },
-  { to: '/lab', label: 'Build and check', match: /^\/lab/ },
-  { to: '/history', label: 'Run and read the result', match: /^\/runs\// },
-]
-
-const NEXT: Record<number, { to: string; label: string }> = {
-  0: { to: '/lab', label: 'Next: Build a portfolio' },
-  1: { to: '#preflight', label: 'Next: Check and run' },
-  2: { to: '/experiments', label: 'Next: Compare settings' },
-}
-
-/** The guided path for a first visit, shown on the three pages a first run passes through. */
-function GuidedPath({ path }: { path: string }) {
-  const at = GUIDE.findIndex((g) => g.match.test(path))
-  if (at < 0) return null
-  const next = NEXT[at]
-  return (
-    <div className="border-b border-line bg-canvas" data-testid="guided-path">
-      <div className={`mx-auto flex items-center gap-3 py-2.5 ${APP_WIDTH}`}>
-        <p className="hidden shrink-0 text-[0.7rem] font-semibold tracking-[0.08em] text-cobalt uppercase md:block">Guided path</p>
-        <ol className="flex min-w-0 items-center gap-1.5 overflow-x-auto" aria-label="Guided path">
-          {GUIDE.map((g, i) => {
-            const state = i < at ? 'done' : i === at ? 'current' : 'todo'
-            return (
-              <li key={g.label} className="flex shrink-0 items-center gap-1.5">
-                {i > 0 ? <span className={`h-px w-4 sm:w-6 ${i <= at ? 'bg-cobalt-200' : 'bg-line-strong'}`} aria-hidden="true" /> : null}
-                <Link
-                  to={g.to}
-                  aria-current={state === 'current' ? 'step' : undefined}
-                  className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium transition-colors sm:text-sm ${
-                    state === 'current'
-                      ? 'bg-cobalt text-white shadow-sm'
-                      : state === 'done'
-                        ? 'border border-teal-100 bg-teal-50 text-teal hover:border-teal-600/40'
-                        : 'border border-line text-muted hover:border-line-strong hover:text-ink'
-                  }`}
-                >
-                  <span
-                    className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.7rem] font-semibold tabular ${
-                      state === 'current' ? 'bg-white/20' : state === 'done' ? 'bg-teal-100' : 'bg-mist-2'
-                    }`}
-                  >
-                    {state === 'done' ? <IconCheck size={12} /> : i + 1}
-                  </span>
-                  <span className={state === 'current' ? '' : 'hidden sm:inline'}>{g.label}</span>
-                </Link>
-              </li>
-            )
-          })}
-        </ol>
-        {next.to.startsWith('#') ? (
-          <a
-            href={next.to}
-            className="ml-auto hidden min-h-9 shrink-0 items-center gap-1.5 rounded-md bg-ink px-3 text-sm font-medium text-white hover:bg-ink-2 sm:inline-flex"
-          >
-            {next.label} <IconArrowRight size={14} />
-          </a>
-        ) : (
-          <ButtonLink to={next.to} variant="dark" size="sm" iconRight={<IconArrowRight size={14} />} className="ml-auto hidden shrink-0 sm:inline-flex">
-            {next.label}
-          </ButtonLink>
-        )}
-      </div>
-    </div>
-  )
-}
-
-/** The app shell: a slim white menu rail on wide screens, a top bar with the page trail and data date, and a light grey workspace. */
+/** The app shell: a white menu rail on wide screens that opens and closes on a button, a top bar with the page trail and data date, and a light grey workspace. */
 export function Layout() {
   const loc = useLocation()
   useDocumentTitle()
   // The mobile menu belongs to the page it was opened on, so navigating closes it.
   const [menuFor, setMenuFor] = useState<string | null>(null)
   const menuOpen = menuFor === loc.pathname
+  const [railOpen, toggleRail] = useSidebar()
 
   return (
-    <div className="min-h-dvh bg-mist lg:pl-16">
+    <div className={`min-h-dvh bg-mist transition-[padding] duration-200 ease-out ${railOpen ? 'lg:pl-60' : 'lg:pl-16'}`}>
       <a href="#main" className="sr-only-focusable fixed top-2 left-2 z-50 rounded-md bg-ink px-3 py-2 text-sm text-white">
         Skip to content
       </a>
       <NavigationProgress />
-      <SidebarRail />
+      <SidebarRail open={railOpen} onToggle={toggleRail} />
       <header className="sticky top-0 z-30 border-b border-line bg-canvas/92 backdrop-blur supports-[backdrop-filter]:bg-canvas/85">
         <div className={`mx-auto flex h-16 items-center gap-3 ${APP_WIDTH}`}>
           <div className="lg:hidden">
@@ -387,7 +329,8 @@ export function Layout() {
             <span className="hidden items-center gap-2 sm:flex">
               <DataChips />
             </span>
-            <span className="lg:hidden">
+            {/* The closed rail only has room for a dot, so the header names the API state instead. */}
+            <span className={railOpen ? 'lg:hidden' : undefined}>
               <ApiBadge />
             </span>
             <button
@@ -411,7 +354,6 @@ export function Layout() {
           </nav>
         ) : null}
       </header>
-      <GuidedPath path={loc.pathname} />
       <div className="flex min-h-dvh flex-col">
         <div className="pt-3 empty:pt-0">
           <Banners wide />
@@ -429,14 +371,13 @@ export function Layout() {
 export function Footer({ wide = false }: { wide?: boolean }) {
   const health = useHealth()
   return (
-    <footer className="mt-16 border-t border-line bg-canvas">
-      <div className={`mx-auto flex flex-col gap-3 py-8 text-sm text-muted md:flex-row md:items-start md:justify-between ${wide ? APP_WIDTH : PUBLIC_WIDTH}`}>
+    <footer className="mt-10 border-t border-line bg-canvas">
+      <div className={`mx-auto flex flex-col gap-3 py-6 text-sm text-muted md:flex-row md:items-start md:justify-between ${wide ? APP_WIDTH : PUBLIC_WIDTH}`}>
         <div className="max-w-prose">
           <p className="font-semibold text-ink-2">{DISCLAIMER}</p>
           <p className="mt-1 leading-relaxed">
-            QuantFolio compares QAOA circuits run on a simulator with classical solvers on the same constrained problem. Historical
-            estimates do not predict future returns. Universe membership is today&apos;s NIFTY 50, so past results carry survivorship
-            bias.
+            QAOA on a simulator, checked against classical solvers. Past returns do not predict future ones. Today&apos;s NIFTY 50 list is
+            used for past dates (survivorship bias).
           </p>
         </div>
         <p className="shrink-0 text-xs tabular">

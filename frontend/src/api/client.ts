@@ -1,9 +1,12 @@
 // Typed HTTP client for the QuantFolio API (/api, proxied to the FastAPI backend).
 // Every non-2xx body is `{"error": {code, message, details?, request_id?}}` (ErrorEnvelope);
 // FastAPI's default `{detail}` shape is also understood so nothing surfaces as "[object Object]".
+// In the cloud build (lib/cloud.ts) the API's refusals get plain wording.
 
 import type {
   AssetsResponse,
+  CandleInterval,
+  CandlesResponse,
   Capabilities,
   DataStatusResponse,
   DatasetInfo,
@@ -14,6 +17,7 @@ import type {
   HealthResponse,
   IbmStatus,
   JobStatus,
+  LiveQuotesResponse,
   PreflightReport,
   PresetsResponse,
   ReadyResponse,
@@ -23,6 +27,7 @@ import type {
   RunResult,
   RunSummary,
 } from './contract.gen'
+import { CLOUD, cloudErrorMessage } from '../lib/cloud'
 
 export const API_BASE = '/api'
 
@@ -79,7 +84,9 @@ async function parseError(res: Response): Promise<ApiError> {
     const env = (body as { error?: unknown }).error
     if (env && typeof env === 'object' && 'message' in env) {
       const e = env as { code?: string; message: string; details?: unknown; request_id?: string | null }
-      return new ApiError({ status: res.status, code: e.code ?? `http_${res.status}`, message: e.message, details: e.details, requestId: e.request_id ?? requestId, retryAfter })
+      const code = e.code ?? `http_${res.status}`
+      const message = (CLOUD && cloudErrorMessage(res.status, code, e.details, retryAfter)) || e.message
+      return new ApiError({ status: res.status, code, message, details: e.details, requestId: e.request_id ?? requestId, retryAfter })
     }
     const detail = (body as { detail?: unknown }).detail
     if (typeof detail === 'string') return new ApiError({ status: res.status, code: `http_${res.status}`, message: detail, requestId, retryAfter })
@@ -89,9 +96,10 @@ async function parseError(res: Response): Promise<ApiError> {
     }
   }
   const fallback =
-    res.status === 502 || res.status === 503 || res.status === 504
+    (CLOUD && cloudErrorMessage(res.status, `http_${res.status}`, null, retryAfter)) ||
+    (res.status === 502 || res.status === 503 || res.status === 504
       ? 'The QuantFolio API is not reachable. Start the backend and try again.'
-      : `Request failed (HTTP ${res.status}).`
+      : `Request failed (HTTP ${res.status}).`)
   return new ApiError({ status: res.status, code: `http_${res.status}`, message: fallback, requestId, retryAfter })
 }
 
@@ -187,6 +195,11 @@ export const api = {
   eventsSnapshot: (id: string, after: number, signal?: AbortSignal) => request<RunEvent[]>(`/runs/${enc(id)}/events/snapshot`, { query: { after }, signal }),
   example: (signal?: AbortSignal) => request<ExampleResponse>('/example', { signal }),
   ibmStatus: (signal?: AbortSignal) => request<IbmStatus>('/ibm/status', { signal }),
+  /** Live NSE prices for the ticker (display only; never part of a run). */
+  marketLive: (signal?: AbortSignal) => request<LiveQuotesResponse>('/market/live', { signal }),
+  /** Real price bars for the market chart (display only; never part of a run). */
+  marketCandles: (symbol: string, interval: CandleInterval, signal?: AbortSignal) =>
+    request<CandlesResponse>('/market/candles', { query: { symbol, interval }, signal }),
 }
 
 export const downloadUrl = {

@@ -63,6 +63,9 @@ Stage = Literal[
 EventType = Literal["status", "stage", "iteration", "log", "result", "error", "heartbeat"]
 IssueSeverity = Literal["error", "warning", "info"]
 ConflictKind = Literal["proven_infeasible", "preflight_conflict", "resource_limit"]
+LiveStatus = Literal["live", "delayed", "closed", "connecting", "offline", "off"]
+QuoteKind = Literal["index", "stock"]
+CandleInterval = Literal["5m", "15m", "1d"]
 
 
 class _Model(BaseModel):
@@ -723,4 +726,57 @@ class IbmStatus(_Model):
     instance_configured: bool = False
     checked: bool = False  # true only after an explicit, user-requested access check
     backends: list[str] = Field(default_factory=list)
+
+
+class LiveQuote(_Model):
+    """One live price for the ticker. Display only: live prices never enter a run."""
+
+    symbol: str  # app symbol ("RELIANCE") or Yahoo index symbol ("^NSEI")
+    label: str  # "RELIANCE", "NIFTY 50"
+    kind: QuoteKind
+    price: float | None = None  # rupees (index points for an index)
+    change: float | None = None  # versus prev_close
+    change_pct: float | None = None  # percent, e.g. 1.25 = +1.25%
+    prev_close: float | None = None
+    at: datetime | None = None  # exchange time of the last tick (None for a snapshot or stored close)
+    delayed: bool = False  # this feed runs behind the exchange (Yahoo's SENSEX is about 15 minutes late)
+
+
+class LiveQuotesResponse(_Model):
+    """`/api/market/live` body and each `/api/market/stream` frame (a `delta` frame lists only changed quotes)."""
+
+    status: LiveStatus  # live = ticks streaming; delayed = market open, snapshots only; closed; connecting;
+    # offline = Yahoo unreachable, stored closes; off = live prices disabled, stored closes
+    source: str  # "Yahoo Finance" or "Stored dataset"
+    updated_at: datetime | None = None
+    market_open: bool = False  # NSE session clock (09:15-15:30 IST, Monday to Friday)
+    as_of: date | None = None  # trading day of the prices
+    note: str | None = None
+    seq: int = 0
+    quotes: list[LiveQuote] = Field(default_factory=list)
+
+
+class Candle(_Model):
+    """One price bar: open, high, low and close over one interval."""
+
+    t: datetime  # start of the bar, exchange time (IST)
+    o: float
+    h: float
+    l: float
+    c: float
+
+
+class CandlesResponse(_Model):
+    """`/api/market/candles` body. Display only: candles never enter a run, and none are ever made up."""
+
+    status: LiveStatus  # live / delayed = the session is trading; closed = last session; offline = Yahoo
+    # unreachable, no candles; off = live prices disabled, no candles
+    symbol: str  # app symbol ("RELIANCE") or Yahoo index symbol ("^NSEI")
+    label: str  # "RELIANCE", "NIFTY 50"
+    interval: CandleInterval
+    as_of: date | None = None  # trading day of the last candle
+    prev_close: float | None = None  # close of the session before `as_of`
+    source: str | None = None  # "Yahoo Finance"; None when there are no candles
+    updated_at: datetime | None = None  # when the candles were fetched
+    candles: list[Candle] = Field(default_factory=list)
 

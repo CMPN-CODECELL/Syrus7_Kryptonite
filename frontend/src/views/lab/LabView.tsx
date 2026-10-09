@@ -5,6 +5,8 @@ import type { RunConfig, RunConfigInput } from '../../api/contract.gen'
 import { errorMessage, useAssets, useCapabilities, useDataStatus, useOnline, usePreflight, usePresets, useSubmitJob } from '../../api/hooks'
 
 import { Button, Card, CardHeader, ErrorState, IconArrowRight, LoadingBlock, Notice } from '../../components/ui'
+import { CLOUD } from '../../lib/cloud'
+import { formatDate } from '../../lib/format'
 import { useMediaQuery } from '../../lib/media'
 import { rememberRunConfig } from '../../lib/storage'
 import { validateRunConfig } from '../../lib/validate'
@@ -58,13 +60,12 @@ export default function LabView() {
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Build a portfolio</h1>
       <p className="mt-1 max-w-3xl text-sm text-muted sm:text-base">
-        New here? Keep the Quick preset and press <span className="font-medium text-ink-2">Run optimisation</span>. Everything below is optional: pick stocks, set your
-        rules, and the check on the right tells you whether it will work before anything runs.
+        New here? Keep the Quick preset and press <span className="font-medium text-ink-2">Run optimisation</span>. The rest is optional.
       </p>
-      <div className="mt-6">{children}</div>
+      <div className="mt-5">{children}</div>
     </div>
   )
 }
@@ -142,11 +143,12 @@ function LabBody({
         {submit.isPending ? 'Submitting…' : 'Run optimisation'}
       </Button>
       <p id="submit-why" className="mt-2 min-h-5 text-xs text-muted" aria-live="polite">
-        {submit.isPending ? 'Sending the run to the job queue.' : (blockedReason ?? 'QAOA on the simulator, then every enabled baseline. You can cancel at any time.')}
+        {submit.isPending ? 'Sending the run to the job queue.' : (blockedReason ?? 'Runs QAOA, then the classical checks. Cancel any time.')}
       </p>
       {submitError ? (
         <Notice tone="danger" title="The run was not started" className="mt-2">
-          {isApiError(submitError) && submitError.status === 429
+          {/* The cloud API has several 429s (daily cap, per-visitor cap, queue); its error already says which. */}
+          {isApiError(submitError) && submitError.status === 429 && !CLOUD
             ? `The job queue is full.${submitError.retryAfter ? ` Try again in about ${submitError.retryAfter} s.` : ' Try again shortly.'}`
             : errorMessage(submitError)}
           {fe.length ? (
@@ -165,8 +167,8 @@ function LabBody({
 
   return (
     <Shell>
-      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
-        <div className="grid grid-cols-1 min-w-0 gap-5">
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="grid min-w-0 grid-cols-1 gap-4">
           <Card>
             <PresetPicker presets={presetsData.presets} value={config.preset} onPick={applyPreset} />
           </Card>
@@ -174,7 +176,7 @@ function LabBody({
             <CardHeader
               level={2}
               title="Universe"
-              description={`Today's NIFTY 50 constituents (${assetsData.dataset.universe_source}${assetsData.dataset.universe_as_of ? `, as of ${assetsData.dataset.universe_as_of}` : ''}). Every selected asset becomes at least one qubit.`}
+              description={`Today's NIFTY 50${assetsData.dataset.universe_as_of ? ` (${formatDate(assetsData.dataset.universe_as_of)})` : ''}, applied to past prices. Each stock is a qubit.`}
             />
             <AssetPicker
               assets={assetsData.assets}
@@ -184,13 +186,15 @@ function LabBody({
               error={errors.symbols}
               presetMax={presetMax}
             />
-            <p className="mt-2 text-xs text-muted">{assetsData.dataset.survivorship_note}</p>
           </Card>
           <ObjectiveControls config={config} update={update} errors={errors} />
-          <HoldingsControls config={config} update={update} errors={errors} />
-          <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+          {/* The two short cards stack beside the taller sector caps, so neither leaves a tall empty box. */}
+          <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
+            <div className="grid min-w-0 grid-cols-1 gap-4">
+              <HoldingsControls config={config} update={update} errors={errors} />
+              <TargetControls config={config} update={update} errors={errors} />
+            </div>
             <SectorControls config={config} update={update} errors={errors} assets={assetsData.assets} />
-            <TargetControls config={config} update={update} errors={errors} />
           </div>
           <CostControls config={config} update={update} errors={errors} />
           <DateControls config={config} update={update} errors={errors} range={{ first: assetsData.dataset.first_date, last: assetsData.dataset.last_date }} />
@@ -214,7 +218,7 @@ function LabBody({
         </aside>
       </div>
       {!wide ? (
-        <div className="sticky bottom-0 z-30 -mx-4 mt-6 border-t border-line bg-canvas/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
+        <div className="sticky bottom-0 z-30 -mx-4 mt-5 border-t border-line bg-canvas/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
           <div className="flex items-center gap-3">
             <p className="min-w-0 flex-1 text-sm text-ink-2 tabular" aria-hidden="true">
               {report ? (

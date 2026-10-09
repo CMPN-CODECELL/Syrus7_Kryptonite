@@ -83,6 +83,10 @@ class Settings:
     pipeline_impl: str = "real"  # "real" | "fake" (fake = deterministic test pipeline)
     sse_heartbeat_s: float = 10.0
     sse_poll_s: float = 0.2
+    # Live NSE quotes for the price ticker (display only; never enter a run). Off in the fake pipeline and tests.
+    live_quotes: bool = False
+    live_idle_s: float = 60.0  # stop the upstream feed this long after the last viewer leaves
+    live_stream_max_s: float = 900.0  # end each SSE stream after this long; the browser reconnects
     log_level: str = "INFO"
     ibm_instance: str | None = None
     _ibm_token: str | None = field(default=None, repr=False)
@@ -106,6 +110,7 @@ class Settings:
             "max_upload_bytes": self.max_upload_bytes,
             "pipeline_impl": self.pipeline_impl,
             "warm_worker": self.warm_worker,
+            "live_quotes": self.live_quotes,
             "ibm_configured": self.ibm_configured,
         }
 
@@ -146,6 +151,9 @@ def load_settings() -> Settings:
         pipeline_impl=impl,
         sse_heartbeat_s=_env_float("QF_SSE_HEARTBEAT_S", 10.0, 0.5, 60.0),
         sse_poll_s=_env_float("QF_SSE_POLL_S", 0.2, 0.02, 2.0),
+        live_quotes=_env_bool("QF_LIVE_QUOTES", impl != "fake"),
+        live_idle_s=_env_float("QF_LIVE_IDLE_S", 60.0, 1.0, 3600.0),
+        live_stream_max_s=_env_float("QF_LIVE_STREAM_MAX_S", 900.0, 1.0, 24 * 3600.0),
         log_level=(os.environ.get("QF_LOG_LEVEL") or "INFO").upper(),
         ibm_instance=os.environ.get("IBM_QUANTUM_INSTANCE") or None,
         _ibm_token=(os.environ.get("IBM_QUANTUM_TOKEN") or "").strip() or None,

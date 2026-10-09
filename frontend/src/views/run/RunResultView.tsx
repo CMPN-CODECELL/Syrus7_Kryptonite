@@ -1,13 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import type { Holding, Residual, RunResult, SampleRow, SolverName, SolverResult } from '../../api/contract.gen'
 import { ConvergenceChart, FrontierChart, HistogramChart, NoiseChart, SectorChart } from '../../components/charts/charts'
-import { Badge, Card, CardHeader, Disclosure, EmptyState, IconAlert, IconCheck, IconX, InSimpleWords, Metric, Notice, Segmented, StatusChip, Table, Tabs } from '../../components/ui'
+import { Badge, Button, Card, CardHeader, Disclosure, EmptyState, IconAlert, IconCheck, IconX, InSimpleWords, Metric, Notice, Segmented, StatusChip, Table, Tabs } from '../../components/ui'
 import type { Column } from '../../components/ui/Table'
 import { DASH, SOLVER_LABEL, STATUS_LABEL, formatDate, formatDateTime, formatInr, formatInt, formatNum, formatPct } from '../../lib/format'
 import { GLOSSARY } from '../../lib/glossary'
 import { plainRunSummary } from '../../lib/plain'
 import { bestClassical, decodeSelection, formatUnknown, gapReference, gapText, humanKey, numericEntries, solver, solverRuntime, sortedSolvers } from '../../lib/result'
-import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Literal, PeriodBlock, SoftwareCard } from './shared'
+import { QaoaCircuitDiagram } from './QaoaCircuitDiagram'
+import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Literal, PeriodBlock, ResultDisclaimer, SoftwareCard } from './shared'
 
 type TabId = 'summary' | 'compare' | 'qaoa' | 'provenance'
 
@@ -16,17 +17,20 @@ function secs(v: number | null): string {
   return v < 1 ? `${(v * 1000).toFixed(0)} ms` : `${v.toFixed(2)} s`
 }
 
-export function RunResultView({ result }: { result: RunResult }) {
+export function RunResultView({ result, actions }: { result: RunResult; actions?: ReactNode }) {
   const [tab, setTab] = useState<TabId>('summary')
   const q = solver(result, 'qaoa')
   const ref = bestClassical(result)
   const ordered = useMemo(() => sortedSolvers(result), [result])
 
   return (
-    <div className="grid grid-cols-1 gap-5" data-testid="run-result">
-      <Notice tone="warning" title="Research demonstration — not investment advice">
-        Simulated QAOA circuits and historical estimates; no live trading.
-      </Notice>
+    <div className="grid grid-cols-1 gap-4" data-testid="run-result">
+      {/* One toolbar row for the downloads and page actions instead of a card of its own. */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <Downloads runId={result.run_id} counts={!!result.qaoa} />
+        {actions}
+      </div>
+      <ResultDisclaimer />
       <Headline result={result} q={q} reference={ref} />
       {result.warnings.length ? (
         <Notice tone="warning" title={`${result.warnings.length} warning${result.warnings.length === 1 ? '' : 's'} from this run`}>
@@ -37,12 +41,6 @@ export function RunResultView({ result }: { result: RunResult }) {
           </ul>
         </Notice>
       ) : null}
-      <Card>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-base font-semibold text-ink">Downloads</h2>
-          <Downloads runId={result.run_id} counts={!!result.qaoa} />
-        </div>
-      </Card>
       <Tabs
         label="Result sections"
         value={tab}
@@ -55,7 +53,7 @@ export function RunResultView({ result }: { result: RunResult }) {
         ]}
       >
         {(active, panel) => (
-          <div {...panel} className="mt-5 focus-visible:outline-none">
+          <div {...panel} className="mt-4 focus-visible:outline-none">
             {active === 'summary' ? <SummaryTab result={result} /> : null}
             {active === 'compare' ? <CompareTab result={result} solvers={ordered} /> : null}
             {active === 'qaoa' ? <QaoaTab result={result} /> : null}
@@ -78,38 +76,40 @@ function Headline({ result, q, reference }: { result: RunResult; q: SolverResult
         {q ? <StatusChip status={q.status} /> : <Badge>QAOA not run</Badge>}
       </div>
       {q?.status_detail ? <p className="mt-1 text-sm text-ink-2">{q.status_detail}</p> : null}
-      <InSimpleWords className="mt-4">
-        <ul className="space-y-1" data-testid="plain-summary">
-          {plainRunSummary(result).map((line) => (
-            <li key={line}>{line}</li>
-          ))}
-        </ul>
-      </InSimpleWords>
-      <dl className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Metric label="QAOA score" value={qp ? formatNum(qp.objective, 5) : DASH} hint="Lower is better: q·risk − return + costs" help={GLOSSARY.objective} />
-        <Metric
-          label="Gap to reference"
-          help={GLOSSARY.gap}
-          value={gapText(q?.gap ?? null)}
-          hint={q?.gap ? gapReference(q.gap) : !reference ? 'No feasible classical reference' : qp ? 'This run did not report a gap' : 'No gap: QAOA had no feasible answer'}
-        />
-        <Metric
-          label="Best classical score"
-          value={reference?.portfolio ? formatNum(reference.portfolio.objective, 5) : DASH}
-          hint={reference ? SOLVER_LABEL[reference.solver] : undefined}
-          help={GLOSSARY.baselines}
-        />
-        <Metric
-          label="Feasible share of final batch"
-          help="Of the final batch of measurements, the share that gave a portfolio following every rule. Higher means the circuit learned the rules well."
-          value={result.qaoa ? formatPct(result.qaoa.final_batch.feasible_probability, 1) : DASH}
-          hint={result.qaoa ? `${formatInt(result.qaoa.final_batch.shots)} shots` : undefined}
-        />
-      </dl>
+      {/* Wide screens: the plain summary and the four headline numbers sit side by side. */}
+      <div className="mt-3 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-6">
+        <InSimpleWords>
+          <ul className="space-y-0.5" data-testid="plain-summary">
+            {plainRunSummary(result).map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </InSimpleWords>
+        <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
+          <Metric label="QAOA score" value={qp ? formatNum(qp.objective, 5) : DASH} hint="Lower is better: q·risk − return + costs" help={GLOSSARY.objective} />
+          <Metric
+            label="Gap to reference"
+            help={GLOSSARY.gap}
+            value={gapText(q?.gap ?? null)}
+            hint={q?.gap ? gapReference(q.gap) : !reference ? 'No feasible classical reference' : qp ? 'This run did not report a gap' : 'No gap: QAOA had no feasible answer'}
+          />
+          <Metric
+            label="Best classical score"
+            value={reference?.portfolio ? formatNum(reference.portfolio.objective, 5) : DASH}
+            hint={reference ? SOLVER_LABEL[reference.solver] : undefined}
+            help={GLOSSARY.baselines}
+          />
+          <Metric
+            label="Feasible share of final batch"
+            help="Of the final batch of measurements, the share that gave a portfolio following every rule. Higher means the circuit learned the rules well."
+            value={result.qaoa ? formatPct(result.qaoa.final_batch.feasible_probability, 1) : DASH}
+            hint={result.qaoa ? `${formatInt(result.qaoa.final_batch.shots)} shots` : undefined}
+          />
+        </dl>
+      </div>
       {q?.status === 'no_feasible_sample' ? (
         <Notice tone="warning" className="mt-4" title="No feasible sample in the final batch">
-          Every sampled bitstring broke at least one constraint, so QAOA has no portfolio to report. The classical baselines below still solved the same problem. Try a higher
-          penalty scale, more evaluations or a smaller universe.
+          Every sample broke a rule. Try a higher penalty, more evaluations or fewer stocks.
         </Notice>
       ) : null}
       {q?.status === 'infeasible' || result.solvers.every((s) => s.status === 'infeasible' || s.status === 'skipped' || s.status === 'unsupported') ? (
@@ -139,7 +139,7 @@ function SummaryTab({ result }: { result: RunResult }) {
   const capMap = caps && caps.basis === 'weight' && p ? Object.fromEntries(Object.keys(p.sector_weights).map((sec) => [sec, caps.per_sector[sec] ?? caps.default_max ?? 1])) : null
 
   return (
-    <div className="grid grid-cols-1 gap-5">
+    <div className="grid grid-cols-1 gap-4">
       {withPortfolio.length > 1 ? (
         <Segmented
           name="solver-pick"
@@ -178,7 +178,7 @@ function SummaryTab({ result }: { result: RunResult }) {
             </p>
           </Card>
 
-          <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
             <Card>
               <CardHeader level={2} title="Holdings" />
               <HoldingsTable holdings={p.holdings} lots={result.config.mode === 'lots'} priceDate={result.config.dates.train_end} />
@@ -188,44 +188,45 @@ function SummaryTab({ result }: { result: RunResult }) {
             </Card>
           </div>
 
-          <Card>
-            <CardHeader
-              level={2}
-              title="Constraint check"
-              aside={
-                p.feasibility.feasible ? (
-                  <Badge tone="teal" icon={<IconCheck size={13} />}>
-                    All satisfied
-                  </Badge>
-                ) : (
-                  <Badge tone="danger" icon={<IconX size={13} />}>
-                    Violated
-                  </Badge>
-                )
-              }
-              description="Each constraint re-checked on the decoded portfolio, independently of the QUBO penalties."
-            />
-            <ResidualTable rows={p.feasibility.residuals} />
-          </Card>
+          {/* Wide screens: the two checks sit side by side instead of two full-width cards. */}
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <Card>
+              <CardHeader
+                level={2}
+                title="Constraint check"
+                aside={
+                  p.feasibility.feasible ? (
+                    <Badge tone="teal" icon={<IconCheck size={13} />}>
+                      All satisfied
+                    </Badge>
+                  ) : (
+                    <Badge tone="danger" icon={<IconX size={13} />}>
+                      Violated
+                    </Badge>
+                  )
+                }
+                description="Re-checked on the final portfolio."
+              />
+              <ResidualTable rows={p.feasibility.residuals} />
+            </Card>
 
-          <Card>
-            <CardHeader
-              level={2}
-              title="Out-of-sample check"
-              description="The risk model was fitted on the training window only. Validation selects settings; the test window is evaluated once, last."
-            />
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <PeriodBlock title="Validation window" m={p.validation} help={GLOSSARY.validationReturn} />
-              <PeriodBlock title="Held-out test window" m={p.test} help={GLOSSARY.testReturn} />
-            </div>
-            <p className="mt-4 border-t border-line pt-3 text-xs leading-relaxed text-muted">{result.dataset.survivorship_note}</p>
-          </Card>
+            <Card>
+              <CardHeader
+                level={2}
+                title="Out-of-sample check"
+                description="Fitted on training data only. The test window is checked once, at the end."
+              />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-1">
+                <PeriodBlock title="Validation window" m={p.validation} help={GLOSSARY.validationReturn} />
+                <PeriodBlock title="Held-out test window" m={p.test} help={GLOSSARY.testReturn} />
+              </div>
+            </Card>
+          </div>
         </>
       ) : null}
 
       {result.explanations.length ? (
-        <Card>
-          <CardHeader level={2} title="What drove this result" />
+        <Disclosure summary={`What drove this result (${result.explanations.length})`}>
           <ul className="grid grid-cols-1 gap-2 text-sm leading-relaxed text-ink-2" data-testid="explanations">
             {result.explanations.map((e) => (
               <li key={e} className="flex gap-2">
@@ -234,7 +235,7 @@ function SummaryTab({ result }: { result: RunResult }) {
               </li>
             ))}
           </ul>
-        </Card>
+        </Disclosure>
       ) : null}
     </div>
   )
@@ -275,8 +276,7 @@ function HoldingsTable({ holdings, lots, priceDate }: { holdings: Holding[]; lot
         }
       />
       <p className="mt-2 text-xs leading-relaxed text-muted">
-        * Indicative shares: amount divided by the NSE closing price on the last training day ({formatDate(priceDate)}), rounded down to whole shares.
-        Prices move after that day and exchange lot rules are not modelled.
+        * Indicative: whole shares at the {formatDate(priceDate)} close.
       </p>
     </>
   )
@@ -329,15 +329,15 @@ function ResidualTable({ rows }: { rows: Residual[] }) {
 function CompareTab({ result, solvers }: { result: RunResult; solvers: SolverResult[] }) {
   const ref = solvers.find((s) => s.gap)?.gap
   return (
-    <div className="grid grid-cols-1 gap-5">
+    <div className="grid grid-cols-1 gap-4">
       <Card>
         <CardHeader
           level={2}
           title="Same problem, every solver"
           description={
             ref
-              ? `Gaps are objective differences ${gapReference(ref)}, normalised by ${ref.normalisation}. Lower objective is better.`
-              : 'No feasible reference was available, so gaps are not reported.'
+              ? `Lower objective is better. Gaps are ${gapReference(ref)}.`
+              : 'No feasible reference, so no gaps.'
           }
         />
         <Table
@@ -378,24 +378,29 @@ function CompareTab({ result, solvers }: { result: RunResult; solvers: SolverRes
             { key: 'rt', header: 'Runtime', align: 'right', cell: (s) => secs(solverRuntime(s)) },
           ]}
         />
-        <ul className="mt-3 grid grid-cols-1 gap-1 text-xs text-muted">
-          {solvers
-            .filter((s) => s.status_detail || s.notes.length)
-            .map((s) => (
-              <li key={s.solver}>
-                <span className="font-medium text-ink-2">{SOLVER_LABEL[s.solver]}:</span> {[STATUS_LABEL[s.status], s.status_detail, ...s.notes].filter(Boolean).join(' · ')}
-              </li>
-            ))}
-        </ul>
+        {solvers.some((s) => s.status_detail || s.notes.length) ? (
+          <Disclosure summary="Solver notes" className="mt-3">
+            <ul className="grid grid-cols-1 gap-1 text-xs text-muted">
+              {solvers
+                .filter((s) => s.status_detail || s.notes.length)
+                .map((s) => (
+                  <li key={s.solver}>
+                    <span className="font-medium text-ink-2">{SOLVER_LABEL[s.solver]}:</span> {[STATUS_LABEL[s.status], s.status_detail, ...s.notes].filter(Boolean).join(' · ')}
+                  </li>
+                ))}
+            </ul>
+          </Disclosure>
+        ) : null}
       </Card>
       <Card>
         <FrontierChart points={result.frontier} solvers={solvers} />
       </Card>
       <Card>
-        <CardHeader level={2} title="Work done by each solver" description="Counts reported by the solvers themselves, so the comparison is not just wall-clock time." />
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <CardHeader level={2} title="Work done by each solver" />
+        {/* Flowed into columns so a short list does not stretch to match a long one beside it. */}
+        <div className="-mb-4 gap-x-8 md:columns-2 xl:columns-3">
           {solvers.map((s) => (
-            <div key={s.solver} className="rounded-md border border-line p-3">
+            <div key={s.solver} className="mb-4 break-inside-avoid">
               <h3 className="text-sm font-semibold text-ink">{SOLVER_LABEL[s.solver]}</h3>
               {Object.keys(s.work).length || numericEntries(s.runtime_s).length ? (
                 <DictTable
@@ -426,7 +431,7 @@ function QaoaTab({ result }: { result: RunResult }) {
   const fb = qa.final_batch
   const symbols = result.encoded_symbols
   return (
-    <div className="grid grid-cols-1 gap-5">
+    <div className="grid grid-cols-1 gap-4">
       <Card>
         <ConvergenceChart points={qa.iterations} budget={qa.evaluation_budget} />
         <p className="mt-3 text-xs text-muted tabular">
@@ -441,58 +446,26 @@ function QaoaTab({ result }: { result: RunResult }) {
         <CardHeader
           level={2}
           title="Most frequent samples"
-          description={`Decision bit i (left to right) is asset i of the encoded universe: ${symbols.join(', ')}. Slack bits are not shown. Selection policy: ${fb.selection_policy}.`}
+          description={`Bits left to right: ${symbols.join(', ')}.`}
         />
-        <Table
-          caption="Top sampled bitstrings"
-          captionHidden
-          rows={fb.top_samples}
-          rowKey={(r, i) => `${r.bitstring}-${i}`}
-          dense
-          rowClassName={(r) => (r.bitstring === fb.best_bitstring ? 'bg-teal-50' : '')}
-          columns={[
-            { key: 'rank', header: '#', cell: (_r, i) => i + 1 },
-            {
-              key: 'bits',
-              header: 'Decision bits',
-              rowHeader: true,
-              cell: (r: SampleRow) => (
-                <span className="inline-flex items-center gap-1.5">
-                  <Literal>{r.decision_bits}</Literal>
-                  {r.bitstring === fb.best_bitstring ? <Badge tone="teal">chosen</Badge> : null}
-                </span>
-              ),
-            },
-            { key: 'dec', header: 'Assets held', cell: (r) => <span className="text-xs">{decodeSelection(r.decision_bits, symbols).join(', ') || DASH}</span> },
-            {
-              key: 'f',
-              header: 'Feasible',
-              cell: (r) =>
-                r.feasible ? (
-                  <span className="inline-flex items-center gap-1 text-teal">
-                    <IconCheck size={14} /> yes
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 text-muted">
-                    <IconX size={14} /> no
-                  </span>
-                ),
-            },
-            { key: 'o', header: 'Objective', align: 'right', cell: (r) => formatNum(r.objective, 5) },
-            { key: 'e', header: 'QUBO energy', align: 'right', cell: (r) => formatNum(r.qubo_energy, 4) },
-            { key: 'c', header: 'Count', align: 'right', cell: (r) => formatInt(r.count) },
-            { key: 'p', header: 'Probability', align: 'right', cell: (r) => formatPct(r.probability, 2) },
-          ]}
-        />
+        <SamplesTable rows={fb.top_samples} best={fb.best_bitstring} symbols={symbols} />
         <p className="mt-2 text-xs text-muted">
           {formatInt(fb.distinct_bitstrings)} distinct bitstrings in {formatInt(fb.shots)} shots · sampling seed {fb.seed} · counts SHA-256 <Literal>{fb.counts_sha256}</Literal>
         </p>
       </Card>
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
         <Card>
           <CardHeader level={2} title="Circuit" description="After transpilation for the simulator's basis gates." />
+          <QaoaCircuitDiagram
+            qubits={qa.circuit.n_qubits}
+            runDepth={qa.depth}
+            parameterOrder={qa.parameter_order}
+            optimalParameters={qa.optimal_parameters}
+            gateCounts={qa.circuit.gate_counts}
+          />
           <KV
+            className="mt-4"
             rows={[
               ['Qubits', qa.circuit.n_qubits],
               ['Depth p (layers)', qa.depth],
@@ -585,67 +558,131 @@ function QaoaTab({ result }: { result: RunResult }) {
   )
 }
 
+const SAMPLE_PREVIEW = 10
+
+/** The top sampled bitstrings: the first ten (plus the chosen one) by default, the rest on request. */
+function SamplesTable({ rows, best, symbols }: { rows: SampleRow[]; best: string | null; symbols: string[] }) {
+  const [all, setAll] = useState(false)
+  const ranked = rows.map((r, i) => ({ ...r, rank: i + 1 }))
+  const shown = all ? ranked : ranked.filter((r) => r.rank <= SAMPLE_PREVIEW || r.bitstring === best)
+  return (
+    <>
+      <Table
+        caption="Top sampled bitstrings"
+        captionHidden
+        rows={shown}
+        rowKey={(r) => `${r.bitstring}-${r.rank}`}
+        dense
+        rowClassName={(r) => (r.bitstring === best ? 'bg-teal-50' : '')}
+        columns={[
+          { key: 'rank', header: '#', cell: (r) => r.rank },
+          {
+            key: 'bits',
+            header: 'Decision bits',
+            rowHeader: true,
+            cell: (r) => (
+              <span className="inline-flex items-center gap-1.5">
+                <Literal>{r.decision_bits}</Literal>
+                {r.bitstring === best ? <Badge tone="teal">chosen</Badge> : null}
+              </span>
+            ),
+          },
+          { key: 'dec', header: 'Assets held', cell: (r) => <span className="text-xs">{decodeSelection(r.decision_bits, symbols).join(', ') || DASH}</span> },
+          {
+            key: 'f',
+            header: 'Feasible',
+            cell: (r) =>
+              r.feasible ? (
+                <span className="inline-flex items-center gap-1 text-teal">
+                  <IconCheck size={14} /> yes
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-muted">
+                  <IconX size={14} /> no
+                </span>
+              ),
+          },
+          { key: 'o', header: 'Objective', align: 'right', cell: (r) => formatNum(r.objective, 5) },
+          { key: 'e', header: 'QUBO energy', align: 'right', cell: (r) => formatNum(r.qubo_energy, 4) },
+          { key: 'c', header: 'Count', align: 'right', cell: (r) => formatInt(r.count) },
+          { key: 'p', header: 'Probability', align: 'right', cell: (r) => formatPct(r.probability, 2) },
+        ]}
+      />
+      {rows.length > shown.length || all ? (
+        <Button variant="quiet" size="sm" className="mt-1 -ml-3" aria-expanded={all} onClick={() => setAll((v) => !v)}>
+          {all ? `Show the top ${SAMPLE_PREVIEW} only` : `Show all ${rows.length} samples`}
+        </Button>
+      ) : null}
+    </>
+  )
+}
+
 /* ------------------------------------------------------------------ provenance */
 
 function ProvenanceTab({ result }: { result: RunResult }) {
   const e = result.estimation
   return (
-    <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
-      <DatasetCard dataset={result.dataset} />
-      <Card>
-        <CardHeader level={2} title="Risk model" />
-        <KV
-          rows={[
-            ['Training window', `${e.train.start} to ${e.train.end} (${formatInt(e.train.n_obs)} days)`],
-            ['Validation window', `${e.validation.start} to ${e.validation.end} (${formatInt(e.validation.n_obs)} days)`],
-            ['Test window', `${e.test.start} to ${e.test.end} (${formatInt(e.test.n_obs)} days)`],
-            ['Returns', `${e.return_type}, annualised × ${e.annualisation_days}`],
-            ['Covariance', `${e.covariance_method}${e.shrinkage_intensity !== null ? `, shrinkage ${formatNum(e.shrinkage_intensity, 3)}` : ''}`],
-            ['PSD check', `${e.psd_corrected ? 'Corrected' : 'Not needed'} (min eigenvalue ${formatNum(e.min_eigenvalue_before, 6)} → ${formatNum(e.min_eigenvalue_after, 6)})`],
+    // Two independent stacks so a short card never stretches to match a tall neighbour.
+    <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4">
+        <DatasetCard dataset={result.dataset} />
+        <Card>
+          <CardHeader level={2} title="Risk model" />
+          <KV
+            rows={[
+              ['Training window', `${e.train.start} to ${e.train.end} (${formatInt(e.train.n_obs)} days)`],
+              ['Validation window', `${e.validation.start} to ${e.validation.end} (${formatInt(e.validation.n_obs)} days)`],
+              ['Test window', `${e.test.start} to ${e.test.end} (${formatInt(e.test.n_obs)} days)`],
+              ['Returns', `${e.return_type}, annualised × ${e.annualisation_days}`],
+              ['Covariance', `${e.covariance_method}${e.shrinkage_intensity !== null ? `, shrinkage ${formatNum(e.shrinkage_intensity, 3)}` : ''}`],
+              ['PSD check', `${e.psd_corrected ? 'Corrected' : 'Not needed'} (min eigenvalue ${formatNum(e.min_eigenvalue_before, 6)} → ${formatNum(e.min_eigenvalue_after, 6)})`],
+            ]}
+          />
+          {e.notes.length ? (
+            <ul className="mt-3 list-disc space-y-0.5 pl-5 text-xs text-muted">
+              {e.notes.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          ) : null}
+          {Object.keys(result.screening).length ? (
+            <>
+              <h3 className="mt-4 text-sm font-semibold text-ink">Screening</h3>
+              <DictTable dict={result.screening} caption="Screening" />
+            </>
+          ) : null}
+        </Card>
+      </div>
+      <div className="grid grid-cols-1 gap-4">
+        <SoftwareCard
+          software={result.software}
+          timings={result.timings_s}
+          extra={[
+            ['Run id', <Literal key="r">{result.run_id}</Literal>],
+            ['Created', formatDateTime(result.created_at)],
+            ['Config hash', <Literal key="h">{result.config_hash}</Literal>],
+            ['Cache key', <Literal key="c">{result.cache_key}</Literal>],
+            ['Implementation', `${result.implementation_version} · schema ${result.schema_version}`],
+            ['Encoded universe', result.encoded_symbols.join(', ')],
           ]}
         />
-        {e.notes.length ? (
-          <ul className="mt-3 list-disc space-y-0.5 pl-5 text-xs text-muted">
-            {e.notes.map((n) => (
-              <li key={n}>{n}</li>
-            ))}
-          </ul>
-        ) : null}
-        {Object.keys(result.screening).length ? (
-          <>
-            <h3 className="mt-5 text-sm font-semibold text-ink">Screening</h3>
-            <DictTable dict={result.screening} caption="Screening" />
-          </>
-        ) : null}
-      </Card>
-      <SoftwareCard
-        software={result.software}
-        timings={result.timings_s}
-        extra={[
-          ['Run id', <Literal key="r">{result.run_id}</Literal>],
-          ['Created', formatDateTime(result.created_at)],
-          ['Config hash', <Literal key="h">{result.config_hash}</Literal>],
-          ['Cache key', <Literal key="c">{result.cache_key}</Literal>],
-          ['Implementation', `${result.implementation_version} · schema ${result.schema_version}`],
-          ['Encoded universe', result.encoded_symbols.join(', ')],
-        ]}
-      />
-      <Card>
-        <CardHeader level={2} title="Configuration" description="Exactly what was submitted, after server defaults were applied." />
-        <KV
-          rows={[
-            ['Preset', result.config.preset],
-            ['Mode', result.config.mode === 'lots' ? 'Lots (bounded weights)' : 'Selection (equal weight 1/K)'],
-            ['Budget', formatInr(result.config.budget_inr)],
-            ['Risk aversion q', formatUnknown(result.config.risk_aversion)],
-            ['QAOA', `p = ${result.config.qaoa.depth}, ${result.config.qaoa.optimizer}, ${result.config.qaoa.init_strategy}, seed ${result.config.qaoa.seed}`],
-            ['Timeout', `${result.config.timeout_seconds} s`],
-          ]}
-        />
-        <div className="mt-2">
-          <ConfigDump config={result.config} />
-        </div>
-      </Card>
+        <Card>
+          <CardHeader level={2} title="Configuration" description="Exactly what was submitted, after server defaults were applied." />
+          <KV
+            rows={[
+              ['Preset', result.config.preset],
+              ['Mode', result.config.mode === 'lots' ? 'Lots (bounded weights)' : 'Selection (equal weight 1/K)'],
+              ['Budget', formatInr(result.config.budget_inr)],
+              ['Risk aversion q', formatUnknown(result.config.risk_aversion)],
+              ['QAOA', `p = ${result.config.qaoa.depth}, ${result.config.qaoa.optimizer}, ${result.config.qaoa.init_strategy}, seed ${result.config.qaoa.seed}`],
+              ['Timeout', `${result.config.timeout_seconds} s`],
+            ]}
+          />
+          <div className="mt-2">
+            <ConfigDump config={result.config} />
+          </div>
+        </Card>
+      </div>
     </div>
   )
 }

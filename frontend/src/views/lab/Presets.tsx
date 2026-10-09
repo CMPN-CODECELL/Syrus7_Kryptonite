@@ -15,13 +15,14 @@ export function PresetPicker({ presets, value, onPick }: { presets: Preset[]; va
           </Badge>
         ) : null}
       </legend>
-      <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-3">
+      <div className="mt-2 grid grid-cols-1 gap-2.5 md:grid-cols-3 md:gap-3">
         {list.map((p) => {
           const on = value === p.name
           return (
             <label
               key={p.name}
-              className={`relative flex cursor-pointer flex-col rounded-lg border p-4 transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-cobalt ${
+              title={p.description}
+              className={`@container relative flex cursor-pointer flex-col rounded-lg border p-3.5 transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-cobalt ${
                 on ? 'border-cobalt bg-cobalt-50/60 ring-1 ring-cobalt' : 'border-line bg-canvas hover:border-line-strong'
               }`}
               data-testid={`preset-${p.name}`}
@@ -35,8 +36,8 @@ export function PresetPicker({ presets, value, onPick }: { presets: Preset[]; va
                   </span>
                 ) : null}
               </span>
-              <span className="mt-1 text-xs leading-relaxed text-muted">{p.description}</span>
-              <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-ink-2 tabular">
+              {/* Two setting pairs per row whenever the card is wide enough (always on phones, where the cards stack). */}
+              <dl className="mt-2 grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-0.5 text-xs whitespace-nowrap text-ink-2 tabular @min-[18rem]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto] @min-[18rem]:gap-x-4">
                 <dt className="text-muted">Depth p</dt>
                 <dd className="text-right">{p.qaoa.depth}</dd>
                 <dt className="text-muted">Optimiser</dt>
@@ -52,14 +53,13 @@ export function PresetPicker({ presets, value, onPick }: { presets: Preset[]; va
                 <dt className="text-muted">Timeout</dt>
                 <dd className="text-right">{formatDuration(p.timeout_seconds)}</dd>
               </dl>
-              <span className="mt-3 border-t border-line pt-2 text-xs text-muted">
+              <span className="mt-2 border-t border-line pt-1.5 text-xs text-muted" title={p.measured_note ?? undefined}>
                 {p.measured_median_s !== null ? (
                   <>
-                    Measured median <span className="font-medium text-ink-2 tabular">{formatDuration(p.measured_median_s)}</span>
-                    {p.measured_note ? ` · ${p.measured_note}` : ''}
+                    Typical run <span className="font-medium text-ink-2 tabular">{formatDuration(p.measured_median_s)}</span>
                   </>
                 ) : (
-                  'Runtime not yet measured on this server'
+                  'Not timed on this server yet'
                 )}
               </span>
             </label>

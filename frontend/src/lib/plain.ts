@@ -14,26 +14,26 @@ export function plainRunSummary(r: RunResult): string[] {
   const budget = formatInrCompact(r.config.budget_inr)
   out.push(
     r.config.mode === 'lots'
-      ? `The task: split ${budget} across ${n} stocks in equal lots, balancing risk, return and trading costs.`
-      : `The task: choose ${k ? `${k} of ` : ''}${n} stocks for ${budget}, balancing risk, return and trading costs.`,
+      ? `Split ${budget} across ${n} stocks in equal lots.`
+      : `Pick ${k ? `${k} of ` : ''}${n} stocks for ${budget}.`,
   )
 
   const q = solver(r, 'qaoa')
   const qp = q?.portfolio
   if (!q || q.status === 'skipped') {
-    out.push('The quantum circuit (QAOA) was not run this time; only the classical methods answered.')
+    out.push('QAOA did not run. Only the classical methods answered.')
     return out
   }
   if (!qp) {
     out.push(
       q.status === 'no_feasible_sample'
-        ? 'The quantum circuit (QAOA) did not produce any portfolio that follows every rule, so it has no answer this time. The classical methods still solved the same problem.'
-        : 'The quantum circuit (QAOA) did not produce a portfolio this time. The Comparison tab says why.',
+        ? 'QAOA found no portfolio that follows every rule. The classical methods still answered.'
+        : 'QAOA returned no portfolio. The Comparison tab says why.',
     )
     return out
   }
   const picks = [...qp.holdings].filter((h) => h.weight > 0).sort((a, b) => b.weight - a.weight).map((h) => h.symbol)
-  out.push(`The quantum circuit (QAOA) picked ${list(picks)}.`)
+  out.push(`QAOA picked ${list(picks)}.`)
 
   const g = q.gap
   if (g) {
@@ -42,21 +42,21 @@ export function plainRunSummary(r: RunResult): string[] {
     if (same)
       out.push(
         g.reference === 'exact_optimum'
-          ? 'That is exactly the best possible portfolio: exact search tried every valid option and found the same one.'
-          : `That matches the best answer the classical methods found (${who}).`,
+          ? 'The best possible portfolio, confirmed by exact search.'
+          : `The same as the best classical answer (${who}).`,
       )
     else
       out.push(
         g.relative !== null
-          ? `Its score is ${formatPct(g.relative, 1)} worse than the ${g.reference === 'exact_optimum' ? 'best possible' : 'best known'} answer (from ${who}). 0 % would mean a perfect match.`
-          : `Its score is a little worse than the ${g.reference === 'exact_optimum' ? 'best possible' : 'best known'} answer (from ${who}).`,
+          ? `${formatPct(g.relative, 1)} off the ${g.reference === 'exact_optimum' ? 'best possible' : 'best known'} answer (${who}).`
+          : `A little off the ${g.reference === 'exact_optimum' ? 'best possible' : 'best known'} answer (${who}).`,
       )
   }
 
   const t = qp.test
   if (t && !t.insufficient && typeof t.total_return === 'number')
     out.push(
-      `On later prices it never saw (${formatDate(t.start)} to ${formatDate(t.end)}), this portfolio ${t.total_return >= 0 ? 'gained' : 'lost'} ${formatPct(Math.abs(t.total_return), 1)}. Past results do not predict future ones.`,
+      `${t.total_return >= 0 ? 'Gained' : 'Lost'} ${formatPct(Math.abs(t.total_return), 1)} on later, unseen prices (${formatDate(t.start)} to ${formatDate(t.end)}).`,
     )
   return out
 }

@@ -3,6 +3,7 @@ import type { AssetInfo } from '../../api/contract.gen'
 import { Badge, Button, Checkbox, Field, IconAlert, IconCheck, IconSearch, Select, Sparkline, TextInput, Tooltip } from '../../components/ui'
 import { DASH, formatDate, formatInr, formatPct, sectorShort } from '../../lib/format'
 import { GLOSSARY } from '../../lib/glossary'
+import { useLivePrice, useLiveStatus } from '../../lib/live'
 
 const MAX = 50
 
@@ -45,6 +46,7 @@ export function AssetPicker({
   )
   const gaps = assets.filter((a) => !a.data_ok).length
   const priceDate = assets.reduce<string | null>((d, a) => (a.last_date && (!d || a.last_date > d) ? a.last_date : d), null)
+  const liveStatus = useLiveStatus()
 
   return (
     <div>
@@ -95,7 +97,9 @@ export function AssetPicker({
       ) : null}
       <p className="mt-2 flex flex-wrap items-center gap-x-1 text-xs text-muted" data-testid="price-note">
         <span>
-          Price: last NSE close{priceDate ? ` on ${formatDate(priceDate)}` : ''}, in ₹ per share.
+          {liveStatus
+            ? `Price: ${liveStatus === 'live' ? 'live' : 'latest'} NSE price, in ₹ per share.`
+            : `Price: last NSE close${priceDate ? ` on ${formatDate(priceDate)}` : ''}, in ₹ per share.`}
         </span>
         <Tooltip content={GLOSSARY.price} label="What is the price?" />
         <span className="ml-3">Line and % show the last year.</span>
@@ -103,7 +107,7 @@ export function AssetPicker({
       </p>
       {gaps ? (
         <p className="mt-1 text-xs text-muted">
-          {gaps} stock{gaps === 1 ? ' has' : 's have'} a shorter price history (marked “Data gap”); the check on the right explains how they are handled.
+          {gaps} stock{gaps === 1 ? ' has' : 's have'} a short price history (marked “Data gap”).
         </p>
       ) : null}
 
@@ -129,8 +133,10 @@ const AssetRow = memo(function AssetRow({
   full: boolean
   onToggle: (s: string) => void
 }) {
+  const live = useLivePrice(a.symbol)
+  const flash = live && live.tick > 0 && live.move ? (live.move === 'up' ? 'qf-price-flash-up' : 'qf-price-flash-down') : ''
   return (
-    <li className={checked ? 'bg-teal-50/70' : 'bg-canvas'}>
+    <li className={checked ? 'bg-teal-50/70' : 'bg-canvas'} data-symbol={a.symbol}>
       <label className="flex min-h-14 cursor-pointer items-center gap-3 px-3 py-2 has-disabled:cursor-not-allowed has-focus-visible:outline-2 has-focus-visible:-outline-offset-2 has-focus-visible:outline-cobalt">
         <input
           type="checkbox"
@@ -144,9 +150,15 @@ const AssetRow = memo(function AssetRow({
           <span className="flex items-baseline gap-2">
             <span className="text-sm font-semibold text-ink">{a.symbol}</span>
             {checked ? <IconCheck size={14} className="text-teal" aria-hidden="true" /> : null}
-            <span className="ml-auto text-sm font-medium text-ink-2 tabular" title={a.last_date ? `NSE close on ${formatDate(a.last_date)}` : undefined}>
-              {a.last_price_inr !== null ? formatInr(a.last_price_inr, { paise: true }) : DASH}
-            </span>
+            {live ? (
+              <span key={live.tick} className={`-mr-1 ml-auto rounded px-1 text-sm font-medium text-ink-2 tabular ${flash}`} title="Live NSE price" data-testid="live-price">
+                {formatInr(live.quote.price, { paise: true })}
+              </span>
+            ) : (
+              <span className="ml-auto text-sm font-medium text-ink-2 tabular" title={a.last_date ? `NSE close on ${formatDate(a.last_date)}` : undefined}>
+                {a.last_price_inr !== null ? formatInr(a.last_price_inr, { paise: true }) : DASH}
+              </span>
+            )}
           </span>
           <span className="flex items-center gap-2">
             <span className="min-w-0 flex-1 truncate text-xs text-muted">{a.name}</span>

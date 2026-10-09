@@ -1,0 +1,27 @@
+﻿{
+    "image":  "asia-south1-docker.pkg.dev/quantfolio-511108/quantfolio/app@sha256:19cd81ec64c7603a12a2a74ea11eee4935eb872c0f62a2b8df61ac7340a0eafa",
+    "source":  "a0a4e1c-dirty",
+    "api":  {
+                "max_instances":  2,
+                "salt_version":  "1",
+                "concurrency":  40,
+                "image":  "asia-south1-docker.pkg.dev/quantfolio-511108/quantfolio/app@sha256:19cd81ec64c7603a12a2a74ea11eee4935eb872c0f62a2b8df61ac7340a0eafa",
+                "revision":  "quantfolio-api-00001-445",
+                "url":  "https://quantfolio-api-8840249691.asia-south1.run.app",
+                "client_ip_source":  "right:2"
+            },
+    "build_id":  "2ace5d37-5b14-4ea2-81fa-24133e1492cb",
+    "tag":  "a0a4e1c-dirty-20261009-102242",
+    "worker":  {
+                   "image":  "asia-south1-docker.pkg.dev/quantfolio-511108/quantfolio/app@sha256:19cd81ec64c7603a12a2a74ea11eee4935eb872c0f62a2b8df61ac7340a0eafa",
+                   "generation":  1,
+                   "max_retries":  0,
+                   "parallelism":  1,
+                   "cpu":  "2",
+                   "salt_version":  "1",
+                   "memory":  "4Gi",
+                   "tasks":  1,
+                   "task_timeout_s":  7200
+               },
+    "updated_utc":  "2026-10-09T10:30:59Z"
+}

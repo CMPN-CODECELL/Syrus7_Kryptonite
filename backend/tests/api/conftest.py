@@ -48,6 +48,7 @@ def data_dir(monkeypatch: pytest.MonkeyPatch) -> Iterator[Path]:
     monkeypatch.delenv("IBM_QUANTUM_TOKEN", raising=False)
     monkeypatch.delenv("IBM_QUANTUM_INSTANCE", raising=False)
     monkeypatch.delenv("QF_QUEUE_CAPACITY", raising=False)
+    monkeypatch.delenv("QF_LIVE_QUOTES", raising=False)  # live prices stay off (no network) unless a test opts in
     from quantfolio.settings import reset_settings_cache
 
     reset_settings_cache()

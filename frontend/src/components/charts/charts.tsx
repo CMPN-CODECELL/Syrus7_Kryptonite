@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   ComposedChart,
   LabelList,
   Line,
@@ -138,7 +137,6 @@ export function FrontierChart({ points, solvers }: { points: FrontierPoint[]; so
       }
     >
       <ComposedChart responsive accessibilityLayer={false} style={{ width: '100%', height: '100%' }} margin={{ top: 8, right: 24, bottom: 22, left: 4 }}>
-        <CartesianGrid stroke={C.line} />
         <XAxis
           type="number"
           dataKey="x"
@@ -255,7 +253,6 @@ export function ConvergenceChart({ points, budget, live = false }: { points: Ite
       {rows.length ? (
         <div className="grid h-full grid-rows-2 gap-1">
           <LineChart responsive accessibilityLayer={false} data={rows} syncId="conv" style={{ width: '100%', height: '100%' }} margin={{ top: 6, right: 16, bottom: 0, left: 4 }}>
-            <CartesianGrid stroke={C.line} />
             <XAxis dataKey="i" type="number" domain={[1, Math.max(rows.length, budget ? budget + prep : 1)]} hide />
             <YAxis domain={['auto', 'auto']} width={58} tickFormatter={formatAxisNum} {...AXIS} />
             <RTooltip content={({ active, payload }) => (active && payload?.[0] ? <ConvTip r={payload[0].payload as ConvergenceRow} /> : null)} />
@@ -263,7 +260,6 @@ export function ConvergenceChart({ points, budget, live = false }: { points: Ite
             <Line dataKey="optEnergy" stroke={C.cobalt} strokeWidth={1.6} dot={rows.length < 30 ? { r: 2 } : false} isAnimationActive={false} connectNulls={false} />
           </LineChart>
           <LineChart responsive accessibilityLayer={false} data={rows} syncId="conv" style={{ width: '100%', height: '100%' }} margin={{ top: 6, right: 16, bottom: 4, left: 4 }}>
-            <CartesianGrid stroke={C.line} />
             <XAxis dataKey="i" type="number" domain={[1, Math.max(rows.length, budget ? budget + prep : 1)]} allowDecimals={false} {...AXIS} />
             <YAxis domain={['auto', 'auto']} width={58} tickFormatter={formatAxisNum} {...AXIS} />
             <RTooltip content={({ active, payload }) => (active && payload?.[0] ? <ConvTip r={payload[0].payload as ConvergenceRow} /> : null)} />
@@ -341,7 +337,6 @@ export function HistogramChart({ batch }: { batch: FinalBatch }) {
             <line x1="0" y1="0" x2="0" y2="6" stroke={C.faint} strokeWidth="2" />
           </pattern>
         </defs>
-        <CartesianGrid stroke={C.line} vertical={false} />
         <XAxis dataKey="label" {...AXIS} interval="preserveStartEnd" minTickGap={18} label={{ value: 'Objective value (bin centre, lower is better)', position: 'insideBottom', offset: -12, fill: C.muted, fontSize: 11 }} />
         <YAxis tickFormatter={(v: number) => `${Math.round(v * 100)}%`} width={44} {...AXIS} />
         <RTooltip
@@ -408,7 +403,6 @@ export function SectorChart({ weights, title = 'Sector allocation', caps }: { we
       }
     >
       <BarChart responsive accessibilityLayer={false} layout="vertical" data={rows} style={{ width: '100%', height: '100%' }} margin={{ top: 0, right: 48, bottom: 0, left: 4 }}>
-        <CartesianGrid stroke={C.line} horizontal={false} />
         <XAxis type="number" domain={[0, axisMax]} ticks={ticks} tickFormatter={(v: number) => `${Math.round(v * 100)}%`} {...AXIS} />
         <YAxis type="category" dataKey="short" width={96} {...AXIS} />
         <Bar dataKey="w" fill={C.teal} radius={[0, 3, 3, 0]} isAnimationActive={false} barSize={18}>
@@ -477,7 +471,6 @@ export function ExperimentFactorChart({ factor, cells, metric }: { factor: strin
       }
     >
       <ComposedChart responsive accessibilityLayer={false} data={data} style={{ width: '100%', height: '100%' }} margin={{ top: 6, right: 12, bottom: 4, left: 4 }}>
-        <CartesianGrid stroke={C.line} vertical={false} />
         <XAxis dataKey="level" type="category" allowDuplicatedCategory={false} {...AXIS} />
         <YAxis domain={['auto', 'auto']} width={58} tickFormatter={(v: number) => fmt(v)} {...AXIS} />
         {metric === 'approximation_ratio' ? <ReferenceLine y={1} stroke={C.muted} strokeDasharray="3 3" /> : null}
@@ -550,7 +543,6 @@ export function NoiseChart({ noise }: { noise: NoiseComparison }) {
             <line x1="0" y1="0" x2="0" y2="5" stroke={C.amber} strokeWidth="1.6" />
           </pattern>
         </defs>
-        <CartesianGrid stroke={C.line} vertical={false} />
         <XAxis dataKey="seed" {...AXIS} />
         <YAxis domain={[0, 1]} tickFormatter={(v: number) => `${Math.round(v * 100)}%`} width={44} {...AXIS} />
         <RTooltip

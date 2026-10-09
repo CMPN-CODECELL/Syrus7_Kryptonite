@@ -1,0 +1,1605 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "E:\\All projects\\QuantFolio\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--project=chromium",
+      "--project=chromium-states"
+    ],
+    "configFile": "E:\\All projects\\QuantFolio\\frontend\\playwright.config.ts",
+    "rootDir": "E:/All projects/QuantFolio/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "E:\\All projects\\QuantFolio\\frontend\\e2e\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(journey|views|perf)\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-states",
+        "name": "chromium-states",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/states\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/journey\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/journey\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "E:\\All projects\\QuantFolio\\.tmp\\pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "E:\\All projects\\QuantFolio\\frontend\\e2e",
+        "snapshotDir": "E:\\All projects\\QuantFolio\\frontend\\e2e",
+        "testIgnore": [],
+        "testMatch": {},
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5201",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "actionTimeout": 15000,
+          "navigationTimeout": 30000,
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "E:\\All projects\\QuantFolio\\.tmp\\pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium-states",
+        "testDir": "E:\\All projects\\QuantFolio\\frontend\\e2e",
+        "snapshotDir": "E:\\All projects\\QuantFolio\\frontend\\e2e",
+        "testIgnore": [],
+        "testMatch": {},
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5200",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "actionTimeout": 15000,
+          "navigationTimeout": 30000,
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium-states"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "../evidence/e2e/playwright-local.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../evidence/e2e/playwright-local.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "journey.spec.ts",
+      "file": "journey.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "primary journey: select, constrain, preflight, run, compare, export, reopen from History",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 26584,
+                  "error": {
+                    "message": "TimeoutError: locator.check: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n",
+                    "stack": "TimeoutError: locator.check: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts:25:32\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts:21:3",
+                    "location": {
+                      "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts",
+                      "column": 32,
+                      "line": 25
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 23 |\u001b[39m     \u001b[36mawait\u001b[39m expect(qubits)\u001b[33m.\u001b[39mtoHaveText(\u001b[35m/\\d+/\u001b[39m)\n \u001b[90m 24 |\u001b[39m     qubitsBefore \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m qubits\u001b[33m.\u001b[39mtextContent()) \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 25 |\u001b[39m     \u001b[36mawait\u001b[39m asset(page\u001b[33m,\u001b[39m \u001b[32m'TITAN'\u001b[39m)\u001b[33m.\u001b[39mcheck()\n \u001b[90m    |\u001b[39m                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m expect(asset(page\u001b[33m,\u001b[39m \u001b[32m'TITAN'\u001b[39m))\u001b[33m.\u001b[39mtoBeChecked()\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'selected-count'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[32m'9 of 50 selected'\u001b[39m)\n \u001b[90m 28 |\u001b[39m   })\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts",
+                        "column": 32,
+                        "line": 25
+                      },
+                      "message": "TimeoutError: locator.check: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n\n\n  23 |     await expect(qubits).toHaveText(/\\d+/)\n  24 |     qubitsBefore = (await qubits.textContent()) ?? ''\n> 25 |     await asset(page, 'TITAN').check()\n     |                                ^\n  26 |     await expect(asset(page, 'TITAN')).toBeChecked()\n  27 |     await expect(page.getByTestId('selected-count')).toContainText('9 of 50 selected')\n  28 |   })\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts:25:32\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts:21:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "the landing page leads to the dashboard, and the dashboard to the Lab",
+                      "duration": 2304
+                    },
+                    {
+                      "title": "select assets",
+                      "duration": 18034,
+                      "error": {
+                        "message": "TimeoutError: locator.check: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.check: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts:25:32\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts:21:3",
+                        "location": {
+                          "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts",
+                          "column": 32,
+                          "line": 25
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 23 |\u001b[39m     \u001b[36mawait\u001b[39m expect(qubits)\u001b[33m.\u001b[39mtoHaveText(\u001b[35m/\\d+/\u001b[39m)\n \u001b[90m 24 |\u001b[39m     qubitsBefore \u001b[33m=\u001b[39m (\u001b[36mawait\u001b[39m qubits\u001b[33m.\u001b[39mtextContent()) \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 25 |\u001b[39m     \u001b[36mawait\u001b[39m asset(page\u001b[33m,\u001b[39m \u001b[32m'TITAN'\u001b[39m)\u001b[33m.\u001b[39mcheck()\n \u001b[90m    |\u001b[39m                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m expect(asset(page\u001b[33m,\u001b[39m \u001b[32m'TITAN'\u001b[39m))\u001b[33m.\u001b[39mtoBeChecked()\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'selected-count'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[32m'9 of 50 selected'\u001b[39m)\n \u001b[90m 28 |\u001b[39m   })\u001b[0m"
+                      }
+                    }
+                  ],
+                  "startTime": "2026-10-09T08:08:44.174Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\journey.spec.ts",
+                    "column": 32,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bf222bad70f76648f722-7ec81f59ef4ab96b4e1d",
+          "file": "journey.spec.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf.spec.ts",
+      "file": "perf.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "mobile LCP and CLS under the documented throttling profile, and control response time",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9322,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5202/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5202/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5202/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5202/\", waiting until \"load\"\u001b[22m\n\n    at measure (E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts:72:14)\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts:123:48",
+                    "location": {
+                      "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts",
+                      "column": 14,
+                      "line": 72
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 70 |\u001b[39m     })\u001b[33m.\u001b[39mobserve({ type\u001b[33m:\u001b[39m \u001b[32m'layout-shift'\u001b[39m\u001b[33m,\u001b[39m buffered\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\n \u001b[90m 71 |\u001b[39m   })\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 72 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(url\u001b[33m,\u001b[39m { waitUntil\u001b[33m:\u001b[39m \u001b[32m'load'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m90\u001b[39m_000 })\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 73 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'networkidle'\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m60\u001b[39m_000 })\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m undefined)\n \u001b[90m 74 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForTimeout(\u001b[35m3\u001b[39m_000)\n \u001b[90m 75 |\u001b[39m   \u001b[36mconst\u001b[39m v \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts",
+                        "column": 14,
+                        "line": 72
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5202/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5202/\", waiting until \"load\"\u001b[22m\n\n\n  70 |     }).observe({ type: 'layout-shift', buffered: true })\n  71 |   })\n> 72 |   await page.goto(url, { waitUntil: 'load', timeout: 90_000 })\n     |              ^\n  73 |   await page.waitForLoadState('networkidle', { timeout: 60_000 }).catch(() => undefined)\n  74 |   await page.waitForTimeout(3_000)\n  75 |   const v = await page.evaluate(() => {\n    at measure (E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts:72:14)\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts:123:48"
+                    },
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\helpers.ts",
+                        "column": 104,
+                        "line": 122
+                      },
+                      "message": "Error: browser errors, warnings or failed requests that this test did not provoke\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 7\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"kind\": \"requestfailed\",\u001b[39m\n\u001b[31m+     \"text\": \"net::ERR_CONNECTION_REFUSED GET http://127.0.0.1:5202/\",\u001b[39m\n\u001b[31m+     \"url\": \"http://127.0.0.1:5202/\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at helpers.ts:122\n\n  120 |       appendFileSync(evidencePath('e2e', `console-guard-${TAG}.jsonl`), JSON.stringify(record) + '\\n')\n  121 |       if (findings.length) await testInfo.attach('console-guard', { body: JSON.stringify(findings, null, 2), contentType: 'application/json' })\n> 122 |       expect(unexpected, 'browser errors, warnings or failed requests that this test did not provoke').toEqual([])\n      |                                                                                                        ^\n  123 |     },\n  124 |     { auto: true },\n  125 |   ],\n    at Object.base.extend.guard.auto (E:\\All projects\\QuantFolio\\frontend\\e2e\\helpers.ts:122:104)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:09:13.797Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "console-guard",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfQ09OTkVDVElPTl9SRUZVU0VEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDIvIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAyLyIKICB9Cl0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts",
+                    "column": 14,
+                    "line": 72
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "73ed389be8d3d6a89cdb-8cd0da9e8d444797260b",
+          "file": "perf.spec.ts",
+          "line": 117,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "views.spec.ts",
+      "file": "views.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "landing: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13165,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:09:26.020Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-cddc0cb0d53d1a104688",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "landing: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:09:41.125Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-6d12da268ea69c7c4714",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "dashboard: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9948,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:09:56.695Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-3bf53096acee0f2740e6",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "dashboard: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10542,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:10:06.660Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-48ce1f33f937f37c1686",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "lab: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:10:17.215Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-cda458d6de6c46b335c7",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "lab: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12728,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:10:25.954Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-2b5b2724558f91918208",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "run: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12098,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:10:38.693Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-3fe064fd57e94997b927",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "run: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20964,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:10:50.803Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-45e6a92053c277ccf9c2",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "experiments: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6224,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:11:11.779Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-3922bcd71c77bdbdc995",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "experiments: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9008,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:11:18.021Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-dd79b1f841bbb3040a07",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "history: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6504,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:11:27.043Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-f1ec4d49d13af471eaa6",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "history: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:11:33.562Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-7d01983b6394cd491f33",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "guardrails: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:11:42.807Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-6af5e562b9b685271d99",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "guardrails: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12032,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:11:49.091Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-3cafc900c6a0368daf9e",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "not-found: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7524,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:12:01.143Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-44eb162a2511871a69c4",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "not-found: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8008,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:12:08.686Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-e54604508a416713f088",
+          "file": "views.spec.ts",
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "sidebar: a rail of icons that the arrow button opens and closes, remembered across pages",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3534,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:12:16.705Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-00c4359990c9dbef0229",
+          "file": "views.spec.ts",
+          "line": 88,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "states.spec.ts",
+      "file": "states.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "infeasible: the preflight blocks a problem that is too large",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9104,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:12:22.711Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-aa54f2b0215880523c64",
+          "file": "states.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "infeasible: the server rejects the configuration (fake seed 999)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5302,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:12:33.955Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-9012dfcfc5310a0e8f9b",
+          "file": "states.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "failed run (fake seed 777): a sanitised error and a retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8186,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:12:39.285Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-795bf6d2d6af471f55fb",
+          "file": "states.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "timeout (fake seed 888 hangs, 10 s limit)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16938,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:12:47.489Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-c147b1e812a9b1fb9989",
+          "file": "states.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "cancel a run, then run the same settings again",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10821,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:13:04.449Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-f7fdb8b71e77b7f791f3",
+          "file": "states.spec.ts",
+          "line": 60,
+          "column": 1
+        },
+        {
+          "title": "a page refresh in the middle of a run resumes the live view",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17750,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:13:15.301Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-e0ab1d660b8a22b840ee",
+          "file": "states.spec.ts",
+          "line": 79,
+          "column": 1
+        },
+        {
+          "title": "a lost event stream reconnects, falls back to polling and still shows the result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20434,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:13:33.075Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "console-guard",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA5LThjMjVmMzAzL2V2ZW50cz9hZnRlcj0wIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOS04YzI1ZjMwMy9ldmVudHM/YWZ0ZXI9MCIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDktOGMyNWYzMDMvZXZlbnRzP2FmdGVyPTAiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOS04YzI1ZjMwMy9ldmVudHM/YWZ0ZXI9MCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDktOGMyNWYzMDMvZXZlbnRzP2FmdGVyPTAiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA5LThjMjVmMzAzL2V2ZW50cz9hZnRlcj0wIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDktOGMyNWYzMDMvZXZlbnRzP2FmdGVyPTAiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA5LThjMjVmMzAzL2V2ZW50cz9hZnRlcj0wIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOS04YzI1ZjMwMy9ldmVudHM/YWZ0ZXI9MCIKICB9Cl0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-4807adffc00b75fed7a7",
+          "file": "states.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "a double-click on submit starts exactly one run",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6299,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:13:53.532Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-f45af2028a8587665ec6",
+          "file": "states.spec.ts",
+          "line": 99,
+          "column": 1
+        },
+        {
+          "title": "offline: the app says so, blocks submit and recovers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4579,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:13:59.855Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-083ce6a7d7eea1672517",
+          "file": "states.spec.ts",
+          "line": 114,
+          "column": 1
+        },
+        {
+          "title": "API unreachable (requests aborted in the browser): an error state with a working retry",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6923,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('API unreachable')\nExpected: visible\nError: strict mode violation: getByText('API unreachable') resolved to 2 elements:\n    1) <span class=\"truncate\">API unreachable</span> aka getByTestId('sidebar').getByText('API unreachable')\n    2) <span class=\"truncate\">API unreachable</span> aka getByRole('banner').getByText('API unreachable')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('API unreachable') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('API unreachable')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('API unreachable')\nExpected: visible\nError: strict mode violation: getByText('API unreachable') resolved to 2 elements:\n    1) <span class=\"truncate\">API unreachable</span> aka getByTestId('sidebar').getByText('API unreachable')\n    2) <span class=\"truncate\">API unreachable</span> aka getByRole('banner').getByText('API unreachable')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('API unreachable') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('API unreachable')\u001b[22m\n\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts:134:51",
+                    "location": {
+                      "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts",
+                      "column": 51,
+                      "line": 134
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 132 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/lab'\u001b[39m)\n \u001b[90m 133 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'alert'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'The Portfolio Lab needs the API'\u001b[39m }))\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m40\u001b[39m_000 })\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 134 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[32m'API unreachable'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\n \u001b[90m     |\u001b[39m                                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 135 |\u001b[39m   \u001b[36mawait\u001b[39m shot(page\u001b[33m,\u001b[39m \u001b[32m'lab-api-unreachable'\u001b[39m)\n \u001b[90m 136 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39munroute(\u001b[32m'**/api/**'\u001b[39m)\n \u001b[90m 137 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'alert'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'The Portfolio Lab needs the API'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts",
+                        "column": 51,
+                        "line": 134
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('API unreachable')\nExpected: visible\nError: strict mode violation: getByText('API unreachable') resolved to 2 elements:\n    1) <span class=\"truncate\">API unreachable</span> aka getByTestId('sidebar').getByText('API unreachable')\n    2) <span class=\"truncate\">API unreachable</span> aka getByRole('banner').getByText('API unreachable')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('API unreachable') with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('API unreachable')\u001b[22m\n\n\n  132 |   await page.goto('/lab')\n  133 |   await expect(page.getByRole('alert').filter({ hasText: 'The Portfolio Lab needs the API' })).toBeVisible({ timeout: 40_000 })\n> 134 |   await expect(page.getByText('API unreachable')).toBeVisible()\n      |                                                   ^\n  135 |   await shot(page, 'lab-api-unreachable')\n  136 |   await page.unroute('**/api/**')\n  137 |   await page.getByRole('alert').filter({ hasText: 'The Portfolio Lab needs the API' }).getByRole('button').click()\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts:134:51"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:14:04.453Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\\test-failed-1.png"
+                    },
+                    {
+                      "name": "console-guard",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2hlYWx0aCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvaGVhbHRoIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9oZWFsdGgiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiCiAgfQpd"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts",
+                    "column": 51,
+                    "line": 134
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "be092eae759d55e55094-f64d4995f0fca36d07ba",
+          "file": "states.spec.ts",
+          "line": 129,
+          "column": 1
+        },
+        {
+          "title": "keyboard only: skip link, asset, K, submit and result tabs",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 22907,
+                  "error": {
+                    "message": "TimeoutError: locator.focus: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n",
+                    "stack": "TimeoutError: locator.focus: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts:150:15",
+                    "location": {
+                      "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts",
+                      "column": 15,
+                      "line": 150
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 148 |\u001b[39m\n \u001b[90m 149 |\u001b[39m   \u001b[36mconst\u001b[39m titan \u001b[33m=\u001b[39m asset(page\u001b[33m,\u001b[39m \u001b[32m'TITAN'\u001b[39m)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 150 |\u001b[39m   \u001b[36mawait\u001b[39m titan\u001b[33m.\u001b[39mfocus()\n \u001b[90m     |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 151 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mkeyboard\u001b[33m.\u001b[39mpress(\u001b[32m'Space'\u001b[39m)\n \u001b[90m 152 |\u001b[39m   \u001b[36mawait\u001b[39m expect(titan)\u001b[33m.\u001b[39mtoBeChecked()\n \u001b[90m 153 |\u001b[39m   \u001b[36mawait\u001b[39m holdings(page)\u001b[33m.\u001b[39mfocus()\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts",
+                        "column": 15,
+                        "line": 150
+                      },
+                      "message": "TimeoutError: locator.focus: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')\u001b[22m\n\n\n  148 |\n  149 |   const titan = asset(page, 'TITAN')\n> 150 |   await titan.focus()\n      |               ^\n  151 |   await page.keyboard.press('Space')\n  152 |   await expect(titan).toBeChecked()\n  153 |   await holdings(page).focus()\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts:150:15"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:14:14.070Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\states.spec.ts",
+                    "column": 15,
+                    "line": 150
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "be092eae759d55e55094-1ee50004bd8cea8d3427",
+          "file": "states.spec.ts",
+          "line": 141,
+          "column": 1
+        },
+        {
+          "title": "reduced motion: the hero shows the landed coins at once, without spinning",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7483,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:14:40.269Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-a95c806329d46bafded2",
+          "file": "states.spec.ts",
+          "line": 172,
+          "column": 1
+        },
+        {
+          "title": "no feasible QAOA sample (result mocked in the browser)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6870,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:14:50.126Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-4aedfb601c3b02d7da89",
+          "file": "states.spec.ts",
+          "line": 183,
+          "column": 1
+        },
+        {
+          "title": "loading, empty and stale states (responses delayed or mocked in the browser)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4226,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:14:57.018Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-3d035abac4326c43457f",
+          "file": "states.spec.ts",
+          "line": 197,
+          "column": 1
+        },
+        {
+          "title": "an experiment sweep runs and shows its cells",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-states",
+              "projectName": "chromium-states",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3665,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T08:15:01.258Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be092eae759d55e55094-b817d72316a2f4937d25",
+          "file": "states.spec.ts",
+          "line": 226,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-09T08:08:43.527Z",
+    "duration": 381593.50399999996,
+    "expected": 30,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

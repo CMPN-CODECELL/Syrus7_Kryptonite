@@ -121,13 +121,7 @@
           "deviceScaleFactor": 1,
           "isMobile": false,
           "hasTouch": false,
-          "defaultBrowserType": "chromium",
-          "launchOptions": {
-            "args": [
-              "--use-angle=swiftshader",
-              "--enable-unsafe-swiftshader"
-            ]
-          }
+          "defaultBrowserType": "chromium"
         },
         "dependencies": [],
         "ignoreSnapshots": false,
@@ -188,50 +182,50 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 68584,
+                  "duration": 20163,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
                   "steps": [
                     {
-                      "title": "the overview leads to the Lab",
-                      "duration": 5204
+                      "title": "the landing page leads to the dashboard, and the dashboard to the Lab",
+                      "duration": 2154
                     },
                     {
                       "title": "select assets",
-                      "duration": 529
+                      "duration": 2686
                     },
                     {
                       "title": "set constraints",
-                      "duration": 852
+                      "duration": 832
                     },
                     {
                       "title": "the preflight reflects the new problem",
-                      "duration": 222
+                      "duration": 155
                     },
                     {
                       "title": "submit and watch live progress",
-                      "duration": 1393
+                      "duration": 673
                     },
                     {
                       "title": "results",
-                      "duration": 48959
+                      "duration": 6279
                     },
                     {
                       "title": "compare QAOA with the classical baselines",
-                      "duration": 531
+                      "duration": 372
                     },
                     {
                       "title": "export the JSON report",
-                      "duration": 1001
+                      "duration": 603
                     },
                     {
                       "title": "reopen the run from History",
-                      "duration": 1315
+                      "duration": 659
                     }
                   ],
-                  "startTime": "2026-10-08T21:25:08.859Z",
+                  "startTime": "2026-10-09T10:12:43.800Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -254,7 +248,7 @@
       "specs": [
         {
           "title": "mobile LCP and CLS under the documented throttling profile, and control response time",
-          "ok": true,
+          "ok": false,
           "tags": [],
           "tests": [
             {
@@ -267,18 +261,211 @@
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 253460,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 331517,
+                  "error": {
+                    "message": "Error: CLS on / (preview-gzip)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0.1004\u001b[39m",
+                    "stack": "Error: CLS on / (preview-gzip)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0.1004\u001b[39m\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts:137:62",
+                    "location": {
+                      "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts",
+                      "column": 62,
+                      "line": 137
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 135 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m r \u001b[36mof\u001b[39m results\u001b[33m.\u001b[39mfilter((x) \u001b[33m=>\u001b[39m x\u001b[33m.\u001b[39menforced)) {\n \u001b[90m 136 |\u001b[39m     expect\u001b[33m.\u001b[39msoft(r\u001b[33m.\u001b[39mlcpMsMedian\u001b[33m,\u001b[39m \u001b[32m`LCP on ${r.route} (${r.target})`\u001b[39m)\u001b[33m.\u001b[39mtoBeLessThanOrEqual(\u001b[33mBUDGET\u001b[39m\u001b[33m.\u001b[39mlcpMs)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 137 |\u001b[39m     expect\u001b[33m.\u001b[39msoft(r\u001b[33m.\u001b[39mclsMax\u001b[33m,\u001b[39m \u001b[32m`CLS on ${r.route} (${r.target})`\u001b[39m)\u001b[33m.\u001b[39mtoBeLessThanOrEqual(\u001b[33mBUDGET\u001b[39m\u001b[33m.\u001b[39mcls)\n \u001b[90m     |\u001b[39m                                                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 138 |\u001b[39m   }\n \u001b[90m 139 |\u001b[39m   expect\u001b[33m.\u001b[39msoft(controls\u001b[33m.\u001b[39mdesktopMedianMs\u001b[33m,\u001b[39m \u001b[32m'control response on desktop'\u001b[39m)\u001b[33m.\u001b[39mtoBeLessThan(\u001b[33mBUDGET\u001b[39m\u001b[33m.\u001b[39minteractionMs)\n \u001b[90m 140 |\u001b[39m })\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts",
+                        "column": 62,
+                        "line": 137
+                      },
+                      "message": "Error: CLS on / (preview-gzip)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.1\u001b[39m\nReceived:    \u001b[31m0.1004\u001b[39m\n\n  135 |   for (const r of results.filter((x) => x.enforced)) {\n  136 |     expect.soft(r.lcpMsMedian, `LCP on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.lcpMs)\n> 137 |     expect.soft(r.clsMax, `CLS on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.cls)\n      |                                                              ^\n  138 |   }\n  139 |   expect.soft(controls.desktopMedianMs, 'control response on desktop').toBeLessThan(BUDGET.interactionMs)\n  140 | })\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts:137:62"
+                    },
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts",
+                        "column": 67,
+                        "line": 136
+                      },
+                      "message": "Error: LCP on /dashboard (preview-gzip)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m2500\u001b[39m\nReceived:    \u001b[31m3912\u001b[39m\n\n  134 |   )\n  135 |   for (const r of results.filter((x) => x.enforced)) {\n> 136 |     expect.soft(r.lcpMsMedian, `LCP on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.lcpMs)\n      |                                                                   ^\n  137 |     expect.soft(r.clsMax, `CLS on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.cls)\n  138 |   }\n  139 |   expect.soft(controls.desktopMedianMs, 'control response on desktop').toBeLessThan(BUDGET.interactionMs)\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts:136:67"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:26:20.462Z",
+                  "startTime": "2026-10-09T10:13:06.499Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-2.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-3.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-4.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-5.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-6.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-7.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-8.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-9.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-10.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-11.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-12.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-13.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-14.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-15.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-16.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-17.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-18.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-19.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-20.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-21.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-22.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-23.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-24.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-25.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-26.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-27.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-28.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-29.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\test-failed-30.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\perf.spec.ts",
+                    "column": 62,
+                    "line": 137
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "73ed389be8d3d6a89cdb-8cd0da9e8d444797260b",
@@ -295,41 +482,76 @@
       "line": 0,
       "specs": [
         {
-          "title": "overview: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
-          "ok": true,
+          "title": "landing: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": false,
           "tags": [],
           "tests": [
             {
-              "timeout": 180000,
+              "timeout": 120000,
               "annotations": [],
               "expectedStatus": "passed",
               "projectId": "chromium",
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 1,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 21665,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 2,
+                  "error": {
+                    "message": "Error: the API serves a recorded example run\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m",
+                    "stack": "Error: the API serves a recorded example run\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\views.spec.ts:46:66",
+                    "location": {
+                      "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\views.spec.ts",
+                      "column": 66,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m   \u001b[36mconst\u001b[39m r \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m'/api/example'\u001b[39m)\n \u001b[90m 45 |\u001b[39m   exampleId \u001b[33m=\u001b[39m ((\u001b[36mawait\u001b[39m r\u001b[33m.\u001b[39mjson()) \u001b[36mas\u001b[39m { run_id\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[36mnull\u001b[39m })\u001b[33m.\u001b[39mrun_id \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   expect(exampleId\u001b[33m,\u001b[39m \u001b[32m'the API serves a recorded example run'\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoBe(\u001b[32m''\u001b[39m)\n \u001b[90m    |\u001b[39m                                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m })\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m view \u001b[36mof\u001b[39m \u001b[33mVIEWS\u001b[39m) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\views.spec.ts",
+                        "column": 66,
+                        "line": 46
+                      },
+                      "message": "Error: the API serves a recorded example run\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"\"\u001b[39m\n\n  44 |   const r = await request.get('/api/example')\n  45 |   exampleId = ((await r.json()) as { run_id: string | null }).run_id ?? ''\n> 46 |   expect(exampleId, 'the API serves a recorded example run').not.toBe('')\n     |                                                                  ^\n  47 | })\n  48 |\n  49 | for (const view of VIEWS) {\n    at E:\\All projects\\QuantFolio\\frontend\\e2e\\views.spec.ts:46:66"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:30:33.977Z",
+                  "startTime": "2026-10-09T10:18:53.964Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\views-landing-screenshots--7c25d-without-horizontal-overflow-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "E:\\All projects\\QuantFolio\\.tmp\\pw-results\\views-landing-screenshots--7c25d-without-horizontal-overflow-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "E:\\All projects\\QuantFolio\\frontend\\e2e\\views.spec.ts",
+                    "column": 66,
+                    "line": 46
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
-          "id": "131fbee99f89d8203d70-2a328d6e25395b4b5271",
+          "id": "131fbee99f89d8203d70-cddc0cb0d53d1a104688",
           "file": "views.spec.ts",
-          "line": 41,
+          "line": 50,
           "column": 3
         },
         {
-          "title": "overview: axe finds no serious or critical issues",
+          "title": "landing: axe finds no serious or critical issues",
           "ok": true,
           "tags": [],
           "tests": [
@@ -341,25 +563,93 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 23839,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:30:55.726Z",
+                  "startTime": "2026-10-09T10:18:54.477Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
-          "id": "131fbee99f89d8203d70-59fe1856a4c87f8b71f9",
+          "id": "131fbee99f89d8203d70-6d12da268ea69c7c4714",
           "file": "views.spec.ts",
-          "line": 60,
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "dashboard: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:18:54.479Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-3bf53096acee0f2740e6",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "dashboard: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:18:54.480Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-48ce1f33f937f37c1686",
+          "file": "views.spec.ts",
+          "line": 69,
           "column": 3
         },
         {
@@ -368,32 +658,32 @@
           "tags": [],
           "tests": [
             {
-              "timeout": 180000,
+              "timeout": 120000,
               "annotations": [],
               "expectedStatus": "passed",
               "projectId": "chromium",
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 18562,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:31:19.598Z",
+                  "startTime": "2026-10-09T10:18:54.480Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-cda458d6de6c46b335c7",
           "file": "views.spec.ts",
-          "line": 41,
+          "line": 50,
           "column": 3
         },
         {
@@ -409,25 +699,25 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 30095,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:31:38.178Z",
+                  "startTime": "2026-10-09T10:18:54.481Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-2b5b2724558f91918208",
           "file": "views.spec.ts",
-          "line": 60,
+          "line": 69,
           "column": 3
         },
         {
@@ -436,32 +726,32 @@
           "tags": [],
           "tests": [
             {
-              "timeout": 180000,
+              "timeout": 120000,
               "annotations": [],
               "expectedStatus": "passed",
               "projectId": "chromium",
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 20980,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:32:08.292Z",
+                  "startTime": "2026-10-09T10:18:54.481Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-3fe064fd57e94997b927",
           "file": "views.spec.ts",
-          "line": 41,
+          "line": 50,
           "column": 3
         },
         {
@@ -477,25 +767,25 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 28308,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:32:29.299Z",
+                  "startTime": "2026-10-09T10:18:54.481Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-45e6a92053c277ccf9c2",
           "file": "views.spec.ts",
-          "line": 60,
+          "line": 69,
           "column": 3
         },
         {
@@ -504,32 +794,32 @@
           "tags": [],
           "tests": [
             {
-              "timeout": 180000,
+              "timeout": 120000,
               "annotations": [],
               "expectedStatus": "passed",
               "projectId": "chromium",
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 8350,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:32:57.623Z",
+                  "startTime": "2026-10-09T10:18:54.482Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-3922bcd71c77bdbdc995",
           "file": "views.spec.ts",
-          "line": 41,
+          "line": 50,
           "column": 3
         },
         {
@@ -545,25 +835,25 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 11704,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:33:05.995Z",
+                  "startTime": "2026-10-09T10:18:54.482Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-dd79b1f841bbb3040a07",
           "file": "views.spec.ts",
-          "line": 60,
+          "line": 69,
           "column": 3
         },
         {
@@ -572,32 +862,32 @@
           "tags": [],
           "tests": [
             {
-              "timeout": 180000,
+              "timeout": 120000,
               "annotations": [],
               "expectedStatus": "passed",
               "projectId": "chromium",
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 8146,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:33:17.717Z",
+                  "startTime": "2026-10-09T10:18:54.482Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-f1ec4d49d13af471eaa6",
           "file": "views.spec.ts",
-          "line": 41,
+          "line": 50,
           "column": 3
         },
         {
@@ -613,25 +903,93 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 11757,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:33:25.879Z",
+                  "startTime": "2026-10-09T10:18:54.482Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-7d01983b6394cd491f33",
           "file": "views.spec.ts",
-          "line": 60,
+          "line": 69,
+          "column": 3
+        },
+        {
+          "title": "guardrails: screenshots at 360/390/768/1280/1440 px without horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:18:54.482Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-6af5e562b9b685271d99",
+          "file": "views.spec.ts",
+          "line": 50,
+          "column": 3
+        },
+        {
+          "title": "guardrails: axe finds no serious or critical issues",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:18:54.482Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-3cafc900c6a0368daf9e",
+          "file": "views.spec.ts",
+          "line": 69,
           "column": 3
         },
         {
@@ -640,32 +998,32 @@
           "tags": [],
           "tests": [
             {
-              "timeout": 180000,
+              "timeout": 120000,
               "annotations": [],
               "expectedStatus": "passed",
               "projectId": "chromium",
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 7063,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:33:37.653Z",
+                  "startTime": "2026-10-09T10:18:54.482Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-44eb162a2511871a69c4",
           "file": "views.spec.ts",
-          "line": 41,
+          "line": 50,
           "column": 3
         },
         {
@@ -681,37 +1039,71 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 10938,
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:33:44.740Z",
+                  "startTime": "2026-10-09T10:18:54.483Z",
                   "annotations": [],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "131fbee99f89d8203d70-e54604508a416713f088",
           "file": "views.spec.ts",
-          "line": 60,
+          "line": 69,
           "column": 3
+        },
+        {
+          "title": "sidebar: a rail of icons that the arrow button opens and closes, remembered across pages",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:18:54.483Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "131fbee99f89d8203d70-00c4359990c9dbef0229",
+          "file": "views.spec.ts",
+          "line": 88,
+          "column": 1
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-08T21:25:07.651Z",
-    "duration": 529640.7440000001,
-    "expected": 14,
-    "skipped": 0,
-    "unexpected": 0,
+    "startTime": "2026-10-09T10:12:42.613Z",
+    "duration": 371966.267,
+    "expected": 1,
+    "skipped": 16,
+    "unexpected": 2,
     "flaky": 0
   }
 }

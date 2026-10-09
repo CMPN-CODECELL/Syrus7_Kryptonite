@@ -102,6 +102,16 @@ export const IconChevronDown = (p: IconProps) => (
     <path d="M6 9.5l6 6 6-6" />
   </Svg>
 )
+export const IconChevronLeft = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M14.5 6l-6 6 6 6" />
+  </Svg>
+)
+export const IconChevronRight = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M9.5 6l6 6-6 6" />
+  </Svg>
+)
 export const IconWifiOff = (p: IconProps) => (
   <Svg {...p}>
     <path d="M3 3l18 18M8.5 16.5a5 5 0 017 0M5 12.6a10 10 0 015.2-2.6M14.6 10.2A10 10 0 0119 12.6M2 9a15 15 0 015-2.7M12 4.5c3.8 0 7.3 1.6 10 4.5M12 20h.01" />
@@ -190,6 +200,12 @@ export const IconGrid = (p: IconProps) => (
     <rect x="13" y="4" width="7" height="7" rx="1.5" />
     <rect x="4" y="13" width="7" height="7" rx="1.5" />
     <rect x="13" y="13" width="7" height="7" rx="1.5" />
+  </Svg>
+)
+export const IconCoin = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <circle cx="12" cy="12" r="5" />
   </Svg>
 )
 export const IconCalendar = (p: IconProps) => (

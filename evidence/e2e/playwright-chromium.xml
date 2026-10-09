@@ -1,36 +1,347 @@
-<testsuites id="" name="" tests="14" failures="0" skipped="0" errors="0" time="529.640744">
-<testsuite name="journey.spec.ts" timestamp="2026-10-08T21:25:07.847Z" hostname="chromium" tests="1" failures="0" skipped="0" time="68.584" errors="0">
-<testcase name="primary journey: select, constrain, preflight, run, compare, export, reopen from History" classname="journey.spec.ts" time="68.584">
+<testsuites id="" name="" tests="19" failures="2" skipped="16" errors="0" time="371.966267">
+<testsuite name="journey.spec.ts" timestamp="2026-10-09T10:12:42.779Z" hostname="chromium" tests="1" failures="0" skipped="0" time="20.163" errors="0">
+<testcase name="primary journey: select, constrain, preflight, run, compare, export, reopen from History" classname="journey.spec.ts" time="20.163">
 </testcase>
 </testsuite>
-<testsuite name="perf.spec.ts" timestamp="2026-10-08T21:25:07.847Z" hostname="chromium" tests="1" failures="0" skipped="0" time="253.46" errors="0">
-<testcase name="mobile LCP and CLS under the documented throttling profile, and control response time" classname="perf.spec.ts" time="253.46">
+<testsuite name="perf.spec.ts" timestamp="2026-10-09T10:12:42.779Z" hostname="chromium" tests="1" failures="1" skipped="0" time="331.517" errors="0">
+<testcase name="mobile LCP and CLS under the documented throttling profile, and control response time" classname="perf.spec.ts" time="331.517">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-2.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-3.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-4.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-5.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-6.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-7.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-8.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-9.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-10.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-11.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-12.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-13.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-14.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-15.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-16.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-17.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-18.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-19.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-20.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-21.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-22.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-23.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-24.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-25.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-26.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-27.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-28.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-29.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-30.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\error-context.md]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\trace.zip]]
+]]>
+</system-out>
+<failure message="CLS on / (preview-gzip)" type="expect.toBeLessThanOrEqual">
+<![CDATA[  [chromium] › perf.spec.ts:117:1 › mobile LCP and CLS under the documented throttling profile, and control response time 
+
+    Error: CLS on / (preview-gzip)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.1
+    Received:    0.1004
+
+      135 |   for (const r of results.filter((x) => x.enforced)) {
+      136 |     expect.soft(r.lcpMsMedian, `LCP on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.lcpMs)
+    > 137 |     expect.soft(r.clsMax, `CLS on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.cls)
+          |                                                              ^
+      138 |   }
+      139 |   expect.soft(controls.desktopMedianMs, 'control response on desktop').toBeLessThan(BUDGET.interactionMs)
+      140 | })
+        at E:\All projects\QuantFolio\frontend\e2e\perf.spec.ts:137:62
+
+    Error: LCP on /dashboard (preview-gzip)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2500
+    Received:    3912
+
+      134 |   )
+      135 |   for (const r of results.filter((x) => x.enforced)) {
+    > 136 |     expect.soft(r.lcpMsMedian, `LCP on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.lcpMs)
+          |                                                                   ^
+      137 |     expect.soft(r.clsMax, `CLS on ${r.route} (${r.target})`).toBeLessThanOrEqual(BUDGET.cls)
+      138 |   }
+      139 |   expect.soft(controls.desktopMedianMs, 'control response on desktop').toBeLessThan(BUDGET.interactionMs)
+        at E:\All projects\QuantFolio\frontend\e2e\perf.spec.ts:136:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #9: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-9.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #10: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-10.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #11: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-11.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #12: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-12.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #13: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-13.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #14: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-14.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #15: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-15.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #16: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-16.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #17: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-17.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #18: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-18.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #19: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-19.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #20: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-20.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #21: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-21.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #22: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-22.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #23: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-23.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #24: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-24.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #25: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-25.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #26: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-26.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #27: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-27.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #28: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-28.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #29: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-29.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #30: screenshot (image/png) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-30.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\error-context.md
+
+    attachment #32: trace (application/zip) ────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
 </testcase>
 </testsuite>
-<testsuite name="views.spec.ts" timestamp="2026-10-08T21:25:07.847Z" hostname="chromium" tests="12" failures="0" skipped="0" time="201.407" errors="0">
-<testcase name="overview: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="21.665">
+<testsuite name="views.spec.ts" timestamp="2026-10-09T10:12:42.779Z" hostname="chromium" tests="17" failures="1" skipped="16" time="0.002" errors="0">
+<testcase name="landing: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="0.002">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\.tmp\pw-results\views-landing-screenshots--7c25d-without-horizontal-overflow-chromium\error-context.md]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\views-landing-screenshots--7c25d-without-horizontal-overflow-chromium\trace.zip]]
+]]>
+</system-out>
+<failure message="the API serves a recorded example run" type="expect.not.toBe">
+<![CDATA[  [chromium] › views.spec.ts:50:3 › landing: screenshots at 360/390/768/1280/1440 px without horizontal overflow 
+
+    Error: the API serves a recorded example run
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not ""
+
+      44 |   const r = await request.get('/api/example')
+      45 |   exampleId = ((await r.json()) as { run_id: string | null }).run_id ?? ''
+    > 46 |   expect(exampleId, 'the API serves a recorded example run').not.toBe('')
+         |                                                                  ^
+      47 | })
+      48 |
+      49 | for (const view of VIEWS) {
+        at E:\All projects\QuantFolio\frontend\e2e\views.spec.ts:46:66
+
+    Error Context: ..\..\.tmp\pw-results\views-landing-screenshots--7c25d-without-horizontal-overflow-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\views-landing-screenshots--7c25d-without-horizontal-overflow-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.tmp\pw-results\views-landing-screenshots--7c25d-without-horizontal-overflow-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
 </testcase>
-<testcase name="overview: axe finds no serious or critical issues" classname="views.spec.ts" time="23.839">
+<testcase name="landing: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="lab: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="18.562">
+<testcase name="dashboard: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="lab: axe finds no serious or critical issues" classname="views.spec.ts" time="30.095">
+<testcase name="dashboard: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="run: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="20.98">
+<testcase name="lab: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="run: axe finds no serious or critical issues" classname="views.spec.ts" time="28.308">
+<testcase name="lab: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="experiments: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="8.35">
+<testcase name="run: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="experiments: axe finds no serious or critical issues" classname="views.spec.ts" time="11.704">
+<testcase name="run: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="history: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="8.146">
+<testcase name="experiments: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="history: axe finds no serious or critical issues" classname="views.spec.ts" time="11.757">
+<testcase name="experiments: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="not-found: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="7.063">
+<testcase name="history: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="not-found: axe finds no serious or critical issues" classname="views.spec.ts" time="10.938">
+<testcase name="history: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="guardrails: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="guardrails: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="not-found: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="not-found: axe finds no serious or critical issues" classname="views.spec.ts">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="sidebar: a rail of icons that the arrow button opens and closes, remembered across pages" classname="views.spec.ts">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
 </testsuites>

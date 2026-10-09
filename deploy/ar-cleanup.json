@@ -1,0 +1,12 @@
+[
+  {
+    "name": "keep-recent-for-rollback",
+    "action": { "type": "Keep" },
+    "mostRecentVersions": { "keepCount": 10 }
+  },
+  {
+    "name": "delete-old",
+    "action": { "type": "Delete" },
+    "condition": { "tagState": "any", "olderThan": "30d" }
+  }
+]

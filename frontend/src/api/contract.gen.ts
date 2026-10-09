@@ -5,6 +5,8 @@
 export const SCHEMA_VERSION = "1.0" as const
 export const DISCLAIMER = "Research demonstration — not investment advice."
 
+export const CANDLE_INTERVAL_VALUES = ["5m","15m","1d"] as const
+export type CandleInterval = (typeof CANDLE_INTERVAL_VALUES)[number]
 export const CONFLICT_KIND_VALUES = ["proven_infeasible","preflight_conflict","resource_limit"] as const
 export type ConflictKind = (typeof CONFLICT_KIND_VALUES)[number]
 export const DATASET_LABEL_VALUES = ["downloaded historical","stale cache","uploaded","synthetic test"] as const
@@ -23,12 +25,16 @@ export const JOB_KIND_VALUES = ["run","experiment"] as const
 export type JobKind = (typeof JOB_KIND_VALUES)[number]
 export const JOB_STATE_VALUES = ["queued","running","succeeded","failed","cancelled","timed_out"] as const
 export type JobState = (typeof JOB_STATE_VALUES)[number]
+export const LIVE_STATUS_VALUES = ["live","delayed","closed","connecting","offline","off"] as const
+export type LiveStatus = (typeof LIVE_STATUS_VALUES)[number]
 export const NOISE_MODE_VALUES = ["ideal","fake_backend"] as const
 export type NoiseMode = (typeof NOISE_MODE_VALUES)[number]
 export const OPTIMIZER_VALUES = ["COBYLA","SPSA"] as const
 export type Optimizer = (typeof OPTIMIZER_VALUES)[number]
 export const PRESET_NAME_VALUES = ["quick","balanced","research","custom"] as const
 export type PresetName = (typeof PRESET_NAME_VALUES)[number]
+export const QUOTE_KIND_VALUES = ["index","stock"] as const
+export type QuoteKind = (typeof QUOTE_KIND_VALUES)[number]
 export const SCREENING_RULE_VALUES = ["none","top_sharpe_train","min_variance_train"] as const
 export type ScreeningRule = (typeof SCREENING_RULE_VALUES)[number]
 export const SECTOR_CAP_BASIS_VALUES = ["count","weight"] as const
@@ -70,6 +76,28 @@ export interface BaselineSettings {
   sa_restarts: number
   sa_sweeps: number
   simulated_annealing: boolean
+}
+
+/** One price bar: open, high, low and close over one interval. */
+export interface Candle {
+  c: number
+  h: number
+  l: number
+  o: number
+  t: string
+}
+
+/** `/api/market/candles` body. Display only: candles never enter a run, and none are ever made up. */
+export interface CandlesResponse {
+  as_of: string | null
+  candles: Array<Candle>
+  interval: CandleInterval
+  label: string
+  prev_close: number | null
+  source: string | null
+  status: LiveStatus
+  symbol: string
+  updated_at: string | null
 }
 
 export interface Capabilities {
@@ -340,6 +368,31 @@ export interface JobStatus {
   started_at: string | null
   status: JobState
   timeout_seconds: number | null
+}
+
+/** One live price for the ticker. Display only: live prices never enter a run. */
+export interface LiveQuote {
+  at: string | null
+  change: number | null
+  change_pct: number | null
+  delayed: boolean
+  kind: QuoteKind
+  label: string
+  prev_close: number | null
+  price: number | null
+  symbol: string
+}
+
+/** `/api/market/live` body and each `/api/market/stream` frame (a `delta` frame lists only changed quotes). */
+export interface LiveQuotesResponse {
+  as_of: string | null
+  market_open: boolean
+  note: string | null
+  quotes: Array<LiveQuote>
+  seq: number
+  source: string
+  status: LiveStatus
+  updated_at: string | null
 }
 
 /** Bounded lot/weight mode. Weight of asset i = n_i / total_lots, n_i in [0, max_lots_per_asset] encoded with binary bits. Lot units are modelling choices (fractions of the budget), not exchange lot sizes. */
@@ -693,6 +746,28 @@ export interface BaselineSettingsInput {
   simulated_annealing?: boolean
 }
 
+/** One price bar: open, high, low and close over one interval. */
+export interface CandleInput {
+  c: number
+  h: number
+  l: number
+  o: number
+  t: string
+}
+
+/** `/api/market/candles` body. Display only: candles never enter a run, and none are ever made up. */
+export interface CandlesResponseInput {
+  as_of?: string | null
+  candles?: Array<CandleInput>
+  interval: CandleInterval
+  label: string
+  prev_close?: number | null
+  source?: string | null
+  status: LiveStatus
+  symbol: string
+  updated_at?: string | null
+}
+
 export interface CapabilitiesInput {
   depths: Array<number>
   fake_backends: Array<string>
@@ -961,6 +1036,31 @@ export interface JobStatusInput {
   started_at?: string | null
   status: JobState
   timeout_seconds?: number | null
+}
+
+/** One live price for the ticker. Display only: live prices never enter a run. */
+export interface LiveQuoteInput {
+  at?: string | null
+  change?: number | null
+  change_pct?: number | null
+  delayed?: boolean
+  kind: QuoteKind
+  label: string
+  prev_close?: number | null
+  price?: number | null
+  symbol: string
+}
+
+/** `/api/market/live` body and each `/api/market/stream` frame (a `delta` frame lists only changed quotes). */
+export interface LiveQuotesResponseInput {
+  as_of?: string | null
+  market_open?: boolean
+  note?: string | null
+  quotes?: Array<LiveQuoteInput>
+  seq?: number
+  source: string
+  status: LiveStatus
+  updated_at?: string | null
 }
 
 /** Bounded lot/weight mode. Weight of asset i = n_i / total_lots, n_i in [0, max_lots_per_asset] encoded with binary bits. Lot units are modelling choices (fractions of the budget), not exchange lot sizes. */
@@ -1494,6 +1594,20 @@ export const BOUNDS = {
     },
     "timeout_seconds": {
       "integer": true
+    }
+  },
+  "LiveQuote": {
+    "delayed": {
+      "default": false
+    }
+  },
+  "LiveQuotesResponse": {
+    "market_open": {
+      "default": false
+    },
+    "seq": {
+      "integer": true,
+      "default": 0
     }
   },
   "LotConfig": {

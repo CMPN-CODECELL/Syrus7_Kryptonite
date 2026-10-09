@@ -2,8 +2,8 @@ import { useId, type ReactNode } from 'react'
 import { Disclosure } from '../ui'
 
 /**
- * Every chart ships with a plain-language summary and its data as a table, so the figure is never the
- * only way to read a result (screen readers, keyboard users, copy/paste).
+ * Every chart ships with a plain-language summary (read out by screen readers, hidden on screen to keep the page
+ * light) and its data as a table, so the figure is never the only way to read a result.
  */
 export function ChartFrame({
   title,
@@ -35,7 +35,7 @@ export function ChartFrame({
         </h3>
         {aside ? <div className="flex items-center gap-2">{aside}</div> : null}
       </div>
-      <p id={`${id}-s`} className="mt-1 max-w-prose text-sm leading-relaxed text-muted">
+      <p id={`${id}-s`} className="sr-only">
         {summary}
       </p>
       {legend ? <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-2">{legend}</div> : null}

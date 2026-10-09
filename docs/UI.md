@@ -2,9 +2,10 @@
 
 React 19 + TypeScript single-page app in `frontend/`, built with Vite and Tailwind CSS v4. It talks only to the
 QuantFolio API (`/api/*`, contract in `docs/CONTRACT.md`, generated types in `frontend/src/api/contract.gen.ts`).
-Everything the UI shows comes from the API. The app has no sign-in, pricing, testimonials, invented tickers, prices
-or performance. Results produced by the fake pipeline or mocked in the browser exist only in the e2e evidence and
-are labelled as such in file names and test titles.
+Everything the UI shows comes from the API. The app has no pricing, testimonials, invented tickers, prices or
+performance, and the local app has no sign-in (the cloud deployment adds one, see `docs/GCP_DEPLOYMENT.md`). Results
+produced by the fake pipeline or mocked in the browser exist only in the e2e evidence and are labelled as such in file
+names and test titles.
 
 ## Stack
 
@@ -13,21 +14,22 @@ are labelled as such in file names and test titles.
 | UI | React 19.3, react-router 8 (data router, one lazy chunk per workspace view) |
 | Server state | TanStack Query 5; live runs use server-sent events with automatic fallback to polling (`src/api/events.ts`) |
 | Charts | Recharts 3. Every chart has a one-sentence text summary and a data table (`src/components/charts`) |
-| Hero | `@react-three/fiber` + three 0.182.0 (pinned), lazy-loaded; static SVG fallback for reduced motion, no WebGL or errors |
+| Hero | `components/hero/QubitCoins.tsx`: plain CSS 3D coins that replay a stored run; no WebGL and no extra chunk. Reduced motion shows the landed coins |
+| Live prices | `lib/live.ts`: one shared `/api/market/stream` connection for the whole app, polling `/api/market/live` every second after three failed connections. `components/market/` holds the ticker and the candlestick chart (plain SVG) |
 | Styling | Tailwind CSS v4 with the design tokens below (`src/styles.css`) |
 | Tests | Vitest + Testing Library (unit), Playwright + axe-core (e2e and accessibility) |
 
 ## Fonts and licences
 
-All fonts are self-hosted through Fontsource and imported in `src/main.tsx`; no request leaves the origin.
+One family is used for everything (headings, text, numbers, ids and code), self-hosted through Fontsource and
+imported in `src/main.tsx`; no request leaves the origin.
 
 | Role | Family | Package | Licence |
 | --- | --- | --- | --- |
-| Display (headings) | Fraunces Variable, optical-size axis | `@fontsource-variable/fraunces` ^5.3.0 (`opsz.css`) | SIL OFL 1.1 |
-| Text | Inter Variable | `@fontsource-variable/inter` ^5.3.0 | SIL OFL 1.1 |
-| Numbers, ids, code | JetBrains Mono Variable | `@fontsource-variable/jetbrains-mono` ^5.3.0 | SIL OFL 1.1 |
+| All text | Plus Jakarta Sans Variable | `@fontsource-variable/plus-jakarta-sans` ^5.3.0 | SIL OFL 1.1 |
 
-Fallback stacks: Georgia / Segoe UI, system-ui / Cascadia Mono, Consolas. Fonts use `font-display: swap`.
+Numbers line up with the `tabular` class (tabular figures). Fallback stack: Segoe UI, system-ui. The font uses
+`font-display: swap`.
 
 ## Design tokens (`src/styles.css`, Tailwind `@theme`)
 
@@ -49,16 +51,23 @@ Fallback stacks: Georgia / Segoe UI, system-ui / Cascadia Mono, Consolas. Fonts 
 
 | Route | View | What it shows |
 | --- | --- | --- |
-| `/` | Overview | Headline, workflow, and the recorded example run (`/api/example`) replayed from disk. The hero is a conceptual 3D motif with the caption "Conceptual illustration … not a quantum circuit state or evidence of computation." It falls back to a static SVG |
+| `/` | Landing | Headline, the steps with an "Explained simply" card (picking a team with pocket money; a qubit as a buy/skip coin), and the recorded example run (`/api/example`). The hero card shows live NIFTY 50 candles, then replays that run: eight coins spin and land on 1 (buy) or 0 (skip), with the gap to the best answer. Its caption names the stored run it replays |
+| `/dashboard` | Dashboard | Five key numbers (live NIFTY 50 among them), the latest result in plain words, recent runs and shortcuts into the Lab |
 | `/lab` | Portfolio Lab | Presets, asset picker (search, sector filter, selected-only), risk and budget, holdings K, sector caps, target return, transaction costs, date split, advanced settings; live preflight (qubits, depth, shots, memory and runtime estimates, blocking issues first) with a sticky submit |
-| `/runs/:id` (run) | Run | Live progress (stages with durations, evaluation counter, convergence chart, worker log, cancel), then the result tabs: **Portfolio** (holdings in rupees, sector chart, costs, constraint residuals), **Comparison** (QAOA vs exact, relaxation, annealing, greedy; frontier; held-out test), **QAOA details** (convergence, sample distribution, noise), **Data & provenance** (dataset, software, seeds, config; HTML/JSON/CSV downloads). Failed, cancelled, timed-out and infeasible runs get their own panel with "Run the same settings again" |
+| `/runs/:id` (run) | Run | Live progress (stages with durations, evaluation counter, convergence chart, worker log, cancel), then the result tabs: **Portfolio** (holdings in rupees, sector chart, costs, constraint residuals), **Comparison** (QAOA vs exact, relaxation, annealing, greedy; frontier; held-out test), **QAOA details** (circuit diagram with a depth p 1/2/3 toggle, convergence, sample distribution, noise), **Data & provenance** (dataset, software, seeds, config; HTML/JSON/CSV downloads). Failed, cancelled, timed-out and infeasible runs get their own panel with "Run the same settings again" |
 | `/runs/:id` (experiment) | Experiment result | Factor sweep summary, one chart per metric with its table, per-cell table |
 | `/experiments` | Experiment Lab | Sweep factor, levels, seeds and budget with a visible total cost |
 | `/history` | History | Every stored run and experiment with status and kind filters |
-| `*` | Not found | Link back to the overview |
+| `/guardrails` | Guardrails | The limits the project keeps to, grouped by family, each with where it is enforced |
+| `*` | Not found | Link back to the dashboard |
 
 Every view has its own error boundary (`ViewError`), so a crash keeps the header, navigation and footer. A failed
-chunk download offers a reload. The 3D hero has its own boundary and falls back to the SVG.
+chunk download offers a reload.
+
+Shared chrome: a dark market ticker on top of every page (status pill: Live, Delayed, Market closed, Connecting,
+Offline, or "Last close" with the date when live prices are off or Yahoo is unreachable; prices scroll and pause on
+hover or focus), then the header, and in the workspace a rail that opens on hover or with its arrow. Charts and page backgrounds have no grid lines. Cards are compact: key/value lists use two columns,
+long tables show the first rows with a "Show all" control, and downloads sit in the run toolbar.
 
 ## States and how they are tested
 
@@ -72,7 +81,7 @@ chunk download offers a reload. The 3D hero has its own boundary and falls back 
 | Stale data | Amber notice and "(stale)" data badge | `lab-stale-mocked.png` (data status mocked in the browser) | states: loading, empty and stale |
 | Offline | Notice, submit blocked, recovers on reconnect | `lab-offline.png` | states: offline |
 | Live, cancel, timeout | Progress view, cancel dialog, time limit | `run-in-progress.png`, `run-cancelled.png`, `run-timed-out.png` | states: cancel, refresh mid-run, lost stream, timeout (fake seed 888) |
-| Reduced motion / no WebGL | Still SVG hero | `overview-reduced-motion.png`, `overview-no-webgl.png` | states: reduced motion; WebGL unavailable |
+| Reduced motion | The hero coins show where they landed, without spinning | `landing-reduced-motion.png` | states: reduced motion |
 
 ## Running it
 
@@ -104,7 +113,7 @@ QF_E2E_TAG=webkit          npx playwright test --project=webkit            # jou
 ```
 
 Run one suite at a time with one worker (the config sets `workers: 1`). Stop the previews before `npm run build`:
-on Windows, `vite preview` can keep a handle on `dist/assets/HeroScene-*.js` after an aborted request, and the build
+on Windows, `vite preview` can keep a handle on a file in `dist/assets/` after an aborted request, and the build
 then fails with `EPERM`.
 
 ## Console and network guard
@@ -124,12 +133,8 @@ cause the failure on purpose:
 - the lost-stream test aborts `/api/runs/<id>/events?after=N` in the browser;
 - the API-unreachable test aborts every `/api/` request.
 
-Chromium needs no allow-list: it runs with `--use-angle=swiftshader --enable-unsafe-swiftshader`. That avoids the
-headless "GPU stall due to ReadPixels" warnings, and the hero still renders in WebGL. Firefox has a two-entry list
-(`BROWSER_NOISE` in `e2e/helpers.ts`) for diagnostics its own WebGL implementation prints. One is "WebGL context was
-lost", logged when react-three-fiber releases the hero's context on unmount (on purpose, to free GPU memory). The other
-is a one-off "drawElementsInstanced: Drawing to a destination rect smaller than the viewport rect" while the canvas
-resizes. Allowed findings are still counted in the log. Each test appends one JSON
+No browser needs an allow-list: the hero is plain CSS and SVG, so `BROWSER_NOISE` in `e2e/helpers.ts` is empty.
+Allowed findings are still counted in the log. Each test appends one JSON
 line to `evidence/e2e/console-guard-<tag>.jsonl`; `e2e/global-setup.ts` clears that file when a run starts.
 
 ## Test results (final runs, 2026-10-09)
@@ -168,8 +173,8 @@ Budget: LCP ≤ 2500 ms, CLS ≤ 0.1, control response < 100 ms. Results from th
 | API-served (8101), same-origin start | `/lab` | 2256 ms | 2256 / 2236 / 2544 | 0.002 | no, recorded |
 
 - The LCP element is the intro paragraph, and FCP equals LCP, so LCP is first paint: the entry chunk (131 kB gzip),
-  the CSS and the Inter font. The 3D hero chunk is lazy-loaded and is not needed for first paint. Transfer per cold
-  load is 629 kB for `/` (including the hero) and 402 kB for `/lab`.
+  the CSS and the font. These numbers were measured with the earlier WebGL hero; the hero is now plain CSS inside the
+  entry chunk, so `/` loads less than the 629 kB recorded then (402 kB for `/lab`).
 - The API-served numbers are slower only in a fresh tab. The API sends `Cross-Origin-Opener-Policy: same-origin`, so
   Chromium moves a fresh navigation into a new renderer process, which costs about 2.4 s here. Starting from a page
   that is already on the API origin (the same-origin-start rows first open `/favicon.svg` there) removes that cost, and the same build is then within
@@ -196,10 +201,8 @@ From the final `npm run build` (Vite, minified):
 | `Experiments-*.js` | 8.65 kB | 3.47 kB | `/experiments` |
 | `History-*.js` | 5.37 kB | 2.20 kB | `/history` |
 | `NotFound-*.js` | 0.62 kB | 0.42 kB | unknown routes |
-| `HeroScene-*.js` (three + react-three-fiber) | 891.90 kB | 239.54 kB | `/` after first paint, only with WebGL and motion allowed |
 
-Fonts are subset WOFF2 files that load per unicode range; the largest is Inter latin-ext at 85.06 kB, and the Latin
-subsets used by English text are Inter 48.25 kB, Fraunces 67.30 kB and JetBrains Mono 40.40 kB.
+Fonts: Plus Jakarta Sans only, as subset WOFF2 files that load per unicode range.
 
 ## Known defects and limits
 
@@ -211,8 +214,6 @@ Known and left as they are, each judged harmless or outside the frontend:
 - **Run labels from the server wrap mid-token.** Long run labels such as "… depth-1 QAOA" can break as "depth-/1" at
   360 px, and the run heading can break after the hyphen at 1280 px too. Nothing overflows.
 - **Experiment metric labels wrap at 1280.** Long metric names on the experiment result charts take two lines.
-- **Hero motif.** At 360–390 px the conceptual hero is small and its tiles are hard to read, and tiles near the
-  canvas edge are clipped by the canvas. It is decoration with a "conceptual illustration" caption, not data.
 - **Wide tables scroll at narrow widths.** The comparison, sample and holdings tables keep all their columns and
   scroll inside their card at 360–390 px, with a "Scroll for more columns →" hint. The page itself never scrolls
   sideways (checked at 360/390/768/1280/1440).
@@ -224,8 +225,6 @@ Known and left as they are, each judged harmless or outside the frontend:
 - **API-served pages are slower in fresh headless loads.** The API sends `Cross-Origin-Opener-Policy: same-origin`,
   and Chromium swaps to a new renderer on a fresh navigation (~2.4 s here). This is measured and reported, not
   enforced; see Performance.
-- **Firefox WebGL diagnostics are allowed.** Two Firefox-only console warnings from its WebGL implementation are on
-  the guard's allow-list (see the console and network guard).
 - **`vite preview` file lock on Windows.** Stop the previews before rebuilding (see Running it).
 - **`RunResultView.tsx` formatting.** One accidental prettier pass changed line breaks in this file (no behaviour
   change); it was reformatted to the project style, so only some JSX wrapping differs.

@@ -7,7 +7,7 @@ import Landing from './views/Landing'
 // Each view has its own error boundary, so a crash in one view keeps the header, navigation and footer.
 const view = { ErrorBoundary: ViewError }
 
-// Two shells: the public landing page (top bar, no sidebar) and the app (sidebar, breadcrumb, guided steps).
+// Two shells: the public landing page (top bar, no sidebar) and the app (sidebar and breadcrumb).
 // The landing page ships in the entry chunk for a fast first paint; the app views are code-split and fetched on navigation.
 const router = createBrowserRouter([
   {

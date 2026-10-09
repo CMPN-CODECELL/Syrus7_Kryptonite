@@ -1,0 +1,279 @@
+<testsuites id="" name="" tests="34" failures="1" skipped="0" errors="3" time="381.59350399999994">
+<testsuite name="journey.spec.ts" timestamp="2026-10-09T08:08:43.657Z" hostname="chromium" tests="1" failures="0" skipped="0" time="26.584" errors="1">
+<testcase name="primary journey: select, constrain, preflight, run, compare, export, reopen from History" classname="journey.spec.ts" time="26.584">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\.tmp\pw-results\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\error-context.md]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\trace.zip]]
+]]>
+</system-out>
+<error message="locator.check: Timeout 15000ms exceeded." type="TimeoutError">
+<![CDATA[  [chromium] › journey.spec.ts:6:1 › primary journey: select, constrain, preflight, run, compare, export, reopen from History › select assets 
+
+    TimeoutError: locator.check: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')
+
+
+      23 |     await expect(qubits).toHaveText(/\d+/)
+      24 |     qubitsBefore = (await qubits.textContent()) ?? ''
+    > 25 |     await asset(page, 'TITAN').check()
+         |                                ^
+      26 |     await expect(asset(page, 'TITAN')).toBeChecked()
+      27 |     await expect(page.getByTestId('selected-count')).toContainText('9 of 50 selected')
+      28 |   })
+        at E:\All projects\QuantFolio\frontend\e2e\journey.spec.ts:25:32
+        at E:\All projects\QuantFolio\frontend\e2e\journey.spec.ts:21:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\.tmp\pw-results\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.tmp\pw-results\journey-primary-journey-se-2809a--export-reopen-from-History-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="perf.spec.ts" timestamp="2026-10-09T08:08:43.657Z" hostname="chromium" tests="1" failures="0" skipped="0" time="9.322" errors="1">
+<testcase name="mobile LCP and CLS under the documented throttling profile, and control response time" classname="perf.spec.ts" time="9.322">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\error-context.md]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\trace.zip]]
+]]>
+</system-out>
+<error message="page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5202/" type="Error">
+<![CDATA[  [chromium] › perf.spec.ts:117:1 › mobile LCP and CLS under the documented throttling profile, and control response time 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5202/
+    Call log:
+      - navigating to "http://127.0.0.1:5202/", waiting until "load"
+
+
+      70 |     }).observe({ type: 'layout-shift', buffered: true })
+      71 |   })
+    > 72 |   await page.goto(url, { waitUntil: 'load', timeout: 90_000 })
+         |              ^
+      73 |   await page.waitForLoadState('networkidle', { timeout: 60_000 }).catch(() => undefined)
+      74 |   await page.waitForTimeout(3_000)
+      75 |   const v = await page.evaluate(() => {
+        at measure (E:\All projects\QuantFolio\frontend\e2e\perf.spec.ts:72:14)
+        at E:\All projects\QuantFolio\frontend\e2e\perf.spec.ts:123:48
+
+    Error: browser errors, warnings or failed requests that this test did not provoke
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "kind": "requestfailed",
+    +     "text": "net::ERR_CONNECTION_REFUSED GET http://127.0.0.1:5202/",
+    +     "url": "http://127.0.0.1:5202/",
+    +   },
+    + ]
+
+       at helpers.ts:122
+
+      120 |       appendFileSync(evidencePath('e2e', `console-guard-${TAG}.jsonl`), JSON.stringify(record) + '\n')
+      121 |       if (findings.length) await testInfo.attach('console-guard', { body: JSON.stringify(findings, null, 2), contentType: 'application/json' })
+    > 122 |       expect(unexpected, 'browser errors, warnings or failed requests that this test did not provoke').toEqual([])
+          |                                                                                                        ^
+      123 |     },
+      124 |     { auto: true },
+      125 |   ],
+        at Object.base.extend.guard.auto (E:\All projects\QuantFolio\frontend\e2e\helpers.ts:122:104)
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.tmp\pw-results\perf-mobile-LCP-and-CLS-un-04380-e-and-control-response-time-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="views.spec.ts" timestamp="2026-10-09T08:08:43.657Z" hostname="chromium" tests="17" failures="0" skipped="0" time="172.05" errors="0">
+<testcase name="landing: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="13.165">
+</testcase>
+<testcase name="landing: axe finds no serious or critical issues" classname="views.spec.ts" time="15.546">
+</testcase>
+<testcase name="dashboard: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="9.948">
+</testcase>
+<testcase name="dashboard: axe finds no serious or critical issues" classname="views.spec.ts" time="10.542">
+</testcase>
+<testcase name="lab: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="8.725">
+</testcase>
+<testcase name="lab: axe finds no serious or critical issues" classname="views.spec.ts" time="12.728">
+</testcase>
+<testcase name="run: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="12.098">
+</testcase>
+<testcase name="run: axe finds no serious or critical issues" classname="views.spec.ts" time="20.964">
+</testcase>
+<testcase name="experiments: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="6.224">
+</testcase>
+<testcase name="experiments: axe finds no serious or critical issues" classname="views.spec.ts" time="9.008">
+</testcase>
+<testcase name="history: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="6.504">
+</testcase>
+<testcase name="history: axe finds no serious or critical issues" classname="views.spec.ts" time="9.232">
+</testcase>
+<testcase name="guardrails: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="6.268">
+</testcase>
+<testcase name="guardrails: axe finds no serious or critical issues" classname="views.spec.ts" time="12.032">
+</testcase>
+<testcase name="not-found: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="7.524">
+</testcase>
+<testcase name="not-found: axe finds no serious or critical issues" classname="views.spec.ts" time="8.008">
+</testcase>
+<testcase name="sidebar: a rail of icons that the arrow button opens and closes, remembered across pages" classname="views.spec.ts" time="3.534">
+</testcase>
+</testsuite>
+<testsuite name="states.spec.ts" timestamp="2026-10-09T08:08:43.657Z" hostname="chromium-states" tests="15" failures="1" skipped="0" time="151.487" errors="1">
+<testcase name="infeasible: the preflight blocks a problem that is too large" classname="states.spec.ts" time="9.104">
+</testcase>
+<testcase name="infeasible: the server rejects the configuration (fake seed 999)" classname="states.spec.ts" time="5.302">
+</testcase>
+<testcase name="failed run (fake seed 777): a sanitised error and a retry" classname="states.spec.ts" time="8.186">
+</testcase>
+<testcase name="timeout (fake seed 888 hangs, 10 s limit)" classname="states.spec.ts" time="16.938">
+</testcase>
+<testcase name="cancel a run, then run the same settings again" classname="states.spec.ts" time="10.821">
+</testcase>
+<testcase name="a page refresh in the middle of a run resumes the live view" classname="states.spec.ts" time="17.75">
+</testcase>
+<testcase name="a lost event stream reconnects, falls back to polling and still shows the result" classname="states.spec.ts" time="20.434">
+</testcase>
+<testcase name="a double-click on submit starts exactly one run" classname="states.spec.ts" time="6.299">
+</testcase>
+<testcase name="offline: the app says so, blocks submit and recovers" classname="states.spec.ts" time="4.579">
+</testcase>
+<testcase name="API unreachable (requests aborted in the browser): an error state with a working retry" classname="states.spec.ts" time="6.923">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\.tmp\pw-results\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\test-failed-1.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\error-context.md]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\trace.zip]]
+]]>
+</system-out>
+<failure message="expect(locator).toBeVisible() failed" type="expect.toBeVisible">
+<![CDATA[  [chromium-states] › states.spec.ts:129:1 › API unreachable (requests aborted in the browser): an error state with a working retry 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('API unreachable')
+    Expected: visible
+    Error: strict mode violation: getByText('API unreachable') resolved to 2 elements:
+        1) <span class="truncate">API unreachable</span> aka getByTestId('sidebar').getByText('API unreachable')
+        2) <span class="truncate">API unreachable</span> aka getByRole('banner').getByText('API unreachable')
+
+    Call log:
+      - Expect "toBeVisible" getByText('API unreachable') with timeout 15000ms
+      - waiting for getByText('API unreachable')
+
+
+      132 |   await page.goto('/lab')
+      133 |   await expect(page.getByRole('alert').filter({ hasText: 'The Portfolio Lab needs the API' })).toBeVisible({ timeout: 40_000 })
+    > 134 |   await expect(page.getByText('API unreachable')).toBeVisible()
+          |                                                   ^
+      135 |   await shot(page, 'lab-api-unreachable')
+      136 |   await page.unroute('**/api/**')
+      137 |   await page.getByRole('alert').filter({ hasText: 'The Portfolio Lab needs the API' }).getByRole('button').click()
+        at E:\All projects\QuantFolio\frontend\e2e\states.spec.ts:134:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\.tmp\pw-results\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.tmp\pw-results\states-API-unreachable-req-6f4e4--state-with-a-working-retry-chromium-states\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+</testcase>
+<testcase name="keyboard only: skip link, asset, K, submit and result tabs" classname="states.spec.ts" time="22.907">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\.tmp\pw-results\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\test-failed-1.png]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\error-context.md]]
+
+[[ATTACHMENT|..\..\.tmp\pw-results\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\trace.zip]]
+]]>
+</system-out>
+<error message="locator.focus: Timeout 15000ms exceeded." type="TimeoutError">
+<![CDATA[  [chromium-states] › states.spec.ts:141:1 › keyboard only: skip link, asset, K, submit and result tabs 
+
+    TimeoutError: locator.focus: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByTestId('asset-list').locator('li').filter({ has: locator('span.font-mono').filter({ hasText: /^TITAN$/ }) }).getByRole('checkbox')
+
+
+      148 |
+      149 |   const titan = asset(page, 'TITAN')
+    > 150 |   await titan.focus()
+          |               ^
+      151 |   await page.keyboard.press('Space')
+      152 |   await expect(titan).toBeChecked()
+      153 |   await holdings(page).focus()
+        at E:\All projects\QuantFolio\frontend\e2e\states.spec.ts:150:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\.tmp\pw-results\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\.tmp\pw-results\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\.tmp\pw-results\states-keyboard-only-skip--31ff4-et-K-submit-and-result-tabs-chromium-states\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
+</testcase>
+<testcase name="reduced motion: the hero shows the landed coins at once, without spinning" classname="states.spec.ts" time="7.483">
+</testcase>
+<testcase name="no feasible QAOA sample (result mocked in the browser)" classname="states.spec.ts" time="6.87">
+</testcase>
+<testcase name="loading, empty and stale states (responses delayed or mocked in the browser)" classname="states.spec.ts" time="4.226">
+</testcase>
+<testcase name="an experiment sweep runs and shows its cells" classname="states.spec.ts" time="3.665">
+</testcase>
+</testsuite>
+</testsuites>

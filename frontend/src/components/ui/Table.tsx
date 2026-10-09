@@ -72,7 +72,7 @@ export function Table<R>({
   const { ref, edges } = useScrollEdges()
   const overflow = edges.left || edges.right
   const pin = (stickyFirst ?? columns[0]?.rowHeader === true) && overflow
-  const pad = dense ? 'px-2.5 py-1.5' : 'px-3 py-2.5'
+  const pad = dense ? 'px-2.5 py-1.5' : 'px-3 py-2'
   const align = (a?: string) => (a === 'right' ? 'text-right' : a === 'center' ? 'text-center' : 'text-left')
   // The pinned cell paints an opaque background (with a tinted row's colour laid over it)
   // and a hairline shadow once columns have scrolled beneath it.

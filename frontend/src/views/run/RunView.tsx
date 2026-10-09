@@ -79,10 +79,7 @@ export default function RunView() {
           isExperimentResult(resultQ.data) ? (
             <ExperimentResultView result={resultQ.data} />
           ) : (
-            <>
-              <EditInLab config={resultQ.data.config} />
-              <RunResultView result={resultQ.data} />
-            </>
+            <RunResultView result={resultQ.data} actions={<EditInLab config={resultQ.data.config} />} />
           )
         ) : resultQ.isError ? (
           <ErrorState error={resultQ.error} title="The run finished but its result could not be loaded" onRetry={() => void resultQ.refetch()} />
@@ -99,11 +96,11 @@ export default function RunView() {
 function Page({ runId, job, aside, children }: { runId: string; job?: JobStatus; aside?: React.ReactNode; children: React.ReactNode }) {
   const kind = job?.kind === 'experiment' ? 'Experiment' : 'Run'
   return (
-    <div className="mx-auto max-w-[1440px] px-4 pt-6 pb-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[1440px] px-4 pt-4 pb-4 sm:px-6 lg:px-8">
       <Link to="/history" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-muted hover:text-ink pointer-fine:min-h-9">
         <IconArrowLeft size={15} /> History
       </Link>
-      <div className="mt-2 mb-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+      <div className={`mt-1 flex flex-wrap items-center gap-x-3 gap-y-2 ${job ? '' : 'mb-5'}`}>
         <h1 className="min-w-0 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           {job?.label ?? kind}{' '}
           <span className="text-lg font-normal text-muted tabular sm:text-xl" title={runId}>
@@ -116,7 +113,7 @@ function Page({ runId, job, aside, children }: { runId: string; job?: JobStatus;
         <span className="ml-auto">{aside}</span>
       </div>
       {job ? (
-        <p className="-mt-4 mb-6 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
+        <p className="mt-1 mb-5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
           {/* The copy button sits by the full id: next to a balanced, wrapping title it drifted far from the short id. */}
           <span className="inline-flex items-center gap-1">
             Id <span className="select-all tabular">{runId}</span>
@@ -137,18 +134,16 @@ function EditInLab({ config }: { config: RunConfig }) {
   const lab = useLab()
   const navigate = useNavigate()
   return (
-    <div className="mb-5 flex flex-wrap justify-end gap-2">
-      <Button
-        variant="secondary"
-        size="sm"
-        onClick={() => {
-          lab.replace(config)
-          navigate('/lab')
-        }}
-      >
-        Open these settings in the Lab
-      </Button>
-    </div>
+    <Button
+      variant="secondary"
+      size="sm"
+      onClick={() => {
+        lab.replace(config)
+        navigate('/lab')
+      }}
+    >
+      Open these settings in the Lab
+    </Button>
   )
 }
 

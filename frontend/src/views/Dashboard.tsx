@@ -26,6 +26,8 @@ import {
 } from '../components/ui'
 import { DASH, formatDate, formatDateTime, formatInr, formatInt, formatPct, formatRelative } from '../lib/format'
 import { guardrailFamilies, liveLimits } from '../lib/guardrails'
+import { useLivePrice, useLiveStatus } from '../lib/live'
+import { formatQuotePct, formatQuotePrice, quoteDirection } from '../components/market/quote'
 import { FAMILY_ICON } from './shared/guardIcons'
 import { RunSummaryCard } from './shared/RunSummaryCard'
 
@@ -48,19 +50,20 @@ function Kpi({
   testId?: string
   className?: string
 }) {
+  // Two to a row on phones, so the label shrinks a step and the hint may wrap there instead of being cut off.
   const body = (
     <>
-      <div className="flex items-start justify-between gap-3">
-        <p className="text-sm font-medium text-muted">{label}</p>
-        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-cobalt-50 text-cobalt">
-          <Icon size={17} />
+      <div className="flex items-center justify-between gap-2">
+        <p className="min-w-0 truncate text-xs font-medium text-muted sm:text-sm">{label}</p>
+        <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-cobalt-50 text-cobalt">
+          <Icon size={15} />
         </span>
       </div>
-      <p className="mt-1 truncate text-2xl font-semibold tracking-tight text-ink tabular">{value}</p>
-      {hint ? <p className="mt-1 truncate text-xs text-muted">{hint}</p> : null}
+      <p className="mt-1 truncate text-xl font-semibold tracking-tight text-ink tabular sm:text-2xl">{value}</p>
+      {hint ? <p className="mt-0.5 text-xs leading-snug text-muted sm:truncate">{hint}</p> : null}
     </>
   )
-  const cls = `block min-w-0 rounded-lg border border-line bg-canvas p-4 shadow-card ${className}`
+  const cls = `block min-w-0 rounded-lg border border-line bg-canvas p-3 shadow-card sm:p-4 ${className}`
   return to ? (
     <Link to={to} className={`${cls} transition-colors hover:border-cobalt-200 hover:bg-cobalt-50/30`} data-testid={testId}>
       {body}
@@ -75,7 +78,7 @@ function Kpi({
 function Mover({ a }: { a: AssetInfo }) {
   const up = (a.change_1y ?? 0) >= 0
   return (
-    <li className="flex items-center gap-3 py-2.5">
+    <li className="flex items-center gap-3 py-2">
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold text-ink">{a.symbol}</p>
         <p className="truncate text-xs text-muted" title={a.name}>
@@ -96,7 +99,8 @@ export default function Dashboard() {
   const caps = useCapabilities()
   const data = useDataStatus()
   const example = useExample()
-  const recent = useRuns({ limit: 6 })
+  // Eight rows fill the column beside the latest result on wide screens; narrower screens show six.
+  const recent = useRuns({ limit: 8 })
   const succeeded = useRuns({ status: 'succeeded', limit: 1 })
   const latestOk = useRuns({ status: 'succeeded', kind: 'run', limit: 1 })
 
@@ -109,6 +113,9 @@ export default function Dashboard() {
   const isOwn = !!ownId && shownId === ownId && !latestOk.data?.items[0]?.is_example
 
   const active = data.data?.active
+  const nifty = useLivePrice('^NSEI')
+  const liveStatus = useLiveStatus()
+  const niftyDir = quoteDirection(nifty?.quote.change_pct)
   const L = liveLimits(caps.data)
   const families = guardrailFamilies(L)
   const last = recent.data?.items[0]
@@ -120,30 +127,54 @@ export default function Dashboard() {
   const risers = priced.filter((a) => (a.change_1y ?? 0) > 0).length
 
   return (
-    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
           <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Dashboard</h1>
-          <p className="mt-1 max-w-2xl text-sm text-muted sm:text-base">Your market data, runs and safety checks in one place. Start a new portfolio whenever you are ready.</p>
+          <p className="mt-1 max-w-2xl text-sm text-muted sm:text-base">Your data, runs and checks at a glance.</p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <ButtonLink to="/experiments" variant="secondary" icon={<IconLayers size={16} />}>
+        {/* Phones: both actions share one row rather than stacking. */}
+        <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap">
+          <ButtonLink to="/experiments" variant="secondary" icon={<IconLayers size={16} />} className="max-sm:gap-1.5 max-sm:px-2 max-sm:text-sm">
             Run an experiment
           </ButtonLink>
-          <ButtonLink to="/lab" icon={<IconSpark size={16} />} data-testid="cta-optimiser">
+          <ButtonLink to="/lab" icon={<IconSpark size={16} />} data-testid="cta-optimiser" className="max-sm:gap-1.5 max-sm:px-2 max-sm:text-sm">
             New optimisation
           </ButtonLink>
         </div>
       </div>
 
-      <section aria-label="Key numbers" className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        <Kpi
-          label="Market data"
-          icon={IconDatabase}
-          value={active ? `${formatInt(active.n_symbols)} stocks` : DASH}
-          hint={active ? (active.stale ? 'Prices are out of date' : `NSE closes to ${formatDate(active.last_date)}`) : 'Loading…'}
-          testId="kpi-data"
-        />
+      <section aria-label="Key numbers" className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-5">
+        {nifty ? (
+          <Kpi
+            label="NIFTY 50"
+            icon={IconDatabase}
+            value={
+              <span key={nifty.tick} className={`-mx-1 rounded px-1 ${nifty.tick > 0 && nifty.move ? (nifty.move === 'up' ? 'qf-price-flash-up' : 'qf-price-flash-down') : ''}`}>
+                {formatQuotePrice(nifty.quote.price)}
+              </span>
+            }
+            hint={
+              <>
+                <span className={niftyDir === 'down' ? 'font-medium text-danger' : niftyDir === 'up' ? 'font-medium text-teal' : ''}>
+                  {niftyDir === 'down' ? '▼ ' : niftyDir === 'up' ? '▲ ' : ''}
+                  {formatQuotePct(nifty.quote.change_pct)}
+                </span>
+                {liveStatus === 'closed' ? ' last session' : ' today'}
+                {active ? ` · ${formatInt(active.n_symbols)} stocks stored` : ''}
+              </>
+            }
+            testId="kpi-data"
+          />
+        ) : (
+          <Kpi
+            label="Market data"
+            icon={IconDatabase}
+            value={active ? `${formatInt(active.n_symbols)} stocks` : DASH}
+            hint={active ? (active.stale ? 'Prices are out of date' : `NSE closes to ${formatDate(active.last_date)}`) : 'Loading…'}
+            testId="kpi-data"
+          />
+        )}
         <Kpi
           label="Your runs"
           icon={IconClock}
@@ -168,7 +199,7 @@ export default function Dashboard() {
           hint={`${families.length} kinds, checked every run`}
           to="/guardrails"
           testId="kpi-guardrails"
-          className="sm:max-xl:col-span-2"
+          className="max-xl:col-span-2"
         />
       </section>
 
@@ -181,7 +212,7 @@ export default function Dashboard() {
             description={
               isOwn
                 ? `Finished ${formatDateTime(latestOk.data?.items[0]?.finished_at ?? latestOk.data?.items[0]?.created_at)}.`
-                : 'You have not finished a run yet, so here is one recorded on this server.'
+                : 'A run recorded on this server.'
             }
             badge={isOwn ? <StatusChip status="succeeded" label="Finished" /> : <Badge tone="cobalt">Recorded run</Badge>}
             loading={latestOk.isPending || (!ownId && example.isPending) || (!!shownId && shown.isPending)}
@@ -193,7 +224,7 @@ export default function Dashboard() {
             runId={shownId}
             result={shownRun}
             emptyTitle="No finished runs yet"
-            emptyBody="Open the Portfolio Lab, keep the Quick preset and press Run. The result appears here."
+            emptyBody="Keep the Quick preset and press Run."
             dense
             testId="latest-summary"
           />
@@ -219,9 +250,9 @@ export default function Dashboard() {
             </EmptyState>
           ) : (
             <ul className="-mx-2 divide-y divide-line" data-testid="recent-runs">
-              {recent.data.items.map((r) => (
-                <li key={r.run_id}>
-                  <Link to={`/runs/${r.run_id}`} className="flex items-center gap-3 rounded-md px-2 py-2.5 hover:bg-mist">
+              {recent.data.items.map((r, i) => (
+                <li key={r.run_id} className={i >= 6 ? 'max-xl:hidden' : undefined}>
+                  <Link to={`/runs/${r.run_id}`} className="flex items-center gap-3 rounded-md px-2 py-2 hover:bg-mist">
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-ink">
                         {r.label ?? (r.kind === 'experiment' ? 'Experiment' : `${r.n_symbols} stocks${r.total_qubits ? ` · ${r.total_qubits} qubits` : ''}`)}
@@ -244,7 +275,7 @@ export default function Dashboard() {
             title="Market snapshot"
             description={
               priced.length
-                ? `${risers} of ${priced.length} NIFTY 50 stocks are up over the last year. Prices are NSE closing prices${active ? ` to ${formatDate(active.last_date)}` : ''}.`
+                ? `${risers} of ${priced.length} stocks up over one year.`
                 : undefined
             }
             aside={
@@ -283,19 +314,19 @@ export default function Dashboard() {
           <CardHeader
             id="guard-h"
             title="Guardrails"
-            description="Checks that run on their own, every time."
+            description="Checked on every run."
             aside={
               <Badge tone="teal" icon={<IconCheck size={13} />}>
                 All on
               </Badge>
             }
           />
-          <ul className="space-y-1">
+          <ul className="space-y-0.5">
             {families.map((f) => {
               const Icon = FAMILY_ICON[f.id] ?? IconShield
               return (
                 <li key={f.id}>
-                  <Link to={`/guardrails#${f.id}`} className="flex items-center gap-3 rounded-md px-2 py-2 hover:bg-mist">
+                  <Link to={`/guardrails#${f.id}`} className="flex min-h-11 items-center gap-3 rounded-md px-2 py-1 hover:bg-mist pointer-fine:min-h-9">
                     <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-mist-2 text-ink-2">
                       <Icon size={15} />
                     </span>
@@ -306,7 +337,7 @@ export default function Dashboard() {
               )
             })}
           </ul>
-          <ButtonLink to="/guardrails" variant="secondary" size="sm" className="mt-4 w-full" iconRight={<IconArrowRight size={14} />}>
+          <ButtonLink to="/guardrails" variant="secondary" size="sm" className="mt-3 w-full" iconRight={<IconArrowRight size={14} />}>
             See every guardrail
           </ButtonLink>
         </Card>

@@ -1,15 +1,173 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="5" failures="0" errors="0" time="0.0099497">
-    <testsuite name="src/components/hero/bloch.test.ts" timestamp="2026-10-09T06:40:51.324Z" hostname="Hardik" tests="5" failures="0" errors="0" skipped="0" time="0.0099497">
-        <testcase classname="src/components/hero/bloch.test.ts" name="Bloch sphere geometry &gt; puts |0&gt; at the top pole and |1&gt; at the bottom" time="0.003455">
+<testsuites name="vitest tests" tests="74" failures="0" errors="0" time="4.3944053">
+    <testsuite name="src/api/client.test.ts" timestamp="2026-10-09T12:11:30.470Z" hostname="Hardik" tests="7" failures="0" errors="0" skipped="0" time="0.2109821">
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; parses the error envelope with request id and Retry-After" time="0.1198204">
         </testcase>
-        <testcase classname="src/components/hero/bloch.test.ts" name="Bloch sphere geometry &gt; turns about the vertical axis without changing length or height" time="0.0003328">
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; understands FastAPI validation details and exposes field errors" time="0.0291409">
         </testcase>
-        <testcase classname="src/components/hero/bloch.test.ts" name="Bloch sphere geometry &gt; projects the centre to the middle of the view and keeps both poles inside it" time="0.0004683">
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; explains a proxy 502 without a JSON body" time="0.0135303">
         </testcase>
-        <testcase classname="src/components/hero/bloch.test.ts" name="Bloch sphere geometry &gt; draws every grid line inside the outline of the sphere" time="0.00291">
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; turns a network failure into status 0" time="0.0053977">
         </testcase>
-        <testcase classname="src/components/hero/bloch.test.ts" name="Bloch sphere geometry &gt; shows nearer points as nearer" time="0.0002002">
+        <testcase classname="src/api/client.test.ts" name="api requests &gt; sends the idempotency key and force_fresh flag and returns the HTTP status" time="0.0103257">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api requests &gt; reads the total from X-Total-Count when listing runs" time="0.0081917">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api requests &gt; fetches the stored config of a run" time="0.0072886">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/api/cloud.test.ts" timestamp="2026-10-09T12:11:30.492Z" hostname="Hardik" tests="5" failures="0" errors="0" skipped="0" time="0.089391">
+        <testcase classname="src/api/cloud.test.ts" name="api client in the cloud build &gt; sends no Authorization header" time="0.0316606">
+        </testcase>
+        <testcase classname="src/api/cloud.test.ts" name="api client in the cloud build &gt; words quota, pause and cold-start refusals plainly" time="0.0112258">
+        </testcase>
+        <testcase classname="src/api/cloud.test.ts" name="cloud error wording &gt; words each known refusal and keeps the server message for the rest" time="0.0039117">
+        </testcase>
+        <testcase classname="src/api/cloud.test.ts" name="run progress in the cloud build &gt; polls instead of opening an event stream, slows while nothing changes and stops at the end" time="0.0296875">
+        </testcase>
+        <testcase classname="src/api/cloud.test.ts" name="live prices in the cloud build &gt; poll every 5 s and never open a stream" time="0.0019643">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/api/events.test.ts" timestamp="2026-10-09T12:11:30.496Z" hostname="Hardik" tests="7" failures="0" errors="0" skipped="0" time="0.0929986">
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; streams over SSE, deduplicates by id and point, and resumes after the last id" time="0.0399063">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; closes on a terminal status event" time="0.0092024">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; falls back to polling the snapshot after repeated SSE failures" time="0.0122306">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; loads the recorded history once for a run that already finished" time="0.0058768">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; goes quiet while offline and reconnects from the last id when back online" time="0.00616">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="parseSseData &gt; reads a full RunEvent body and ignores heartbeats and junk" time="0.0064207">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="parseSseData &gt; accepts a bare payload named by the SSE event field, taking the id from the header" time="0.0010969">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/components/components.test.tsx" timestamp="2026-10-09T12:11:30.499Z" hostname="Hardik" tests="5" failures="0" errors="0" skipped="0" time="1.2272978">
+        <testcase classname="src/components/components.test.tsx" name="ErrorState &gt; shows the server message, code and request id, and retries" time="0.6861544">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="ErrorState &gt; says the API is unreachable on a network error" time="0.0299078">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="Segmented &gt; is a labelled radio group that works by keyboard and skips disabled options" time="0.3407116">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="ChartFrame &gt; gives every chart a text summary and a data table" time="0.154081">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="toConvergenceRows &gt; orders warm-start preparation before optimisation and splits the series" time="0.0072219">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/components/market/CandleChart.test.tsx" timestamp="2026-10-09T12:11:30.501Z" hostname="Hardik" tests="4" failures="0" errors="0" skipped="0" time="0.8106329">
+        <testcase classname="src/components/market/CandleChart.test.tsx" name="CandleChart &gt; draws one bar per candle, green up and red down, with a spoken summary and no grid" time="0.6708892">
+        </testcase>
+        <testcase classname="src/components/market/CandleChart.test.tsx" name="CandleChart &gt; reads one bar out on focus and with the arrow keys" time="0.1009595">
+        </testcase>
+        <testcase classname="src/components/market/CandleChart.test.tsx" name="CandleChart &gt; draws wider bodies when asked" time="0.0176054">
+        </testcase>
+        <testcase classname="src/components/market/CandleChart.test.tsx" name="CandleChart &gt; renders nothing without candles" time="0.0122566">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/candles.test.ts" timestamp="2026-10-09T12:11:30.504Z" hostname="Hardik" tests="13" failures="0" errors="0" skipped="0" time="0.1456864">
+        <testcase classname="src/lib/candles.test.ts" name="cleanCandles &gt; keeps real bars and drops broken ones" time="0.039764">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="followLive &gt; moves the last close to the live price and stretches the high or low to include it" time="0.0072157">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="followLive &gt; leaves earlier bars alone, never adds a bar, and ignores a missing price" time="0.0047216">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="daySummary &gt; is the first open, the extremes and the last close" time="0.0106216">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="candleLayout &gt; puts higher prices nearer the top and keeps every bar inside the plot" time="0.0044476">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="candleLayout &gt; gives a flat bar a visible body and a few bars a sensible width" time="0.0089279">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="candleLayout &gt; lets a wider body cap through, still odd and still inside its slot" time="0.0039081">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="candleLayout &gt; draws the previous close only when it is near the range" time="0.0016047">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="candleLayout &gt; handles a single flat price and an empty or zero-size chart" time="0.0145789">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="time labels &gt; formats in exchange time whatever the viewer time zone" time="0.0014009">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="time labels &gt; marks whole hours for intraday bars and thins them to the limit" time="0.0153501">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="time labels &gt; marks month starts for daily bars" time="0.0037424">
+        </testcase>
+        <testcase classname="src/lib/candles.test.ts" name="axisPrice &gt; drops decimals for index levels and keeps them for share prices" time="0.0021877">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/experiment.test.ts" timestamp="2026-10-09T12:11:30.513Z" hostname="Hardik" tests="6" failures="0" errors="0" skipped="0" time="0.0347439">
+        <testcase classname="src/lib/experiment.test.ts" name="experiment cell count (mirrors backend experiment_cell_count) &gt; sums factor levels for one-factor-at-a-time" time="0.0094137">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="experiment cell count (mirrors backend experiment_cell_count) &gt; multiplies factor levels for full factorial, treating empty lists as one level" time="0.0010583">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="experiment cell count (mirrors backend experiment_cell_count) &gt; never returns zero" time="0.0010609">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="parseIntList &gt; accepts commas and whitespace and removes duplicates" time="0.0050157">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="parseIntList &gt; reports entries that are not whole numbers" time="0.0028539">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="parseIntList &gt; returns nothing for an empty string" time="0.0009504">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/format.test.ts" timestamp="2026-10-09T12:11:30.516Z" hostname="Hardik" tests="8" failures="0" errors="0" skipped="0" time="0.0422385">
+        <testcase classname="src/lib/format.test.ts" name="format &gt; uses Indian digit grouping for rupees" time="0.0168766">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; compacts to lakh and crore" time="0.001999">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; renders missing and non-finite values as a dash" time="0.0046483">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; formats percentages with a true minus sign and optional plus" time="0.0012903">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; formats decimals and durations" time="0.0025496">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; humanises memory with at most three significant figures" time="0.0011564">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; states a memory estimate against the limit" time="0.0012076">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; gives relative times and short ids" time="0.0011217">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/live.test.ts" timestamp="2026-10-09T12:11:30.519Z" hostname="Hardik" tests="9" failures="0" errors="0" skipped="0" time="0.1049949">
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; starts on the first subscriber, applies a snapshot, then merges deltas in order" time="0.0404948">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; ignores heartbeats and malformed frames" time="0.0060736">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; closes for good when live prices are off" time="0.0085826">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; reconnects with backoff, then falls back to polling every second" time="0.0146344">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; reports an unreachable API while polling" time="0.0039532">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; reconnects when the watchdog hears nothing" time="0.0043513">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; pauses while hidden or offline and resumes after" time="0.0058493">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="LiveStore &gt; keeps the stream through a quick unsubscribe and resubscribe" time="0.0042368">
+        </testcase>
+        <testcase classname="src/lib/live.test.ts" name="parseLiveFrame &gt; accepts a body and drops broken quotes" time="0.0014166">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/validate.test.ts" timestamp="2026-10-09T12:11:30.525Z" hostname="Hardik" tests="7" failures="0" errors="0" skipped="0" time="0.0195608">
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; accepts the default configuration with K set" time="0.0073651">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; requires K in selection mode and forbids it in lots mode" time="0.0018777">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; rejects K larger than the selected universe" time="0.0007337">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; rejects duplicate and malformed symbols" time="0.0011837">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; requires dates in train → validation → test order" time="0.0009737">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; checks numeric bounds generated from the contract" time="0.0013916">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; checks sector caps by basis" time="0.0006154">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/views/run/QaoaCircuitDiagram.test.tsx" timestamp="2026-10-09T12:11:30.529Z" hostname="Hardik" tests="3" failures="0" errors="0" skipped="0" time="1.6158784">
+        <testcase classname="src/views/run/QaoaCircuitDiagram.test.tsx" name="QaoaCircuitDiagram &gt; defaults to the run depth, shows its optimised angles and collapses extra qubits" time="0.7776743">
+        </testcase>
+        <testcase classname="src/views/run/QaoaCircuitDiagram.test.tsx" name="QaoaCircuitDiagram &gt; redraws one cost and one mixer block per layer for p = 2 and 3, by click or keyboard" time="0.7046704">
+        </testcase>
+        <testcase classname="src/views/run/QaoaCircuitDiagram.test.tsx" name="QaoaCircuitDiagram &gt; clamps a deeper run to three drawn layers and draws every wire for small circuits" time="0.1212884">
         </testcase>
     </testsuite>
 </testsuites>

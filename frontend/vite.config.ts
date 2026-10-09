@@ -60,8 +60,7 @@ export default defineConfig({
   build: {
     target: 'es2022',
     sourcemap: false,
-    // The 3D scene (three.js, about 0.9 MB) and the charts are only reachable through lazy routes, so the default
-    // splitting keeps them out of the entry. Hand-made vendor groups caused import cycles between chunks.
-    chunkSizeWarningLimit: 1000,
+    // The charts are only reachable through lazy routes, so the default splitting keeps them out of the entry.
+    // Hand-made vendor groups caused import cycles between chunks.
   },
 })

@@ -1,0 +1,10 @@
+rules_version = '2';
+// The bucket is private (uniform access, public access prevention). Only the API and worker service accounts reach
+// it, through IAM. These rules close the Firebase client SDK path in case Firebase Storage is ever attached to it.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

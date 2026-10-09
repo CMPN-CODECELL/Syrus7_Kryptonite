@@ -1,5 +1,6 @@
 import { Outlet, ScrollRestoration } from 'react-router'
 import { ButtonLink, IconArrowRight } from '../ui'
+import { MarketTicker } from '../market/MarketTicker'
 import { ApiBadge, Banners, Brand, Footer, NavigationProgress } from './Layout'
 import { useDocumentTitle } from './title'
 
@@ -18,6 +19,7 @@ export function PublicLayout() {
         Skip to content
       </a>
       <NavigationProgress />
+      <MarketTicker />
       <header className="sticky top-0 z-40 border-b border-line bg-canvas/92 backdrop-blur supports-[backdrop-filter]:bg-canvas/80">
         <div className="mx-auto flex h-16 max-w-[1320px] items-center gap-6 px-4 sm:px-6">
           <Brand />

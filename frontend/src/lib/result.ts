@@ -18,7 +18,7 @@ export function bestClassical(r: RunResult): SolverResult | undefined {
     .sort((a, b) => a.portfolio!.objective - b.portfolio!.objective)[0]
 }
 
-/** Weights by symbol for a solver's portfolio (used to drive the hero's allocation bars). */
+/** Weights by symbol for a solver's portfolio (used for the landing hero's coins and weight bars). */
 export function weightsOf(s: SolverResult | undefined): Record<string, number> | null {
   if (!s?.portfolio) return null
   return Object.fromEntries(s.portfolio.holdings.filter((h) => h.weight > 0).map((h) => [h.symbol, h.weight]))

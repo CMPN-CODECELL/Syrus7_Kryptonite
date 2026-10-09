@@ -85,25 +85,35 @@ for (const view of VIEWS) {
   })
 }
 
-test('sidebar: a rail of icons that opens on hover or keyboard focus without moving the page', async ({ page }) => {
+test('sidebar: a rail of icons that the arrow button opens and closes, remembered across pages', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 })
   await page.goto('/dashboard')
   await expect(page.getByTestId('cta-optimiser')).toBeVisible()
   const rail = page.getByTestId('sidebar')
+  const toggle = page.getByTestId('sidebar-toggle')
   const main = page.locator('#main')
   await expect(rail).toHaveAttribute('data-open', 'false')
-  const before = await main.boundingBox()
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  const closed = await main.boundingBox()
 
+  // Hovering does nothing; the button opens the menu and the page makes room instead of being covered.
   await rail.hover()
+  await expect(rail).toHaveAttribute('data-open', 'false')
+  await toggle.click()
   await expect(rail).toHaveAttribute('data-open', 'true')
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true')
   await expect(rail.getByRole('link', { name: 'Portfolio Lab' })).toBeVisible()
-  expect(await main.boundingBox()).toEqual(before)
-  await page.mouse.move(900, 450)
-  await expect(rail).toHaveAttribute('data-open', 'false')
+  await expect.poll(async () => (await main.boundingBox())?.x).toBeGreaterThan((closed?.x ?? 0) + 150)
 
-  // Keyboard: tabbing into the rail opens it, and Escape closes it again.
-  for (let i = 0; i < 6 && !(await rail.evaluate((el) => el.contains(document.activeElement))); i++) await page.keyboard.press('Tab')
+  // The choice survives navigation and a reload.
+  await rail.getByRole('link', { name: 'History' }).click()
+  await expect(page).toHaveURL(/\/history$/)
+  await page.reload()
   await expect(rail).toHaveAttribute('data-open', 'true')
-  await page.keyboard.press('Escape')
+
+  // Keyboard: the button works with Enter too.
+  await toggle.focus()
+  await page.keyboard.press('Enter')
   await expect(rail).toHaveAttribute('data-open', 'false')
+  await expect.poll(async () => (await main.boundingBox())?.x).toBe(closed?.x)
 })

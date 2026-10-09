@@ -48,16 +48,9 @@ export interface Guard {
 // app closes a run's event stream on purpose once the run ends. These are counted separately in the log.
 const CANCELLED = /ERR_ABORTED|NS_BINDING_ABORTED|NS_ERROR_ABORT|cancelled|Load request cancelled/i
 
-// Diagnostics a browser's own WebGL implementation prints, not errors in the page. Firefox logs "WebGL context was
-// lost" when the three.js hero releases its context on unmount (forceContextLoss, on purpose, so GPU memory is
-// freed on navigation), and once per session warns that a frame was drawn while the canvas was being resized.
-// Nothing else is allowed for any browser, and Chromium needs no entry (it runs on SwiftShader).
-const BROWSER_NOISE: Record<string, Allowance[]> = {
-  firefox: [
-    { kind: 'console-warning', text: /^\[JavaScript Warning: "WebGL context was lost\."/ },
-    { kind: 'console-warning', text: /^\[JavaScript Warning: "WebGL warning: drawElementsInstanced: Drawing to a destination rect smaller than the viewport rect\./ },
-  ],
-}
+// Diagnostics a browser itself prints, not errors in the page. None are allowed today; add an entry per browser only
+// with a reason.
+const BROWSER_NOISE: Record<string, Allowance[]> = {}
 
 /** What Chromium reports for a request the test aborts with `route.abort()`: the failed request and its console line. */
 export const aborted = (url: RegExp): Allowance[] => [
@@ -153,14 +146,11 @@ export async function capture(page: Page, path: string) {
   if (sticky) await page.evaluate(() => document.querySelectorAll<HTMLElement>('.sticky.bottom-0').forEach((el) => el.style.removeProperty('position')))
 }
 
-const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
 /** The checkbox of one asset row, matched on the exact symbol. */
 export function asset(page: Page, symbol: string): Locator {
   return page
     .getByTestId('asset-list')
-    .locator('li')
-    .filter({ has: page.locator('span.font-mono', { hasText: new RegExp(`^${escapeRe(symbol)}$`) }) })
+    .locator(`li[data-symbol="${symbol}"]`)
     .getByRole('checkbox')
 }
 

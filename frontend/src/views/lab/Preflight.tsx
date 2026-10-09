@@ -106,7 +106,7 @@ export function PreflightPanel({
           {status}
         </span>
       </div>
-      <p className="mt-1 text-xs leading-relaxed text-muted">A check before anything runs: how big the quantum problem is and whether your rules can all be met.</p>
+      <p className="mt-1 text-xs leading-relaxed text-muted">Problem size and rules, checked before anything runs.</p>
       {blockedByForm ? <p className="mt-2 text-sm text-muted">The preflight runs once the highlighted fields are valid.</p> : null}
       {error && !blockedByForm ? <ErrorState className="mt-3" error={error} title="Preflight could not run" onRetry={onRetry} /> : null}
       {!r && !error && !blockedByForm ? (

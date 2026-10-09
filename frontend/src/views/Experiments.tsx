@@ -24,12 +24,10 @@ export default function Experiments() {
   }, [presets.data, seed])
 
   return (
-    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Study what changes the answer</h1>
-      <p className="mt-2 max-w-2xl text-muted">
-        Sweep circuit depth, optimiser, initialisation and universe size on the Lab’s current problem. Every cell is a full QAOA run with a visible seed and budget, scored against the exact optimum where it can be computed.
-      </p>
-      <div className="mt-6">
+      <p className="mt-1 max-w-2xl text-sm text-muted sm:text-base">Vary depth, optimiser or stock count and compare full QAOA runs.</p>
+      <div className="mt-5">
         {presets.isError ? (
           <ErrorState error={presets.error} title="The Experiment Lab needs the API" onRetry={() => void presets.refetch()} />
         ) : !config ? (
@@ -100,8 +98,8 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
 
   const fe = fieldErrors(submit.error)
   return (
-    <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
-      <div className="grid grid-cols-1 min-w-0 gap-5">
+    <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="grid min-w-0 grid-cols-1 gap-4">
         <Card>
           <CardHeader
             level={2}
@@ -130,7 +128,7 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
         </Card>
 
         <Card>
-          <CardHeader level={2} title="Factors" description="One factor at a time varies each list while the others stay at the base value. Full factorial runs every combination." />
+          <CardHeader level={2} title="Factors" description="Change one at a time, or try every combination." />
           <Segmented
             name="design"
             legend="Design"
@@ -141,10 +139,10 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
               { value: 'full_factorial', label: 'Full factorial' },
             ]}
           />
-          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
+          <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-5">
             <fieldset>
               <legend className="text-sm font-medium text-ink">Depth p</legend>
-              <div className="mt-2 grid grid-cols-1 gap-1">
+              <div className="mt-1 flex flex-wrap gap-x-5">
                 {(caps?.depths ?? [1, 2, 3, 4, 5]).map((p) => (
                   <Checkbox key={p} checked={depths.includes(p)} onChange={() => setDepths((d) => toggle(d, p).sort())} label={`p = ${p}`} />
                 ))}
@@ -152,7 +150,7 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
             </fieldset>
             <fieldset>
               <legend className="text-sm font-medium text-ink">Optimiser</legend>
-              <div className="mt-2 grid grid-cols-1 gap-1">
+              <div className="mt-1 flex flex-wrap gap-x-5">
                 {(caps?.optimizers ?? (['COBYLA', 'SPSA'] as Optimizer[])).map((o) => (
                   <Checkbox key={o} checked={optimizers.includes(o)} onChange={() => setOptimizers((d) => toggle(d, o))} label={o} />
                 ))}
@@ -160,7 +158,7 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
             </fieldset>
             <fieldset>
               <legend className="text-sm font-medium text-ink">Initialisation</legend>
-              <div className="mt-2 grid grid-cols-1 gap-1">
+              <div className="mt-1 flex flex-wrap gap-x-5">
                 {(Object.keys(caps?.init_strategies ?? { random: '', warm_interp: '' }) as InitStrategy[]).map((s) => (
                   <Checkbox key={s} checked={inits.includes(s)} onChange={() => setInits((d) => toggle(d, s))} label={s === 'random' ? 'Random (seeded)' : s === 'warm_interp' ? 'Warm start (interpolated)' : s} />
                 ))}
@@ -168,8 +166,8 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
             </fieldset>
           </div>
           {errors.factors ? <p className="mt-3 text-sm text-danger">{errors.factors}</p> : null}
-          <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <Field label="Universe sizes (optional)" hint="Encoded asset counts, e.g. 4, 6, 8" error={errors.sizes}>
+          <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-4 md:grid-cols-3 md:gap-4">
+            <Field label="Universe sizes (optional)" className="col-span-2 md:col-span-1" hint="Encoded asset counts, e.g. 4, 6, 8" error={errors.sizes}>
               {({ id, describedBy, invalid }) => <TextInput id={id} value={sizesText} onChange={(e) => setSizesText(e.target.value)} aria-describedby={describedBy} aria-invalid={invalid} inputMode="numeric" />}
             </Field>
             <Field label="Seeds" hint="Each cell runs once per seed (max 20)" error={errors.seeds}>
@@ -209,7 +207,7 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
             {submit.isPending ? 'Submitting…' : 'Run experiment'}
           </Button>
           <p className="mt-2 text-xs text-muted" aria-live="polite">
-            {!online ? 'You are offline.' : nErr || nBase ? 'Fix the highlighted settings first.' : 'Cells run one after another on the job queue. You can cancel at any time.'}
+            {!online ? 'You are offline.' : nErr || nBase ? 'Fix the highlighted settings first.' : 'Runs one after another. Cancel any time.'}
           </p>
           {submit.error ? (
             <Notice tone="danger" className="mt-3" title="The experiment was not started">

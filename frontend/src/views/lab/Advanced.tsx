@@ -51,7 +51,7 @@ export function AdvancedPanel({
 
   return (
     <Disclosure summary="Advanced settings" className="rounded-lg border border-line bg-canvas px-4 shadow-card sm:px-5" aside={<span className="hidden text-xs text-muted sm:inline">QAOA, noise, screening, baselines, limits</span>}>
-      <div className="grid grid-cols-1 gap-6 pb-5">
+      <div className="grid grid-cols-1 gap-5 pb-4">
         <Group title="QAOA">
           <Field label="Depth p" error={errors['qaoa.depth']} hint="Layers of cost + mixer unitaries; parameters = 2p">
             {({ id, describedBy }) => (

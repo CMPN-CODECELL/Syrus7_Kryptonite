@@ -5,7 +5,7 @@ import { FACTOR_LABEL, INIT_LABEL, METRIC_LABEL, levelOf, type ExpMetric } from 
 import { Card, CardHeader, Notice, Segmented, StatusChip, Table } from '../../components/ui'
 import { DASH, formatDateTime, formatInt, formatNum, formatPct } from '../../lib/format'
 import { formatUnknown, humanKey } from '../../lib/result'
-import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Literal, SoftwareCard } from './shared'
+import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Literal, ResultDisclaimer, SoftwareCard } from './shared'
 
 export function ExperimentResultView({ result }: { result: ExperimentResult }) {
   const [metric, setMetric] = useState<ExpMetric>('approximation_ratio')
@@ -15,15 +15,13 @@ export function ExperimentResultView({ result }: { result: ExperimentResult }) {
   const summaryCols = useMemo(() => [...new Set(result.summary.flatMap((r) => Object.keys(r)))], [result.summary])
 
   return (
-    <div className="grid grid-cols-1 gap-5" data-testid="experiment-result">
-      <Notice tone="warning" title="Research demonstration — not investment advice">
-        Simulated QAOA circuits and historical estimates; no live trading.
-      </Notice>
+    <div className="grid grid-cols-1 gap-4" data-testid="experiment-result">
+      <ResultDisclaimer />
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-base font-semibold text-ink">Controlled experiment</h2>
-            <p className="mt-1 text-sm text-ink-2 tabular">
+            <p className="mt-0.5 text-sm text-ink-2 tabular">
               {formatInt(result.cells.length)} cells · {cfg.design === 'full_factorial' ? 'full factorial' : 'one factor at a time'} · seeds {cfg.seeds.join(', ')}
               {failed ? ` · ${failed} failed` : ''}
             </p>
@@ -113,8 +111,24 @@ export function ExperimentResultView({ result }: { result: ExperimentResult }) {
         </Card>
       ) : null}
 
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
-        <DatasetCard dataset={result.dataset} />
+      {/* Two independent stacks so a short card never stretches to match a tall neighbour. */}
+      <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4">
+          <DatasetCard dataset={result.dataset} />
+          <Card>
+            <CardHeader level={2} title="Configuration" />
+            <KV
+              rows={[
+                ['Base universe', cfg.base.symbols.join(', ')],
+                ['Budget per cell', `${formatInt(cfg.base.qaoa.max_evaluations)} evaluations, ${formatInt(cfg.base.qaoa.shots)} shots`],
+                ['Cell limit', formatInt(cfg.max_cells)],
+              ]}
+            />
+            <div className="mt-2">
+              <ConfigDump config={cfg} />
+            </div>
+          </Card>
+        </div>
         <SoftwareCard
           software={result.software}
           timings={result.timings_s}
@@ -126,19 +140,6 @@ export function ExperimentResultView({ result }: { result: ExperimentResult }) {
           ]}
         />
       </div>
-      <Card>
-        <CardHeader level={2} title="Configuration" />
-        <KV
-          rows={[
-            ['Base universe', cfg.base.symbols.join(', ')],
-            ['Budget per cell', `${formatInt(cfg.base.qaoa.max_evaluations)} evaluations, ${formatInt(cfg.base.qaoa.shots)} shots`],
-            ['Cell limit', formatInt(cfg.max_cells)],
-          ]}
-        />
-        <div className="mt-2">
-          <ConfigDump config={cfg} />
-        </div>
-      </Card>
     </div>
   )
 }

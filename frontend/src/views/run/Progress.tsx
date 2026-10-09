@@ -4,6 +4,7 @@ import type { RunStreamState } from '../../api/events'
 import { errorMessage, useCancelRun } from '../../api/hooks'
 import { ConvergenceChart } from '../../components/charts/charts'
 import { Badge, Button, Card, CardHeader, Dialog, Disclosure, IconCheck, IconClock, IconRefresh, IconSpinner, IconStop, IconWifiOff, Notice } from '../../components/ui'
+import { CLOUD } from '../../lib/cloud'
 import { STAGE_LABEL, formatDuration, formatInt } from '../../lib/format'
 
 const RUN_STAGES: Stage[] = ['queued', 'loading_data', 'estimating', 'screening', 'building_qubo', 'transpiling', 'optimising', 'final_sampling', 'baselines', 'frontier', 'noise', 'reporting', 'done']
@@ -25,9 +26,15 @@ export function ConnectionBadge({ stream }: { stream: RunStreamState | null }) {
     <Badge
       tone="teal"
       icon={<span className="qf-pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-teal" aria-hidden="true" />}
-      title={stream.transport === 'polling' ? 'Live updates via polling (event stream unavailable)' : 'Live updates via server-sent events'}
+      title={
+        stream.transport !== 'polling'
+          ? 'Live updates via server-sent events'
+          : CLOUD
+            ? 'Progress is checked every few seconds, so it can trail the worker slightly'
+            : 'Live updates via polling (event stream unavailable)'
+      }
     >
-      {stream.transport === 'polling' ? 'Live (polling)' : 'Live'}
+      {stream.transport !== 'polling' ? 'Live' : CLOUD ? 'Updating every few seconds' : 'Live (polling)'}
     </Badge>
   )
 }
@@ -60,7 +67,9 @@ export function LiveProgress({ runId, kind, status, stream, noiseExpected }: { r
             status.status === 'queued'
               ? status.queue_position !== null
                 ? `Position ${status.queue_position + 1} in the queue.`
-                : 'Waiting for a worker.'
+                : CLOUD
+                  ? 'Waiting for a worker. Starting one can take up to a minute.'
+                  : 'Waiting for a worker.'
               : (message ?? STAGE_LABEL[current])
           }
         />

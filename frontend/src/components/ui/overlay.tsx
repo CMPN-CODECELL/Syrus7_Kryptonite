@@ -73,7 +73,7 @@ export function Disclosure({
 }) {
   return (
     <details className={`group rounded-md border border-line bg-canvas ${className}`} open={defaultOpen || undefined}>
-      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-2 text-sm font-medium text-ink-2 select-none hover:bg-mist [&::-webkit-details-marker]:hidden">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-2 text-sm pointer-fine:min-h-9 pointer-fine:py-1.5 font-medium text-ink-2 select-none hover:bg-mist [&::-webkit-details-marker]:hidden">
         <span className="flex min-w-0 items-center gap-2">
           <IconChevronDown className="shrink-0 -rotate-90 text-muted transition-transform group-open:rotate-0" />
           <span className="min-w-0">{summary}</span>

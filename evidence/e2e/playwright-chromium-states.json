@@ -121,13 +121,7 @@
           "deviceScaleFactor": 1,
           "isMobile": false,
           "hasTouch": false,
-          "defaultBrowserType": "chromium",
-          "launchOptions": {
-            "args": [
-              "--use-angle=swiftshader",
-              "--enable-unsafe-swiftshader"
-            ]
-          }
+          "defaultBrowserType": "chromium"
         },
         "dependencies": [],
         "ignoreSnapshots": false,
@@ -188,12 +182,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 15032,
+                  "duration": 8633,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:21:42.780Z",
+                  "startTime": "2026-10-09T10:10:41.857Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -222,12 +216,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8751,
+                  "duration": 4468,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:22:00.826Z",
+                  "startTime": "2026-10-09T10:10:52.829Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -256,12 +250,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 12698,
+                  "duration": 7130,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:22:09.600Z",
+                  "startTime": "2026-10-09T10:10:57.310Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -290,12 +284,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 19226,
+                  "duration": 15808,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:22:22.318Z",
+                  "startTime": "2026-10-09T10:11:04.457Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -324,12 +318,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 14800,
+                  "duration": 6988,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:22:41.568Z",
+                  "startTime": "2026-10-09T10:11:20.278Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -358,12 +352,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 20233,
+                  "duration": 12934,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:22:56.396Z",
+                  "startTime": "2026-10-09T10:11:27.277Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -392,18 +386,18 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 23511,
+                  "duration": 19518,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:23:16.653Z",
+                  "startTime": "2026-10-09T10:11:40.221Z",
                   "annotations": [],
                   "attachments": [
                     {
                       "name": "console-guard",
                       "contentType": "application/json",
-                      "body": "WwogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA4LThjZDA0ODNjL2V2ZW50cz9hZnRlcj0wIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOC04Y2QwNDgzYy9ldmVudHM/YWZ0ZXI9MCIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDgtOGNkMDQ4M2MvZXZlbnRzP2FmdGVyPTAiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOC04Y2QwNDgzYy9ldmVudHM/YWZ0ZXI9MCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDgtOGNkMDQ4M2MvZXZlbnRzP2FmdGVyPTAiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA4LThjZDA0ODNjL2V2ZW50cz9hZnRlcj0wIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDgtOGNkMDQ4M2MvZXZlbnRzP2FmdGVyPTAiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA4LThjZDA0ODNjL2V2ZW50cz9hZnRlcj0wIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOC04Y2QwNDgzYy9ldmVudHM/YWZ0ZXI9MCIKICB9Cl0="
+                      "body": "WwogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA5LTE1MTMxZmFkL2V2ZW50cz9hZnRlcj0wIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOS0xNTEzMWZhZC9ldmVudHM/YWZ0ZXI9MCIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDktMTUxMzFmYWQvZXZlbnRzP2FmdGVyPTAiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOS0xNTEzMWZhZC9ldmVudHM/YWZ0ZXI9MCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDktMTUxMzFmYWQvZXZlbnRzP2FmdGVyPTAiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA5LTE1MTMxZmFkL2V2ZW50cz9hZnRlcj0wIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcnVucy9ydW4tMjAyNjEwMDktMTUxMzFmYWQvZXZlbnRzP2FmdGVyPTAiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3J1bnMvcnVuLTIwMjYxMDA5LTE1MTMxZmFkL2V2ZW50cz9hZnRlcj0wIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9ydW5zL3J1bi0yMDI2MTAwOS0xNTEzMWZhZC9ldmVudHM/YWZ0ZXI9MCIKICB9Cl0="
                     }
                   ]
                 }
@@ -432,12 +426,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10158,
+                  "duration": 4961,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:23:40.184Z",
+                  "startTime": "2026-10-09T10:11:59.750Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -466,12 +460,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8004,
+                  "duration": 2963,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:23:50.372Z",
+                  "startTime": "2026-10-09T10:12:04.721Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -500,18 +494,18 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7885,
+                  "duration": 6552,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:23:58.397Z",
+                  "startTime": "2026-10-09T10:12:07.696Z",
                   "annotations": [],
                   "attachments": [
                     {
                       "name": "console-guard",
                       "contentType": "application/json",
-                      "body": "WwogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9oZWFsdGgiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2hlYWx0aCIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvaGVhbHRoIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiCiAgfQpd"
+                      "body": "WwogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2hlYWx0aCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvaGVhbHRoIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9oZWFsdGgiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvcHJlc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvbWFya2V0L3N0cmVhbSIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvbWFya2V0L3N0cmVhbSIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvbWFya2V0L3N0cmVhbSIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9wcmVzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9tYXJrZXQvc3RyZWFtIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9tYXJrZXQvc3RyZWFtIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9tYXJrZXQvc3RyZWFtIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvZGF0YS9zdGF0dXMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2RhdGEvc3RhdHVzIgogIH0sCiAgewogICAgImtpbmQiOiAiY29uc29sZS1lcnJvciIsCiAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogbmV0OjpFUlJfRkFJTEVEIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9kYXRhL3N0YXR1cyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL3ByZXNldHMiCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9hc3NldHMiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2Fzc2V0cyIKICB9LAogIHsKICAgICJraW5kIjogImNvbnNvbGUtZXJyb3IiLAogICAgInRleHQiOiAiRmFpbGVkIHRvIGxvYWQgcmVzb3VyY2U6IG5ldDo6RVJSX0ZBSUxFRCIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvYXNzZXRzIgogIH0sCiAgewogICAgImtpbmQiOiAicmVxdWVzdGZhaWxlZCIsCiAgICAidGV4dCI6ICJuZXQ6OkVSUl9GQUlMRUQgR0VUIGh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvY2FwYWJpbGl0aWVzIiwKICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9jYXBhYmlsaXRpZXMiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL2NhcGFiaWxpdGllcyIKICB9LAogIHsKICAgICJraW5kIjogInJlcXVlc3RmYWlsZWQiLAogICAgInRleHQiOiAibmV0OjpFUlJfRkFJTEVEIEdFVCBodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL21hcmtldC9zdHJlYW0iLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL21hcmtldC9zdHJlYW0iCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL21hcmtldC9zdHJlYW0iCiAgfSwKICB7CiAgICAia2luZCI6ICJyZXF1ZXN0ZmFpbGVkIiwKICAgICJ0ZXh0IjogIm5ldDo6RVJSX0ZBSUxFRCBHRVQgaHR0cDovLzEyNy4wLjAuMTo1MjAwL2FwaS9tYXJrZXQvbGl2ZSIsCiAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NTIwMC9hcGkvbWFya2V0L2xpdmUiCiAgfSwKICB7CiAgICAia2luZCI6ICJjb25zb2xlLWVycm9yIiwKICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiBuZXQ6OkVSUl9GQUlMRUQiLAogICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjUyMDAvYXBpL21hcmtldC9saXZlIgogIH0KXQ=="
                     }
                   ]
                 }
@@ -540,12 +534,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9830,
+                  "duration": 4681,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:24:06.306Z",
+                  "startTime": "2026-10-09T10:12:14.265Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -559,7 +553,7 @@
           "column": 1
         },
         {
-          "title": "reduced motion: the hero stays a still illustration",
+          "title": "reduced motion: the hero shows the landed coins at once, without spinning",
           "ok": true,
           "tags": [],
           "tests": [
@@ -574,12 +568,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5086,
+                  "duration": 2826,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:24:16.162Z",
+                  "startTime": "2026-10-09T10:12:18.960Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -587,43 +581,9 @@
               "status": "expected"
             }
           ],
-          "id": "be092eae759d55e55094-14a7a0a27fcfce7af581",
+          "id": "be092eae759d55e55094-a95c806329d46bafded2",
           "file": "states.spec.ts",
           "line": 172,
-          "column": 1
-        },
-        {
-          "title": "WebGL unavailable: the hero falls back to the SVG without errors",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium-states",
-              "projectName": "chromium-states",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 4692,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-08T21:24:21.276Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "be092eae759d55e55094-aab319333f68e92bdc74",
-          "file": "states.spec.ts",
-          "line": 182,
           "column": 1
         },
         {
@@ -642,12 +602,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 12653,
+                  "duration": 5627,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:24:25.990Z",
+                  "startTime": "2026-10-09T10:12:21.797Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -657,7 +617,7 @@
           ],
           "id": "be092eae759d55e55094-4aedfb601c3b02d7da89",
           "file": "states.spec.ts",
-          "line": 197,
+          "line": 183,
           "column": 1
         },
         {
@@ -676,12 +636,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9004,
+                  "duration": 3696,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:24:38.664Z",
+                  "startTime": "2026-10-09T10:12:27.436Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -691,7 +651,7 @@
           ],
           "id": "be092eae759d55e55094-3d035abac4326c43457f",
           "file": "states.spec.ts",
-          "line": 211,
+          "line": 197,
           "column": 1
         },
         {
@@ -710,12 +670,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8142,
+                  "duration": 6097,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-08T21:24:47.718Z",
+                  "startTime": "2026-10-09T10:12:31.144Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -725,7 +685,7 @@
           ],
           "id": "be092eae759d55e55094-b817d72316a2f4937d25",
           "file": "states.spec.ts",
-          "line": 240,
+          "line": 226,
           "column": 1
         }
       ]
@@ -733,9 +693,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-08T21:21:41.818Z",
-    "duration": 195121.035,
-    "expected": 16,
+    "startTime": "2026-10-09T10:10:40.554Z",
+    "duration": 118305.907,
+    "expected": 15,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

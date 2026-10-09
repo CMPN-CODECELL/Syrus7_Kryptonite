@@ -1,0 +1,25 @@
+# Cloud Build: build the API/worker image from the repository root and push it to Artifact Registry.
+# Run through scripts\gcp\build.ps1 (it passes the tag, the build service account and the project explicitly):
+#   gcloud builds submit . --config backend/cloudbuild.yaml --substitutions _TAG=<tag> \
+#     --service-account projects/quantfolio-511108/serviceAccounts/qf-build@quantfolio-511108.iam.gserviceaccount.com \
+#     --gcs-source-staging-dir gs://quantfolio-511108-build/source --project quantfolio-511108 --region asia-south1
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --file=backend/Dockerfile
+      - --tag=${_IMAGE}:${_TAG}
+      - --label=org.opencontainers.image.revision=${_SOURCE}
+      - --label=org.opencontainers.image.title=quantfolio
+      - .
+images:
+  - ${_IMAGE}:${_TAG}
+substitutions:
+  _IMAGE: asia-south1-docker.pkg.dev/quantfolio-511108/quantfolio/app
+  _TAG: manual
+  _SOURCE: unknown
+options:
+  logging: CLOUD_LOGGING_ONLY
+  dynamicSubstitutions: true
+timeout: 2400s

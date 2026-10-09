@@ -13,7 +13,7 @@
     "wcag21aa",
     "wcag22aa"
   ],
-  "passes": 24,
-  "incomplete": 0,
+  "passes": 26,
+  "incomplete": 1,
   "violations": []
 }

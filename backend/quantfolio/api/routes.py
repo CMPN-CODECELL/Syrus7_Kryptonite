@@ -22,6 +22,8 @@ from sse_starlette.sse import EventSourceResponse, ServerSentEvent
 from .. import __version__
 from ..contracts import (
     AssetsResponse,
+    CandleInterval,
+    CandlesResponse,
     Capabilities,
     DatasetInfo,
     DataStatusResponse,
@@ -30,6 +32,7 @@ from ..contracts import (
     HealthResponse,
     IbmStatus,
     JobStatus,
+    LiveQuotesResponse,
     PreflightReport,
     PresetsResponse,
     ReadyResponse,
@@ -60,6 +63,8 @@ class AppState:
     worker: Any = None  # WorkerProcess | None
     started_at: float = field(default_factory=time.time)
     example_note: str | None = None
+    live: Any = None  # live.LiveQuotes (display-only price ticker)
+    candles: Any = None  # candles.CandleStore (display-only chart bars; made on first use)
 
 
 def st(request: Request) -> AppState:
@@ -445,6 +450,79 @@ def ibm_check(request: Request) -> IbmStatus:
     from .. import ibm
 
     return ibm.check_access(st(request).settings)
+
+
+# --------------------------------------------------------------------------- #
+# live market prices (display only; never used by a run)
+# --------------------------------------------------------------------------- #
+@router.get("/market/live", response_model=LiveQuotesResponse)
+async def market_live(request: Request, response: Response) -> LiveQuotesResponse:
+    """Current NSE prices. The first call starts the feed and waits briefly for its first snapshot."""
+    live = st(request).live
+    live.touch()
+    await live.wait_ready(timeout=5.0)
+    response.headers["Cache-Control"] = "no-store"
+    return await live.snapshot()
+
+
+@router.get("/market/candles", response_model=CandlesResponse)
+async def market_candles(request: Request, response: Response, symbol: str = Query("^NSEI", max_length=32), interval: CandleInterval = "5m") -> CandlesResponse:
+    """Real price bars for the market chart: the latest session for 5m and 15m, about three months for 1d.
+    An empty list with status `off` or `offline` when there is nothing real to show."""
+    s = st(request)
+    if s.candles is None:
+        from .candles import CandleStore
+
+        s.candles = CandleStore(s.settings)
+    response.headers["Cache-Control"] = "no-store"
+    return await s.candles.get(symbol, interval)
+
+
+@router.get("/market/stream")
+async def market_stream(request: Request) -> EventSourceResponse:
+    """Live prices as Server-Sent Events: one `snapshot` frame, then `delta` frames with only the changed
+    quotes, at most once per second. Each stream ends after `QF_LIVE_STREAM_MAX_S`; the browser reconnects."""
+    s = st(request)
+    live = s.live
+    max_s = s.settings.live_stream_max_s
+
+    def frame(snap: LiveQuotesResponse, event: str, retry: int | None = None) -> ServerSentEvent:
+        return ServerSentEvent(data=snap.model_dump_json(), event=event, retry=retry)
+
+    async def gen():  # type: ignore[no-untyped-def]
+        if not live.enabled:
+            yield frame(await live.snapshot(), "snapshot", retry=600_000)
+            return
+        live.attach()
+        try:
+            deadline = time.monotonic() + max_s
+            await live.wait_ready(timeout=5.0)  # first frame carries prices when Yahoo answers in time
+            snap = await live.snapshot()
+            sent_seq, sent_status, sent_source = snap.seq, snap.status, snap.source
+            yield frame(snap, "snapshot", retry=3000)
+            while time.monotonic() < deadline:
+                await anyio.sleep(1.0)
+                if await request.is_disconnected():
+                    return
+                live.touch()
+                if live.seq == sent_seq and live.status() == sent_status:
+                    continue
+                snap = await live.snapshot(since=sent_seq)
+                event = "delta" if snap.source == sent_source else "snapshot"
+                if event == "snapshot":
+                    snap = await live.snapshot()
+                sent_seq, sent_status, sent_source = snap.seq, snap.status, snap.source
+                yield frame(snap, event)
+        finally:
+            live.detach()
+
+    return EventSourceResponse(
+        gen(),
+        ping=s.settings.sse_heartbeat_s,
+        ping_message_factory=_heartbeat,
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        send_timeout=30,
+    )
 
 
 @router.api_route("/{rest:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE"], include_in_schema=False)

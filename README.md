@@ -12,6 +12,8 @@ SYRUS 7.0 · Problem statement PS-03 (Portfolio Optimisation using Quantum Compu
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.143-009688?logo=fastapi&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 
+**Live demo: [quantfolio-511108.web.app](https://quantfolio-511108.web.app)** · no sign-in · shared demo, 20 runs a day (5 per visitor)
+
 </div>
 
 ---
@@ -54,7 +56,7 @@ QuantFolio picks a portfolio of NIFTY 50 stocks under real constraints, and lets
 - **Checks** the answer against exact enumeration, convex relaxation with rounding, simulated annealing and a greedy heuristic. One shared evaluator scores every solver.
 - **Shows** live progress (stages and every optimiser evaluation), the efficient frontier, the bitstring histogram, sector allocation and held-out performance.
 - **Exports** HTML, JSON and CSV reports rendered from the stored result, so the numbers in the report are the numbers on screen.
-- **Runs offline** on one Windows machine at `127.0.0.1`. IBM Quantum is optional and never required.
+- **Runs on one Windows machine** at `127.0.0.1`, and every run works offline. Only the live price ticker goes online (`QF_LIVE_QUOTES=0` turns it off). IBM Quantum is optional and never required.
 
 It is a research and teaching tool. It does not claim a quantum advantage, and nothing in it is investment advice.
 
@@ -83,7 +85,7 @@ It is a research and teaching tool. It does not claim a quantum advantage, and n
 | Node.js and npm | Node 20 or newer | Built and tested with Node 24.16.0 and npm 11.13.0. Needed only to build the web app. |
 | Memory | about 2 GB free | A default run peaks at about 500 MB for the whole process tree; 24-qubit runs need more. |
 | Disk | about 3 GB | Python packages, `node_modules`, Playwright browsers (only for end-to-end tests). |
-| Internet | only during setup | Packages are downloaded once. The app itself never goes online; the price data is bundled. |
+| Internet | only during setup | Packages are downloaded once. The price data used by runs is bundled; only the optional live price ticker goes online. |
 
 ### One-command setup
 
@@ -181,11 +183,15 @@ Server logs from a background start are in `data\logs\serve.out.log` and `data\l
 
 | View | Route | Purpose |
 | --- | --- | --- |
-| **Overview** | `/` | What the project is, a 3D hero (with a static fallback when WebGL or motion is unavailable) and a link to a completed example run. |
+| **Landing** | `/` | What the project is in one screen: a card that replays a stored quantum pick (each stock is a coin that lands on buy or skip) and a link to a completed example run. |
+| **Dashboard** | `/dashboard` | Key numbers, recent runs and shortcuts into the Lab. |
 | **Portfolio Lab** | `/lab` | Pick stocks, set the number to hold, sector caps, target return, costs and starting portfolio; choose a preset or open the advanced QAOA settings. A live preflight shows qubit count, memory estimate and any conflicting constraints before anything is queued. |
 | **Run** | `/runs/:runId` | Live stages and convergence curve over Server-Sent Events, then the result: QAOA against each baseline, frontier, bitstring histogram, sector allocation, held-out metrics and report downloads. |
 | **Experiments** | `/experiments` | Depth × optimiser × initial point × seed studies, with the effect of each factor and every cell in a table. |
 | **History** | `/history` | Every stored run and experiment, with status filters and paging. |
+| **Guardrails** | `/guardrails` | The limits the project keeps to (data, method, claims), each with where it is enforced. |
+
+A dark ticker along the top of every page shows live NIFTY 50 prices from Yahoo Finance, updated about once a second during NSE hours. Live prices are for display only and never enter a run; with `QF_LIVE_QUOTES=0`, or when Yahoo is unreachable, the ticker shows the stored closing prices and says so.
 
 Every view handles loading, empty, offline and error states, and works from 360 px phone width to wide desktop screens.
 
@@ -201,7 +207,7 @@ flowchart LR
     yahoo["Yahoo Finance"] -. "one-off download when the dataset was built" .-> data
 ```
 
-The running app has no network dependency. Yahoo Finance was used once to build the bundled dataset; IBM Quantum is used only when someone runs the IBM commands by hand.
+Runs have no network dependency: Yahoo Finance was used once to build the bundled dataset, and IBM Quantum is used only when someone runs the IBM commands by hand. The one live connection is the price ticker, which reads Yahoo Finance for display only and falls back to the stored closes when it is off or unreachable.
 
 ### Processes
 
@@ -270,7 +276,8 @@ flowchart TD
         EXP["Experiments"]
         HIS["History"]
     end
-    HERO["3D hero, lazy chunk<br/>three.js + react-three-fiber<br/>SVG fallback"]
+    HERO["Hero card<br/>CSS coin animation<br/>replays a stored run"]
+    LIVE["Live prices<br/>lib/live.ts<br/>one shared stream, polling fallback"]
     STATE["Lab state<br/>state/lab.tsx"]
     HOOKS["TanStack Query hooks<br/>api/hooks.ts"]
     CLIENT["Typed client<br/>api/client.ts"]
@@ -279,6 +286,8 @@ flowchart TD
     API[("FastAPI /api")]
 
     OV --> HERO
+    Views --> LIVE
+    LIVE --> API
     LAB --> STATE
     Views --> HOOKS
     HOOKS --> CLIENT
@@ -572,6 +581,8 @@ All paths are under `/api`. Errors use one envelope: `{"error": {"code", "messag
 | GET | `/runs/{id}/report.html` · `report.json` · `report.csv` | Reports rendered from the stored result. |
 | GET | `/runs/{id}/counts.csv` | Raw counts of the final sampling batch. |
 | GET | `/example` | The saved genuine example run. |
+| GET | `/market/live` | Live prices for the ticker: status, source and one quote per stock and index. Display only. |
+| GET | `/market/stream` | The same quotes as Server-Sent Events: a snapshot, then changes at most once a second. |
 | GET | `/ibm/status` | Whether an IBM token is configured. Local only, no network. |
 | POST | `/ibm/check` | Explicit connectivity check. Lists backends, submits nothing. |
 
@@ -715,8 +726,8 @@ No test or load test contacts IBM, Yahoo or any other third party. How each requ
 | API | FastAPI 0.143.0, uvicorn 0.54.0, sse-starlette 3.5.0, pydantic 2.14.0, psutil 7.2.2 |
 | Storage | SQLite in WAL mode, JSON result files |
 | Frontend | React 19, TypeScript 6.0, Vite 8, Tailwind CSS 4, React Router 8, TanStack Query 5 |
-| Charts and 3D | Recharts 3, three.js with @react-three/fiber 9 |
-| Fonts | Fraunces, Inter, JetBrains Mono (bundled through Fontsource, no network) |
+| Charts | Recharts 3; the candlestick chart and the hero animation are plain SVG and CSS |
+| Fonts | Plus Jakarta Sans everywhere (bundled through Fontsource, no network) |
 | Testing | pytest 9.1.1, Hypothesis, httpx, Vitest 5, Testing Library, Playwright, axe-core, Locust 2.46 |
 | Tooling | ESLint 10 with zero warnings allowed, TypeScript type check, pip-audit, ruff |
 
@@ -789,6 +800,9 @@ Copy `.env.example` to `.env` (setup does this). Every value is optional.
 | `QF_START_WORKER` | `true` | Start the job worker together with the API. |
 | `QF_ITERATION_FLUSH_HZ` | `4` | Maximum iteration events per second on the live stream. |
 | `QF_MAX_EVENTS_PER_RUN` | `3000` | Cap on stored events per run. |
+| `QF_LIVE_QUOTES` | `1` (`0` with the fake pipeline) | Live prices from Yahoo Finance for the ticker and chart. `0` makes no outbound connection. |
+| `QF_LIVE_IDLE_S` | `60` | Seconds the price feed stays open after the last viewer leaves. |
+| `QF_LIVE_STREAM_MAX_S` | `900` | Longest a browser price stream stays open before it reconnects. |
 | `IBM_QUANTUM_TOKEN`, `IBM_QUANTUM_INSTANCE` | empty | Optional IBM Quantum account. |
 
 ## Optional: IBM Quantum

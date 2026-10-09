@@ -24,11 +24,11 @@ export function ObjectiveControls({ config, update, errors }: { config: RunConfi
   const q = config.risk_aversion
   return (
     <Card>
-      <CardHeader level={2} title="Objective and budget" description="Minimise q·risk − expected return + trading costs, all annualised from the training window." />
+      <CardHeader level={2} title="Objective and budget" description="Minimise q·risk − return + costs." />
       <div className="grid grid-cols-1 gap-5">
         <Field
           label="Risk appetite"
-          hint="Sets q, the weight on portfolio variance. Moving right accepts more risk for expected return."
+          hint="Right: more risk for more return."
           error={errors.risk_aversion}
           labelAside={<span className="text-sm text-ink tabular" aria-hidden="true">q = {q}</span>}
         >
@@ -101,7 +101,7 @@ export function HoldingsControls({ config, update, errors }: { config: RunConfig
         <CardHeader
           level={2}
           title="Lots"
-          description="Each asset gets 0 to m lots, encoded with binary bits. A lot is a fraction of the budget chosen for modelling, not an exchange lot size."
+          description="Each stock gets 0 to m equal slices of the budget."
         />
         {L ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -120,7 +120,7 @@ export function HoldingsControls({ config, update, errors }: { config: RunConfig
                 checked={L.allow_cash_remainder}
                 onChange={(v) => update((d) => void (d.constraints.lots!.allow_cash_remainder = v))}
                 label="Allow uninvested cash"
-                description="Budget becomes ‘at most’ the total lots, which adds slack bits."
+                description="Spend at most the budget. Adds slack qubits."
               />
             </div>
           </div>
@@ -132,7 +132,7 @@ export function HoldingsControls({ config, update, errors }: { config: RunConfig
   }
   return (
     <Card>
-      <CardHeader level={2} title="Holdings" description="Hold exactly K of the selected assets, each at weight 1/K." />
+      <CardHeader level={2} title="Holdings" description="Hold exactly K stocks, equally weighted." />
       <Field
         label="Number of holdings (K)"
         hint={n >= 2 ? `1 to ${n} with the current selection` : 'Select assets first'}
@@ -175,7 +175,7 @@ export function SectorControls({ config, update, errors, assets }: { config: Run
   const weight = sc?.basis === 'weight'
   return (
     <Card>
-      <CardHeader level={2} title="Sector caps" description="Limit how much of the portfolio any one sector can take. Caps become penalty terms with slack bits." />
+      <CardHeader level={2} title="Sector caps" description="Cap how much any one sector can take." />
       <Toggle
         checked={!!sc}
         onChange={(on) => update((d) => void (d.constraints.sector_caps = on ? { basis: 'count', default_max: 2, per_sector: {} } : null))}
@@ -219,7 +219,7 @@ export function SectorControls({ config, update, errors, assets }: { config: Run
           {sectors.length ? (
             <fieldset>
               <legend className="text-sm font-medium text-ink-2">Per-sector overrides for your selection</legend>
-              <div className="mt-2 grid grid-cols-1 gap-x-4 gap-y-3 sm:grid-cols-2">
+              <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-3 sm:gap-x-4">
                 {sectors.map(([sec, count]) => (
                   <Field key={sec} label={`${sectorShort(sec)} · ${count} selected`} error={errors[`constraints.sector_caps.${sec}`]}>
                     {({ id, describedBy, invalid }) => (
@@ -255,7 +255,7 @@ export function TargetControls({ config, update, errors }: { config: RunConfig; 
   const t = config.constraints.target_return
   return (
     <Card>
-      <CardHeader level={2} title="Target return" description="Require at least this annualised expected return, estimated on the training window only." />
+      <CardHeader level={2} title="Target return" description="The lowest expected return you accept, per year." />
       <Toggle checked={t !== null} onChange={(on) => update((d) => void (d.constraints.target_return = on ? 0.12 : null))} label="Set a return floor" />
       {t !== null ? (
         <Field className="mt-4 max-w-xs" label="Minimum expected return (annual)" error={errors['constraints.target_return']}>
@@ -274,7 +274,7 @@ export function CostControls({ config, update, errors }: { config: RunConfig; up
   const total = Object.values(sp.weights).reduce((a, b) => a + b, 0)
   return (
     <Card>
-      <CardHeader level={2} title="Transaction costs" description="Costs are charged on traded weight relative to the starting portfolio and reported gross and net." />
+      <CardHeader level={2} title="Transaction costs" description="Charged on what you trade. Shown gross and net." />
       <Toggle checked={tc.enabled} onChange={(v) => update((d) => void (d.constraints.transaction_costs.enabled = v))} label="Include transaction costs" />
       {tc.enabled ? (
         <div className="mt-4 grid grid-cols-1 gap-4">
@@ -309,7 +309,7 @@ export function CostControls({ config, update, errors }: { config: RunConfig; up
             <fieldset>
               <legend className="text-sm font-medium text-ink-2">Current weights (the rest is cash)</legend>
               {config.symbols.length ? (
-                <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
                   {config.symbols.map((s) => (
                     <Field key={s} label={s}>
                       {({ id }) => (
@@ -358,18 +358,18 @@ export function DateControls({ config, update, errors, range }: { config: RunCon
       <CardHeader
         level={2}
         title="Date split"
-        description={`Estimate on training data, choose settings on validation, then evaluate once on the held-out test window.${range ? ` Data available ${range.first} to ${range.last}.` : ''}`}
+        description={`Train, validate, then test once.${range ? ` Data: ${range.first} to ${range.last}.` : ''}`}
       />
       {errors.dates ? (
         <p className="mb-3 text-sm font-medium text-danger" role="alert">
           {errors.dates}
         </p>
       ) : null}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
         {DATE_FIELDS.map((g) => (
           <fieldset key={g.seg} className="min-w-0 rounded-md border border-line p-3">
             <legend className="px-1 text-sm font-medium text-ink-2">{g.seg}</legend>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-1">
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-1">
               {g.keys.map(([k, label]) => (
                 <Field key={k} label={label} error={errors[`dates.${k}`]}>
                   {({ id, describedBy, invalid }) => (

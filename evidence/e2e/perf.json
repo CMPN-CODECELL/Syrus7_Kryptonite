@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-10-08T21:30:33.874Z",
+  "measuredAt": "2026-10-09T10:18:37.796Z",
   "browser": "chromium 156.0.8078.4",
   "profile": {
     "name": "Mobile 390x844 @3x, Slow 4G (150 ms RTT, 1.6 Mbit/s down, 750 kbit/s up), 4x CPU slowdown, cold cache",
@@ -26,30 +26,63 @@
       "route": "/",
       "enforced": true,
       "sameOriginStart": false,
-      "lcpMsMedian": 2356,
-      "clsMax": 0.002,
-      "withinBudget": true,
+      "lcpMsMedian": 2152,
+      "clsMax": 0.1004,
+      "withinBudget": false,
       "runs": [
         {
-          "lcpMs": 2356,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.002,
-          "fcpMs": 2356,
-          "transferKb": 629
+          "lcpMs": 2208,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.1004,
+          "fcpMs": 2208,
+          "transferKb": 211
         },
         {
-          "lcpMs": 2368,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.0019,
-          "fcpMs": 2368,
-          "transferKb": 629
+          "lcpMs": 2152,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.1004,
+          "fcpMs": 2152,
+          "transferKb": 211
         },
         {
-          "lcpMs": 2216,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.0019,
-          "fcpMs": 2216,
-          "transferKb": 629
+          "lcpMs": 2000,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.0543,
+          "fcpMs": 2000,
+          "transferKb": 211
+        }
+      ]
+    },
+    {
+      "target": "preview-gzip",
+      "base": "http://127.0.0.1:5202",
+      "route": "/dashboard",
+      "enforced": true,
+      "sameOriginStart": false,
+      "lcpMsMedian": 3912,
+      "clsMax": 0.0575,
+      "withinBudget": false,
+      "runs": [
+        {
+          "lcpMs": 3652,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0575,
+          "fcpMs": 2580,
+          "transferKb": 247
+        },
+        {
+          "lcpMs": 4316,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0575,
+          "fcpMs": 2560,
+          "transferKb": 247
+        },
+        {
+          "lcpMs": 3912,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0139,
+          "fcpMs": 2572,
+          "transferKb": 247
         }
       ]
     },
@@ -59,30 +92,30 @@
       "route": "/lab",
       "enforced": true,
       "sameOriginStart": false,
-      "lcpMsMedian": 2308,
-      "clsMax": 0.002,
+      "lcpMsMedian": 2136,
+      "clsMax": 0.003,
       "withinBudget": true,
       "runs": [
         {
-          "lcpMs": 2292,
-          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
-          "cls": 0.002,
-          "fcpMs": 2292,
-          "transferKb": 402
+          "lcpMs": 2360,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
+          "fcpMs": 2360,
+          "transferKb": 247
         },
         {
-          "lcpMs": 2372,
-          "lcpElement": "",
-          "cls": 0.002,
-          "fcpMs": 2372,
-          "transferKb": 402
+          "lcpMs": 2136,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
+          "fcpMs": 2136,
+          "transferKb": 247
         },
         {
-          "lcpMs": 2308,
-          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
-          "cls": 0.002,
-          "fcpMs": 2308,
-          "transferKb": 402
+          "lcpMs": 2024,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
+          "fcpMs": 2024,
+          "transferKb": 247
         }
       ]
     },
@@ -92,30 +125,63 @@
       "route": "/",
       "enforced": false,
       "sameOriginStart": false,
-      "lcpMsMedian": 4892,
-      "clsMax": 0.002,
+      "lcpMsMedian": 4444,
+      "clsMax": 0.1004,
       "withinBudget": false,
       "runs": [
         {
-          "lcpMs": 4940,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.0019,
-          "fcpMs": 4940,
-          "transferKb": 629
+          "lcpMs": 3888,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.1004,
+          "fcpMs": 3888,
+          "transferKb": 211
         },
         {
-          "lcpMs": 4892,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.002,
-          "fcpMs": 4892,
-          "transferKb": 629
+          "lcpMs": 4444,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.0543,
+          "fcpMs": 4444,
+          "transferKb": 211
         },
         {
-          "lcpMs": 4776,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.0019,
-          "fcpMs": 4776,
-          "transferKb": 629
+          "lcpMs": 4456,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.1004,
+          "fcpMs": 4456,
+          "transferKb": 211
+        }
+      ]
+    },
+    {
+      "target": "api-served",
+      "base": "http://127.0.0.1:8101",
+      "route": "/dashboard",
+      "enforced": false,
+      "sameOriginStart": false,
+      "lcpMsMedian": 5976,
+      "clsMax": 0.0575,
+      "withinBudget": false,
+      "runs": [
+        {
+          "lcpMs": 7380,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0575,
+          "fcpMs": 5828,
+          "transferKb": 247
+        },
+        {
+          "lcpMs": 5976,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0139,
+          "fcpMs": 4616,
+          "transferKb": 247
+        },
+        {
+          "lcpMs": 5432,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0139,
+          "fcpMs": 4492,
+          "transferKb": 247
         }
       ]
     },
@@ -125,30 +191,30 @@
       "route": "/lab",
       "enforced": false,
       "sameOriginStart": false,
-      "lcpMsMedian": 5632,
-      "clsMax": 0.002,
+      "lcpMsMedian": 4472,
+      "clsMax": 0.0048,
       "withinBudget": false,
       "runs": [
         {
-          "lcpMs": 4856,
-          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
-          "cls": 0.002,
-          "fcpMs": 4856,
-          "transferKb": 402
+          "lcpMs": 4568,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
+          "fcpMs": 4568,
+          "transferKb": 247
         },
         {
-          "lcpMs": 5632,
-          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
-          "cls": 0.002,
-          "fcpMs": 5632,
-          "transferKb": 402
+          "lcpMs": 4472,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.0048,
+          "fcpMs": 4472,
+          "transferKb": 247
         },
         {
-          "lcpMs": 7316,
-          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
-          "cls": 0.002,
-          "fcpMs": 7316,
-          "transferKb": 402
+          "lcpMs": 4432,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
+          "fcpMs": 4432,
+          "transferKb": 247
         }
       ]
     },
@@ -158,63 +224,96 @@
       "route": "/",
       "enforced": false,
       "sameOriginStart": true,
-      "lcpMsMedian": 2312,
-      "clsMax": 0.002,
+      "lcpMsMedian": 2336,
+      "clsMax": 0.1004,
+      "withinBudget": false,
+      "runs": [
+        {
+          "lcpMs": 2048,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.1004,
+          "fcpMs": 2048,
+          "transferKb": 211
+        },
+        {
+          "lcpMs": 2336,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.0543,
+          "fcpMs": 2336,
+          "transferKb": 211
+        },
+        {
+          "lcpMs": 2520,
+          "lcpElement": "h1: Quantum stock picks you can check.",
+          "cls": 0.1004,
+          "fcpMs": 2520,
+          "transferKb": 211
+        }
+      ]
+    },
+    {
+      "target": "api-served-same-origin-start",
+      "base": "http://127.0.0.1:8101",
+      "route": "/dashboard",
+      "enforced": false,
+      "sameOriginStart": true,
+      "lcpMsMedian": 3776,
+      "clsMax": 0.0578,
+      "withinBudget": false,
+      "runs": [
+        {
+          "lcpMs": 3388,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0139,
+          "fcpMs": 2264,
+          "transferKb": 247
+        },
+        {
+          "lcpMs": 3988,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0575,
+          "fcpMs": 2612,
+          "transferKb": 247
+        },
+        {
+          "lcpMs": 3776,
+          "lcpElement": "li: QAOA picked SBIN, ITC and BHARTIARTL.",
+          "cls": 0.0578,
+          "fcpMs": 2656,
+          "transferKb": 247
+        }
+      ]
+    },
+    {
+      "target": "api-served-same-origin-start",
+      "base": "http://127.0.0.1:8101",
+      "route": "/lab",
+      "enforced": false,
+      "sameOriginStart": true,
+      "lcpMsMedian": 2288,
+      "clsMax": 0.003,
       "withinBudget": true,
       "runs": [
         {
-          "lcpMs": 2216,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.0019,
-          "fcpMs": 2216,
-          "transferKb": 629
+          "lcpMs": 2272,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
+          "fcpMs": 2272,
+          "transferKb": 247
         },
         {
           "lcpMs": 2392,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.002,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
           "fcpMs": 2392,
-          "transferKb": 629
+          "transferKb": 247
         },
         {
-          "lcpMs": 2312,
-          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
-          "cls": 0.0019,
-          "fcpMs": 2312,
-          "transferKb": 629
-        }
-      ]
-    },
-    {
-      "target": "api-served-same-origin-start",
-      "base": "http://127.0.0.1:8101",
-      "route": "/lab",
-      "enforced": false,
-      "sameOriginStart": true,
-      "lcpMsMedian": 2256,
-      "clsMax": 0.002,
-      "withinBudget": true,
-      "runs": [
-        {
-          "lcpMs": 2256,
-          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
-          "cls": 0.002,
-          "fcpMs": 2256,
-          "transferKb": 402
-        },
-        {
-          "lcpMs": 2236,
-          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
-          "cls": 0.002,
-          "fcpMs": 2236,
-          "transferKb": 402
-        },
-        {
-          "lcpMs": 2544,
-          "lcpElement": "",
-          "cls": 0.002,
-          "fcpMs": 2544,
-          "transferKb": 402
+          "lcpMs": 2288,
+          "lcpElement": "p: New here? Keep the Quick preset and press Run optimisation. ",
+          "cls": 0.003,
+          "fcpMs": 2288,
+          "transferKb": 247
         }
       ]
     }
@@ -222,24 +321,24 @@
   "controls": {
     "what": "asset checkbox click until the selection count is updated and painted",
     "desktopMs": [
-      14.7,
-      13.8,
-      24,
-      46.1,
-      16,
-      62.2,
-      18.9
+      13.2,
+      9.6,
+      9.4,
+      21.8,
+      13.4,
+      15,
+      7.5
     ],
-    "desktopMedianMs": 18.9,
+    "desktopMedianMs": 13.2,
     "mobile4xCpuMs": [
-      48.3,
-      7,
-      29.1,
-      35.3,
-      36.2,
-      20.5,
-      48.8
+      30.4,
+      55.4,
+      110.7,
+      53.4,
+      43,
+      51,
+      38.3
     ],
-    "mobile4xCpuMedianMs": 35.3
+    "mobile4xCpuMedianMs": 51
   }
 }

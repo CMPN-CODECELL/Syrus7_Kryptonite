@@ -181,7 +181,8 @@ export function Toggle({
   const auto = useId()
   const descId = description ? `${id ?? auto}-d` : undefined
   return (
-    <div className="flex items-start justify-between gap-4">
+    // The switch keeps a 44px hit area but only takes the track's height in the layout, so it lines up with its label.
+    <div className={`flex justify-between gap-4 ${description ? 'items-start' : 'items-center'}`}>
       <div className="min-w-0">
         <span id={`${id ?? auto}-l`} className="text-sm font-medium text-ink-2">
           {label}
@@ -201,7 +202,7 @@ export function Toggle({
         aria-describedby={descId}
         disabled={disabled}
         onClick={() => onChange(!checked)}
-        className="group relative inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center disabled:cursor-not-allowed disabled:opacity-50"
+        className="group relative -my-2.5 inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span className={`relative h-6 w-10 rounded-full transition-colors ${checked ? 'bg-cobalt' : 'bg-line-strong'}`}>
           <span
@@ -230,7 +231,7 @@ export function Checkbox({
   describedBy?: string
 }) {
   return (
-    <label className={`inline-flex min-h-11 cursor-pointer items-center gap-2.5 text-sm text-ink-2 has-disabled:cursor-not-allowed has-disabled:opacity-60 ${className}`}>
+    <label className={`inline-flex min-h-11 cursor-pointer items-center gap-2.5 text-sm text-ink-2 pointer-fine:min-h-9 has-disabled:cursor-not-allowed has-disabled:opacity-60 ${className}`}>
       <input
         type="checkbox"
         className="h-[18px] w-[18px] shrink-0 accent-cobalt"

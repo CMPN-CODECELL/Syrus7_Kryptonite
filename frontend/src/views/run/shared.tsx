@@ -23,13 +23,22 @@ export function Downloads({ runId, counts = true }: { runId: string; counts?: bo
   )
 }
 
+/** The research disclaimer above every result, kept to one slim line on wide screens. */
+export function ResultDisclaimer() {
+  return (
+    <Notice tone="warning">
+      <span className="font-semibold text-ink">Research demonstration — not investment advice.</span> Simulated QAOA circuits and historical estimates; no live trading.
+    </Notice>
+  )
+}
+
 export function KV({ rows, className = '' }: { rows: Array<[ReactNode, ReactNode]>; className?: string }) {
   return (
-    <dl className={`grid grid-cols-1 gap-x-4 gap-y-0 text-sm sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] ${className}`}>
+    <dl className={`grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-x-4 gap-y-0 text-sm sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] ${className}`}>
       {rows.map(([k, v], i) => (
         <div key={i} className="contents">
-          <dt className="pt-2 text-muted sm:border-t sm:border-line sm:py-2">{k}</dt>
-          <dd className="min-w-0 border-b border-line pb-2 break-words text-ink sm:border-t sm:border-b-0 sm:py-2">{v}</dd>
+          <dt className="border-t border-line py-1.5 leading-snug text-muted">{k}</dt>
+          <dd className="min-w-0 border-t border-line py-1.5 leading-snug break-words text-ink">{v}</dd>
         </div>
       ))}
     </dl>
@@ -91,13 +100,31 @@ export function SoftwareCard({ software, timings, extra }: { software: Record<st
   return (
     <Card>
       <CardHeader level={2} title="Provenance" />
-      <KV rows={[...extra, ...Object.entries(software).map(([k, v]): [ReactNode, ReactNode] => [humanKey(k), <Literal key={k}>{v}</Literal>])]} />
+      <KV rows={extra} />
+      {Object.keys(software).length ? (
+        <>
+          <h3 className="mt-4 text-sm font-semibold text-ink">Software versions</h3>
+          {/* Short name/version pairs: a compact grid instead of one full-width row each. */}
+          <dl className="mt-1.5 grid grid-cols-2 gap-x-5 text-sm sm:grid-cols-3">
+            {Object.entries(software).map(([k, v]) => (
+              <div key={k} className="flex min-w-0 items-baseline justify-between gap-2 border-t border-line py-1.5">
+                <dt className="min-w-0 truncate text-muted" title={humanKey(k)}>
+                  {humanKey(k)}
+                </dt>
+                <dd className="min-w-0 text-right text-ink">
+                  <Literal>{v}</Literal>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </>
+      ) : null}
       {t.length ? (
         <>
-          <h3 className="mt-5 text-sm font-semibold text-ink">Wall-clock timings</h3>
+          <h3 className="mt-4 text-sm font-semibold text-ink">Wall-clock timings</h3>
           <ul className="mt-2 grid grid-cols-1 gap-1.5" aria-label="Runtime breakdown">
             {t.map(([k, v]) => (
-              <li key={k} className="grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)_4.5rem] items-center gap-3 text-sm">
+              <li key={k} className="grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)_4.5rem] items-center gap-3 text-sm sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)_4.5rem]">
                 <span className="leading-snug break-words text-ink-2">{humanKey(k)}</span>
                 <span className="h-2 overflow-hidden rounded-full bg-mist-2" aria-hidden="true">
                   <span className="block h-full rounded-full bg-cobalt/70" style={{ width: `${total ? (v / Math.max(...t.map((x) => x[1]))) * 100 : 0}%` }} />

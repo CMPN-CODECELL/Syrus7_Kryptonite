@@ -20,11 +20,11 @@ export default function History() {
   const pages = total !== null ? Math.max(1, Math.ceil(total / PAGE)) : null
 
   return (
-    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Runs and reports</h1>
-      <p className="mt-1 max-w-2xl text-sm text-muted sm:text-base">Every run the server has stored, including failed, cancelled and timed-out ones. Open a run to see its result, provenance and downloads.</p>
+      <p className="mt-1 max-w-2xl text-sm text-muted sm:text-base">Every stored run, including failed ones.</p>
 
-      <Card className="mt-6">
+      <Card className="mt-5">
         <div className="flex flex-wrap items-end gap-4">
           <Field label="Status" className="w-full sm:w-48">
             {({ id }) => (
@@ -156,7 +156,7 @@ function RunTable({ rows }: { rows: RunSummary[] }) {
         },
         { key: 'n', header: 'Assets', align: 'right', cell: (r) => r.n_symbols },
         { key: 'qb', header: 'Qubits', align: 'right', cell: (r) => r.total_qubits ?? DASH },
-        { key: 'cfg', header: 'Circuit', cell: (r) => (r.depth ? `p = ${r.depth}${r.optimizer ? `, ${r.optimizer}` : ''}` : DASH) },
+        { key: 'cfg', header: 'Circuit', className: 'whitespace-nowrap', cell: (r) => (r.depth ? `p = ${r.depth}${r.optimizer ? `, ${r.optimizer}` : ''}` : DASH) },
         { key: 'obj', header: 'Best objective', align: 'right', cell: (r) => formatNum(r.best_objective, 5) },
         {
           key: 'when',
@@ -167,7 +167,7 @@ function RunTable({ rows }: { rows: RunSummary[] }) {
             </time>
           ),
         },
-        { key: 'dur', header: 'Duration', align: 'right', cell: (r) => (r.finished_at ? formatDuration((Date.parse(r.finished_at) - Date.parse(r.created_at)) / 1000) : DASH) },
+        { key: 'dur', header: 'Duration', align: 'right', className: 'whitespace-nowrap', cell: (r) => (r.finished_at ? formatDuration((Date.parse(r.finished_at) - Date.parse(r.created_at)) / 1000) : DASH) },
         {
           key: 'dl',
           header: 'Reports',

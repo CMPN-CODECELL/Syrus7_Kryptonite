@@ -29,6 +29,7 @@ from ..jobs.fsutil import atomic_write_bytes, is_valid_run_id
 from ..jobs.store import JobStore
 from ..settings import Settings, get_settings
 from .errors import install_error_handlers
+from .live import LiveQuotes
 from .middleware import BodyGuardMiddleware, RequestContextMiddleware
 from .routes import AppState, router
 from .worker_proc import WorkerProcess
@@ -93,7 +94,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             d.mkdir(parents=True, exist_ok=True)
         _cleanup_upload_tmp(s)
         store = JobStore(s.db_path, s.max_events_per_run)
-        state = AppState(settings=s, store=store)
+        state = AppState(settings=s, store=store, live=LiveQuotes(s))  # live prices start with the first viewer
         app.state.qf = state
         state.example_note = await anyio.to_thread.run_sync(import_examples, s, store)
         monitor: asyncio.Task[None] | None = None
@@ -116,6 +117,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         finally:
             if monitor is not None:
                 monitor.cancel()
+            if state.live is not None:
+                await state.live.aclose()
             if state.worker is not None:
                 await anyio.to_thread.run_sync(state.worker.stop)
             store.close()

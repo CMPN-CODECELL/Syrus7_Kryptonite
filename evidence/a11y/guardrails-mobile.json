@@ -1,0 +1,19 @@
+{
+  "name": "guardrails-mobile",
+  "note": "Real pipeline, mobile 390 px",
+  "url": "http://127.0.0.1:5201/guardrails",
+  "viewport": {
+    "width": 390,
+    "height": 800
+  },
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "passes": 23,
+  "incomplete": 0,
+  "violations": []
+}

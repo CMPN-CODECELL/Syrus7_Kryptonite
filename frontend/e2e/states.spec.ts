@@ -131,7 +131,7 @@ test('API unreachable (requests aborted in the browser): an error state with a w
   await page.route('**/api/**', (route) => route.abort())
   await page.goto('/lab')
   await expect(page.getByRole('alert').filter({ hasText: 'The Portfolio Lab needs the API' })).toBeVisible({ timeout: 40_000 })
-  await expect(page.getByText('API unreachable')).toBeVisible()
+  await expect(page.getByRole('banner').getByText('API unreachable')).toBeVisible()
   await shot(page, 'lab-api-unreachable')
   await page.unroute('**/api/**')
   await page.getByRole('alert').filter({ hasText: 'The Portfolio Lab needs the API' }).getByRole('button').click()
@@ -169,29 +169,15 @@ test('keyboard only: skip link, asset, K, submit and result tabs', async ({ page
   await expect(page.getByRole('tab', { name: 'Data & provenance' })).toHaveAttribute('aria-selected', 'true')
 })
 
-test('reduced motion: the hero stays a still illustration', async ({ page }) => {
+test('reduced motion: the hero shows the landed coins at once, without spinning', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
   const hero = page.getByTestId('hero-stage').first()
-  await expect(hero).toHaveAttribute('data-hero-reason', 'reduced-motion')
-  await expect(hero).toHaveAttribute('data-hero-mode', 'svg')
-  await expect(hero.locator('canvas')).toHaveCount(0)
+  await expect(hero).toHaveAttribute('data-hero-animated', 'false')
+  await expect(page.getByTestId('hero-caption')).toHaveAttribute('data-phase', /^(done|spin)$/)
+  await expect(hero.locator('.qf-coin[data-state="idle"]')).toHaveCount(0)
+  await expect(page.getByTestId('hero-replay')).toHaveCount(0)
   await shot(page, 'landing-reduced-motion')
-})
-
-test('WebGL unavailable: the hero falls back to the SVG without errors', async ({ page }) => {
-  await page.addInitScript(() => {
-    const original = HTMLCanvasElement.prototype.getContext as (this: HTMLCanvasElement, type: string, ...rest: unknown[]) => unknown
-    HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, type: string, ...rest: unknown[]) {
-      return /webgl/i.test(type) ? null : original.call(this, type, ...rest)
-    } as typeof HTMLCanvasElement.prototype.getContext
-  })
-  await page.goto('/')
-  const hero = page.getByTestId('hero-stage').first()
-  await expect(hero).toHaveAttribute('data-hero-reason', 'no-webgl')
-  await expect(hero).toHaveAttribute('data-hero-mode', 'svg')
-  await expect(page.getByTestId('cta-dashboard')).toBeVisible()
-  await shot(page, 'landing-no-webgl')
 })
 
 test('no feasible QAOA sample (result mocked in the browser)', async ({ page }) => {

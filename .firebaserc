@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "quantfolio-511108"
+  },
+  "targets": {
+    "quantfolio-511108": {
+      "hosting": {
+        "app": [
+          "quantfolio-511108"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
