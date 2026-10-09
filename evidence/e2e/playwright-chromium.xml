@@ -1,0 +1,36 @@
+<testsuites id="" name="" tests="14" failures="0" skipped="0" errors="0" time="529.640744">
+<testsuite name="journey.spec.ts" timestamp="2026-10-08T21:25:07.847Z" hostname="chromium" tests="1" failures="0" skipped="0" time="68.584" errors="0">
+<testcase name="primary journey: select, constrain, preflight, run, compare, export, reopen from History" classname="journey.spec.ts" time="68.584">
+</testcase>
+</testsuite>
+<testsuite name="perf.spec.ts" timestamp="2026-10-08T21:25:07.847Z" hostname="chromium" tests="1" failures="0" skipped="0" time="253.46" errors="0">
+<testcase name="mobile LCP and CLS under the documented throttling profile, and control response time" classname="perf.spec.ts" time="253.46">
+</testcase>
+</testsuite>
+<testsuite name="views.spec.ts" timestamp="2026-10-08T21:25:07.847Z" hostname="chromium" tests="12" failures="0" skipped="0" time="201.407" errors="0">
+<testcase name="overview: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="21.665">
+</testcase>
+<testcase name="overview: axe finds no serious or critical issues" classname="views.spec.ts" time="23.839">
+</testcase>
+<testcase name="lab: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="18.562">
+</testcase>
+<testcase name="lab: axe finds no serious or critical issues" classname="views.spec.ts" time="30.095">
+</testcase>
+<testcase name="run: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="20.98">
+</testcase>
+<testcase name="run: axe finds no serious or critical issues" classname="views.spec.ts" time="28.308">
+</testcase>
+<testcase name="experiments: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="8.35">
+</testcase>
+<testcase name="experiments: axe finds no serious or critical issues" classname="views.spec.ts" time="11.704">
+</testcase>
+<testcase name="history: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="8.146">
+</testcase>
+<testcase name="history: axe finds no serious or critical issues" classname="views.spec.ts" time="11.757">
+</testcase>
+<testcase name="not-found: screenshots at 360/390/768/1280/1440 px without horizontal overflow" classname="views.spec.ts" time="7.063">
+</testcase>
+<testcase name="not-found: axe finds no serious or critical issues" classname="views.spec.ts" time="10.938">
+</testcase>
+</testsuite>
+</testsuites>

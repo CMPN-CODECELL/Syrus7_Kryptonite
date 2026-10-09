@@ -1,0 +1,36 @@
+<testsuites id="" name="" tests="16" failures="0" skipped="0" errors="0" time="195.121035">
+<testsuite name="states.spec.ts" timestamp="2026-10-08T21:21:41.966Z" hostname="chromium-states" tests="16" failures="0" skipped="0" time="189.705" errors="0">
+<testcase name="infeasible: the preflight blocks a problem that is too large" classname="states.spec.ts" time="15.032">
+</testcase>
+<testcase name="infeasible: the server rejects the configuration (fake seed 999)" classname="states.spec.ts" time="8.751">
+</testcase>
+<testcase name="failed run (fake seed 777): a sanitised error and a retry" classname="states.spec.ts" time="12.698">
+</testcase>
+<testcase name="timeout (fake seed 888 hangs, 10 s limit)" classname="states.spec.ts" time="19.226">
+</testcase>
+<testcase name="cancel a run, then run the same settings again" classname="states.spec.ts" time="14.8">
+</testcase>
+<testcase name="a page refresh in the middle of a run resumes the live view" classname="states.spec.ts" time="20.233">
+</testcase>
+<testcase name="a lost event stream reconnects, falls back to polling and still shows the result" classname="states.spec.ts" time="23.511">
+</testcase>
+<testcase name="a double-click on submit starts exactly one run" classname="states.spec.ts" time="10.158">
+</testcase>
+<testcase name="offline: the app says so, blocks submit and recovers" classname="states.spec.ts" time="8.004">
+</testcase>
+<testcase name="API unreachable (requests aborted in the browser): an error state with a working retry" classname="states.spec.ts" time="7.885">
+</testcase>
+<testcase name="keyboard only: skip link, asset, K, submit and result tabs" classname="states.spec.ts" time="9.83">
+</testcase>
+<testcase name="reduced motion: the hero stays a still illustration" classname="states.spec.ts" time="5.086">
+</testcase>
+<testcase name="WebGL unavailable: the hero falls back to the SVG without errors" classname="states.spec.ts" time="4.692">
+</testcase>
+<testcase name="no feasible QAOA sample (result mocked in the browser)" classname="states.spec.ts" time="12.653">
+</testcase>
+<testcase name="loading, empty and stale states (responses delayed or mocked in the browser)" classname="states.spec.ts" time="9.004">
+</testcase>
+<testcase name="an experiment sweep runs and shows its cells" classname="states.spec.ts" time="8.142">
+</testcase>
+</testsuite>
+</testsuites>

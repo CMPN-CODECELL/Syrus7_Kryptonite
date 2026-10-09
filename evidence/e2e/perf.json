@@ -1,0 +1,245 @@
+{
+  "measuredAt": "2026-10-08T21:30:33.874Z",
+  "browser": "chromium 156.0.8078.4",
+  "profile": {
+    "name": "Mobile 390x844 @3x, Slow 4G (150 ms RTT, 1.6 Mbit/s down, 750 kbit/s up), 4x CPU slowdown, cold cache",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "deviceScaleFactor": 3,
+    "latencyMs": 150,
+    "downKbps": 1600,
+    "upKbps": 750,
+    "cpuSlowdown": 4
+  },
+  "budget": {
+    "lcpMs": 2500,
+    "cls": 0.1,
+    "interactionMs": 100
+  },
+  "runsPerPage": 3,
+  "results": [
+    {
+      "target": "preview-gzip",
+      "base": "http://127.0.0.1:5202",
+      "route": "/",
+      "enforced": true,
+      "sameOriginStart": false,
+      "lcpMsMedian": 2356,
+      "clsMax": 0.002,
+      "withinBudget": true,
+      "runs": [
+        {
+          "lcpMs": 2356,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.002,
+          "fcpMs": 2356,
+          "transferKb": 629
+        },
+        {
+          "lcpMs": 2368,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.0019,
+          "fcpMs": 2368,
+          "transferKb": 629
+        },
+        {
+          "lcpMs": 2216,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.0019,
+          "fcpMs": 2216,
+          "transferKb": 629
+        }
+      ]
+    },
+    {
+      "target": "preview-gzip",
+      "base": "http://127.0.0.1:5202",
+      "route": "/lab",
+      "enforced": true,
+      "sameOriginStart": false,
+      "lcpMsMedian": 2308,
+      "clsMax": 0.002,
+      "withinBudget": true,
+      "runs": [
+        {
+          "lcpMs": 2292,
+          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
+          "cls": 0.002,
+          "fcpMs": 2292,
+          "transferKb": 402
+        },
+        {
+          "lcpMs": 2372,
+          "lcpElement": "",
+          "cls": 0.002,
+          "fcpMs": 2372,
+          "transferKb": 402
+        },
+        {
+          "lcpMs": 2308,
+          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
+          "cls": 0.002,
+          "fcpMs": 2308,
+          "transferKb": 402
+        }
+      ]
+    },
+    {
+      "target": "api-served",
+      "base": "http://127.0.0.1:8101",
+      "route": "/",
+      "enforced": false,
+      "sameOriginStart": false,
+      "lcpMsMedian": 4892,
+      "clsMax": 0.002,
+      "withinBudget": false,
+      "runs": [
+        {
+          "lcpMs": 4940,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.0019,
+          "fcpMs": 4940,
+          "transferKb": 629
+        },
+        {
+          "lcpMs": 4892,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.002,
+          "fcpMs": 4892,
+          "transferKb": 629
+        },
+        {
+          "lcpMs": 4776,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.0019,
+          "fcpMs": 4776,
+          "transferKb": 629
+        }
+      ]
+    },
+    {
+      "target": "api-served",
+      "base": "http://127.0.0.1:8101",
+      "route": "/lab",
+      "enforced": false,
+      "sameOriginStart": false,
+      "lcpMsMedian": 5632,
+      "clsMax": 0.002,
+      "withinBudget": false,
+      "runs": [
+        {
+          "lcpMs": 4856,
+          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
+          "cls": 0.002,
+          "fcpMs": 4856,
+          "transferKb": 402
+        },
+        {
+          "lcpMs": 5632,
+          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
+          "cls": 0.002,
+          "fcpMs": 5632,
+          "transferKb": 402
+        },
+        {
+          "lcpMs": 7316,
+          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
+          "cls": 0.002,
+          "fcpMs": 7316,
+          "transferKb": 402
+        }
+      ]
+    },
+    {
+      "target": "api-served-same-origin-start",
+      "base": "http://127.0.0.1:8101",
+      "route": "/",
+      "enforced": false,
+      "sameOriginStart": true,
+      "lcpMsMedian": 2312,
+      "clsMax": 0.002,
+      "withinBudget": true,
+      "runs": [
+        {
+          "lcpMs": 2216,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.0019,
+          "fcpMs": 2216,
+          "transferKb": 629
+        },
+        {
+          "lcpMs": 2392,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.002,
+          "fcpMs": 2392,
+          "transferKb": 629
+        },
+        {
+          "lcpMs": 2312,
+          "lcpElement": "p: Select a constrained portfolio from the NIFTY 50: a fixed nu",
+          "cls": 0.0019,
+          "fcpMs": 2312,
+          "transferKb": 629
+        }
+      ]
+    },
+    {
+      "target": "api-served-same-origin-start",
+      "base": "http://127.0.0.1:8101",
+      "route": "/lab",
+      "enforced": false,
+      "sameOriginStart": true,
+      "lcpMsMedian": 2256,
+      "clsMax": 0.002,
+      "withinBudget": true,
+      "runs": [
+        {
+          "lcpMs": 2256,
+          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
+          "cls": 0.002,
+          "fcpMs": 2256,
+          "transferKb": 402
+        },
+        {
+          "lcpMs": 2236,
+          "lcpElement": "p: Choose assets and constraints. The preflight shows how the p",
+          "cls": 0.002,
+          "fcpMs": 2236,
+          "transferKb": 402
+        },
+        {
+          "lcpMs": 2544,
+          "lcpElement": "",
+          "cls": 0.002,
+          "fcpMs": 2544,
+          "transferKb": 402
+        }
+      ]
+    }
+  ],
+  "controls": {
+    "what": "asset checkbox click until the selection count is updated and painted",
+    "desktopMs": [
+      14.7,
+      13.8,
+      24,
+      46.1,
+      16,
+      62.2,
+      18.9
+    ],
+    "desktopMedianMs": 18.9,
+    "mobile4xCpuMs": [
+      48.3,
+      7,
+      29.1,
+      35.3,
+      36.2,
+      20.5,
+      48.8
+    ],
+    "mobile4xCpuMedianMs": 35.3
+  }
+}
