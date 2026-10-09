@@ -5,6 +5,7 @@ import type { ExperimentConfigInput, InitStrategy, Optimizer, RunConfigInput } f
 import { errorMessage, useCapabilities, useOnline, usePreflight, usePresets, useSubmitJob } from '../api/hooks'
 import { Button, Card, CardHeader, Checkbox, ErrorState, Field, IconArrowRight, LoadingBlock, Metric, Notice, NumberInput, Segmented, TextInput } from '../components/ui'
 import { formatDuration, formatInt } from '../lib/format'
+import { GLOSSARY } from '../lib/glossary'
 import { rememberRunConfig } from '../lib/storage'
 import { validateRunConfig } from '../lib/validate'
 import { useLab } from '../state/lab'
@@ -21,14 +22,10 @@ export default function Experiments() {
   useEffect(() => {
     if (presets.data) seed(presets.data.default_config)
   }, [presets.data, seed])
-  useEffect(() => {
-    document.title = 'Experiment Lab · QuantFolio'
-  }, [])
 
   return (
-    <div className="mx-auto max-w-[1320px] px-4 pt-8 sm:px-6">
-      <p className="eyebrow">Experiment Lab</p>
-      <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Study what changes the answer</h1>
+    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Study what changes the answer</h1>
       <p className="mt-2 max-w-2xl text-muted">
         Sweep circuit depth, optimiser, initialisation and universe size on the Lab’s current problem. Every cell is a full QAOA run with a visible seed and budget, scored against the exact optimum where it can be computed.
       </p>
@@ -103,7 +100,7 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
 
   const fe = fieldErrors(submit.error)
   return (
-    <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+    <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
       <div className="grid grid-cols-1 min-w-0 gap-5">
         <Card>
           <CardHeader
@@ -116,10 +113,14 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
             }
           />
           <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <Metric label="Assets" value={base.symbols.length} />
-            <Metric label="Mode" value={base.mode === 'lots' ? 'Lots' : `K = ${base.constraints.cardinality ?? '?'}`} />
-            <Metric label="Evaluations per cell" value={formatInt(base.qaoa.max_evaluations)} />
-            <Metric label="Shots per evaluation" value={formatInt(base.qaoa.shots)} />
+            <Metric label="Stocks" value={base.symbols.length} help="How many stocks the base problem chooses from." />
+            <Metric
+              label="Mode"
+              value={base.mode === 'lots' ? 'Lots' : `K = ${base.constraints.cardinality ?? '?'}`}
+              help={base.mode === 'lots' ? GLOSSARY.lots : GLOSSARY.cardinality}
+            />
+            <Metric label="Evaluations per cell" value={formatInt(base.qaoa.max_evaluations)} help={GLOSSARY.evaluations} />
+            <Metric label="Shots per evaluation" value={formatInt(base.qaoa.shots)} help={GLOSSARY.shots} />
           </dl>
           {nBase ? (
             <Notice tone="warning" className="mt-3" title="The base problem has invalid settings">
@@ -181,18 +182,23 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
         </Card>
       </div>
 
-      <aside className="min-w-0 lg:sticky lg:top-20">
+      <aside className="min-w-0 xl:sticky xl:top-6">
         <Card>
           <h2 className="text-base font-semibold text-ink">Cost before you run</h2>
           <dl className="mt-3 grid grid-cols-2 gap-4">
-            <Metric label="Cells" value={<span data-testid="exp-cells">{formatInt(cells)}</span>} hint={`${formatInt(seeds.values.length)} seed${seeds.values.length === 1 ? '' : 's'} each`} />
-            <Metric label="Evaluation budget" value={formatInt(evals)} hint="cells × evaluations per cell" />
+            <Metric
+              label="Cells"
+              value={<span data-testid="exp-cells">{formatInt(cells)}</span>}
+              hint={`${formatInt(seeds.values.length)} seed${seeds.values.length === 1 ? '' : 's'} each`}
+              help="One cell is one full run with one combination of the settings you sweep. Every combination is run once per seed."
+            />
+            <Metric label="Evaluation budget" value={formatInt(evals)} hint="cells × evaluations per cell" help={GLOSSARY.evaluations} />
             <Metric
               label="Runtime estimate"
               value={perRun !== null ? `≈ ${formatDuration(perRun * cells)}` : 'not available'}
               hint={perRun !== null ? `${formatDuration(perRun)} per base run (preflight) × cells; varies with depth and size` : 'The server has no runtime estimate for this problem yet'}
             />
-            <Metric label="Qubits (base)" value={preflight.data ? preflight.data.total_qubits : '…'} />
+            <Metric label="Qubits (base)" value={preflight.data ? preflight.data.total_qubits : '…'} help={GLOSSARY.qubits} />
           </dl>
           {errors.cells ? (
             <Notice tone="danger" className="mt-3">
@@ -212,7 +218,7 @@ function ExperimentForm({ base, caps }: { base: NonNullable<ReturnType<typeof us
                 <ul className="mt-1 list-disc pl-5">
                   {fe.map((f) => (
                     <li key={f.loc}>
-                      <span className="font-mono text-xs">{f.loc}</span>: {f.msg}
+                      <span className="font-semibold">{f.loc}</span>: {f.msg}
                     </li>
                   ))}
                 </ul>

@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
 import type { Holding, Residual, RunResult, SampleRow, SolverName, SolverResult } from '../../api/contract.gen'
 import { ConvergenceChart, FrontierChart, HistogramChart, NoiseChart, SectorChart } from '../../components/charts/charts'
-import { Badge, Card, CardHeader, Disclosure, EmptyState, IconAlert, IconCheck, IconX, Metric, Notice, Segmented, StatusChip, Table, Tabs } from '../../components/ui'
+import { Badge, Card, CardHeader, Disclosure, EmptyState, IconAlert, IconCheck, IconX, InSimpleWords, Metric, Notice, Segmented, StatusChip, Table, Tabs } from '../../components/ui'
 import type { Column } from '../../components/ui/Table'
-import { DASH, SOLVER_LABEL, STATUS_LABEL, formatDateTime, formatInr, formatInt, formatNum, formatPct } from '../../lib/format'
+import { DASH, SOLVER_LABEL, STATUS_LABEL, formatDate, formatDateTime, formatInr, formatInt, formatNum, formatPct } from '../../lib/format'
+import { GLOSSARY } from '../../lib/glossary'
+import { plainRunSummary } from '../../lib/plain'
 import { bestClassical, decodeSelection, formatUnknown, gapReference, gapText, humanKey, numericEntries, solver, solverRuntime, sortedSolvers } from '../../lib/result'
-import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Mono, PeriodBlock, SoftwareCard } from './shared'
+import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Literal, PeriodBlock, SoftwareCard } from './shared'
 
 type TabId = 'summary' | 'compare' | 'qaoa' | 'provenance'
 
@@ -76,20 +78,30 @@ function Headline({ result, q, reference }: { result: RunResult; q: SolverResult
         {q ? <StatusChip status={q.status} /> : <Badge>QAOA not run</Badge>}
       </div>
       {q?.status_detail ? <p className="mt-1 text-sm text-ink-2">{q.status_detail}</p> : null}
+      <InSimpleWords className="mt-4">
+        <ul className="space-y-1" data-testid="plain-summary">
+          {plainRunSummary(result).map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      </InSimpleWords>
       <dl className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Metric label="QAOA objective" value={qp ? formatNum(qp.objective, 5) : DASH} hint="Lower is better: q·risk − return + costs" />
+        <Metric label="QAOA score" value={qp ? formatNum(qp.objective, 5) : DASH} hint="Lower is better: q·risk − return + costs" help={GLOSSARY.objective} />
         <Metric
           label="Gap to reference"
+          help={GLOSSARY.gap}
           value={gapText(q?.gap ?? null)}
           hint={q?.gap ? gapReference(q.gap) : !reference ? 'No feasible classical reference' : qp ? 'This run did not report a gap' : 'No gap: QAOA had no feasible answer'}
         />
         <Metric
-          label="Best classical objective"
+          label="Best classical score"
           value={reference?.portfolio ? formatNum(reference.portfolio.objective, 5) : DASH}
           hint={reference ? SOLVER_LABEL[reference.solver] : undefined}
+          help={GLOSSARY.baselines}
         />
         <Metric
           label="Feasible share of final batch"
+          help="Of the final batch of measurements, the share that gave a portfolio following every rule. Higher means the circuit learned the rules well."
           value={result.qaoa ? formatPct(result.qaoa.final_batch.feasible_probability, 1) : DASH}
           hint={result.qaoa ? `${formatInt(result.qaoa.final_batch.shots)} shots` : undefined}
         />
@@ -142,12 +154,24 @@ function SummaryTab({ result }: { result: RunResult }) {
           <Card>
             <CardHeader level={2} title={`${SOLVER_LABEL[s.solver]} portfolio`} aside={<StatusChip status={s.status} />} description={s.status_detail ?? undefined} />
             <dl className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6" data-testid="portfolio-metrics">
-              <Metric label="Expected return" value={formatPct(p.expected_return, 2, { sign: true })} unit="p.a., gross" tone={p.expected_return < 0 ? 'loss' : undefined} />
-              <Metric label="Net of costs" value={formatPct(p.net_expected_return, 2, { sign: true })} unit="p.a." tone={p.net_expected_return < 0 ? 'loss' : undefined} />
-              <Metric label="Volatility" value={formatPct(p.volatility, 2)} unit="p.a." />
-              <Metric label="Sharpe estimate" value={formatNum(p.sharpe_estimate, 2)} hint={`Risk-free ${formatPct(result.config.risk_free_rate, 2)}`} />
-              <Metric label="Objective" value={formatNum(p.objective, 5)} hint={`q = ${formatNum(result.config.risk_aversion, 3)}`} />
-              <Metric label="Transaction costs" value={formatInr(p.cost_inr)} hint={`${formatPct(p.cost_fraction, 3)} of budget`} />
+              <Metric
+                label="Expected return"
+                value={formatPct(p.expected_return, 2, { sign: true })}
+                unit="p.a., gross"
+                tone={p.expected_return < 0 ? 'loss' : undefined}
+                help={GLOSSARY.expectedReturn}
+              />
+              <Metric
+                label="Net of costs"
+                value={formatPct(p.net_expected_return, 2, { sign: true })}
+                unit="p.a."
+                tone={p.net_expected_return < 0 ? 'loss' : undefined}
+                help="Expected return after subtracting trading costs."
+              />
+              <Metric label="Volatility" value={formatPct(p.volatility, 2)} unit="p.a." help={GLOSSARY.volatility} />
+              <Metric label="Sharpe estimate" value={formatNum(p.sharpe_estimate, 2)} hint={`Risk-free ${formatPct(result.config.risk_free_rate, 2)}`} help={GLOSSARY.sharpe} />
+              <Metric label="Score" value={formatNum(p.objective, 5)} hint={`q = ${formatNum(result.config.risk_aversion, 3)}`} help={GLOSSARY.objective} />
+              <Metric label="Transaction costs" value={formatInr(p.cost_inr)} hint={`${formatPct(p.cost_fraction, 3)} of budget`} help={GLOSSARY.costs} />
             </dl>
             <p className="mt-3 text-xs text-muted">
               Training-window estimates on {formatInr(result.config.budget_inr)}; cash left uninvested {formatInr(p.cash_inr)} ({formatPct(p.cash_weight, 2)}).
@@ -157,7 +181,7 @@ function SummaryTab({ result }: { result: RunResult }) {
           <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
             <Card>
               <CardHeader level={2} title="Holdings" />
-              <HoldingsTable holdings={p.holdings} lots={result.config.mode === 'lots'} />
+              <HoldingsTable holdings={p.holdings} lots={result.config.mode === 'lots'} priceDate={result.config.dates.train_end} />
             </Card>
             <Card>
               <SectorChart weights={p.sector_weights} caps={capMap} />
@@ -191,8 +215,8 @@ function SummaryTab({ result }: { result: RunResult }) {
               description="The risk model was fitted on the training window only. Validation selects settings; the test window is evaluated once, last."
             />
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <PeriodBlock title="Validation window" m={p.validation} />
-              <PeriodBlock title="Held-out test window" m={p.test} />
+              <PeriodBlock title="Validation window" m={p.validation} help={GLOSSARY.validationReturn} />
+              <PeriodBlock title="Held-out test window" m={p.test} help={GLOSSARY.testReturn} />
             </div>
             <p className="mt-4 border-t border-line pt-3 text-xs leading-relaxed text-muted">{result.dataset.survivorship_note}</p>
           </Card>
@@ -216,7 +240,7 @@ function SummaryTab({ result }: { result: RunResult }) {
   )
 }
 
-function HoldingsTable({ holdings, lots }: { holdings: Holding[]; lots: boolean }) {
+function HoldingsTable({ holdings, lots, priceDate }: { holdings: Holding[]; lots: boolean; priceDate: string }) {
   const rows = [...holdings].sort((a, b) => b.weight - a.weight)
   const cols: Array<Column<Holding>> = [
     { key: 'sym', header: 'Symbol', rowHeader: true, cell: (h) => <span className="font-medium">{h.symbol}</span> },
@@ -224,7 +248,7 @@ function HoldingsTable({ holdings, lots }: { holdings: Holding[]; lots: boolean 
     { key: 'w', header: 'Weight', align: 'right', cell: (h) => formatPct(h.weight, 2) },
     { key: 'amt', header: 'Amount', align: 'right', cell: (h) => formatInr(h.amount_inr) },
     ...(lots ? [{ key: 'lots', header: 'Lots', align: 'right' as const, cell: (h: Holding) => formatInt(h.lots) }] : []),
-    { key: 'px', header: 'Last price', align: 'right', cell: (h) => formatInr(h.price_inr, { paise: true }) },
+    { key: 'px', header: `Price on ${formatDate(priceDate)}`, align: 'right', cell: (h) => formatInr(h.price_inr, { paise: true }) },
     { key: 'sh', header: 'Shares*', align: 'right', cell: (h) => formatInt(h.indicative_shares) },
   ]
   // The note on shares sits under the table rather than in a header tooltip: a tooltip inside the scroll region is
@@ -251,7 +275,8 @@ function HoldingsTable({ holdings, lots }: { holdings: Holding[]; lots: boolean 
         }
       />
       <p className="mt-2 text-xs leading-relaxed text-muted">
-        * Indicative shares: amount divided by the last cached close, rounded down. Prices move and exchange lot rules are not modelled.
+        * Indicative shares: amount divided by the NSE closing price on the last training day ({formatDate(priceDate)}), rounded down to whole shares.
+        Prices move after that day and exchange lot rules are not modelled.
       </p>
     </>
   )
@@ -433,7 +458,7 @@ function QaoaTab({ result }: { result: RunResult }) {
               rowHeader: true,
               cell: (r: SampleRow) => (
                 <span className="inline-flex items-center gap-1.5">
-                  <Mono>{r.decision_bits}</Mono>
+                  <Literal>{r.decision_bits}</Literal>
                   {r.bitstring === fb.best_bitstring ? <Badge tone="teal">chosen</Badge> : null}
                 </span>
               ),
@@ -460,7 +485,7 @@ function QaoaTab({ result }: { result: RunResult }) {
           ]}
         />
         <p className="mt-2 text-xs text-muted">
-          {formatInt(fb.distinct_bitstrings)} distinct bitstrings in {formatInt(fb.shots)} shots · sampling seed {fb.seed} · counts SHA-256 <Mono>{fb.counts_sha256}</Mono>
+          {formatInt(fb.distinct_bitstrings)} distinct bitstrings in {formatInt(fb.shots)} shots · sampling seed {fb.seed} · counts SHA-256 <Literal>{fb.counts_sha256}</Literal>
         </p>
       </Card>
 
@@ -495,7 +520,7 @@ function QaoaTab({ result }: { result: RunResult }) {
             rows={qa.parameter_order.map((name, i) => ({ name, init: qa.initial_parameters[i], opt: qa.optimal_parameters[i] }))}
             rowKey={(r) => r.name}
             columns={[
-              { key: 'n', header: 'Parameter', rowHeader: true, cell: (r) => <Mono>{r.name}</Mono> },
+              { key: 'n', header: 'Parameter', rowHeader: true, cell: (r) => <Literal>{r.name}</Literal> },
               { key: 'i', header: 'Initial', align: 'right', cell: (r) => formatNum(r.init, 4) },
               { key: 'o', header: 'Optimised', align: 'right', cell: (r) => formatNum(r.opt, 4) },
             ]}
@@ -506,10 +531,14 @@ function QaoaTab({ result }: { result: RunResult }) {
       <Card>
         <CardHeader level={2} title="QUBO encoding" description={result.qubo.objective_definition} />
         <dl className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <Metric label="Decision bits" value={result.qubo.n_decision} />
-          <Metric label="Slack bits" value={result.qubo.n_slack} />
-          <Metric label="Linear terms" value={formatInt(result.qubo.n_linear_terms)} />
-          <Metric label="Quadratic terms" value={formatInt(result.qubo.n_quadratic_terms)} />
+          <Metric label="Decision bits" value={result.qubo.n_decision} help="Qubits that stand for stocks (or lots): 1 means buy, 0 means skip." />
+          <Metric label="Slack bits" value={result.qubo.n_slack} help={GLOSSARY.slackQubits} />
+          <Metric label="Linear terms" value={formatInt(result.qubo.n_linear_terms)} help="Parts of the score that depend on one qubit alone, such as a stock's own expected return." />
+          <Metric
+            label="Quadratic terms"
+            value={formatInt(result.qubo.n_quadratic_terms)}
+            help="Parts of the score that depend on a pair of qubits, such as how two stocks move together. Each one becomes a two-qubit gate."
+          />
         </dl>
         <div className="mt-4">
           <Table
@@ -534,7 +563,7 @@ function QaoaTab({ result }: { result: RunResult }) {
             rowKey={(v) => String(v.index)}
             columns={[
               { key: 'i', header: 'Bit', cell: (v) => v.index },
-              { key: 'n', header: 'Name', rowHeader: true, cell: (v) => <Mono>{v.name}</Mono> },
+              { key: 'n', header: 'Name', rowHeader: true, cell: (v) => <Literal>{v.name}</Literal> },
               { key: 'k', header: 'Kind', cell: (v) => v.kind.replace('_', ' ') },
               { key: 'a', header: 'Asset or constraint', cell: (v) => v.asset ?? (v.constraint ? humanKey(v.constraint) : DASH) },
               { key: 'c', header: 'Coefficient', align: 'right', cell: (v) => formatNum(v.coefficient, 3) },
@@ -593,10 +622,10 @@ function ProvenanceTab({ result }: { result: RunResult }) {
         software={result.software}
         timings={result.timings_s}
         extra={[
-          ['Run id', <Mono key="r">{result.run_id}</Mono>],
+          ['Run id', <Literal key="r">{result.run_id}</Literal>],
           ['Created', formatDateTime(result.created_at)],
-          ['Config hash', <Mono key="h">{result.config_hash}</Mono>],
-          ['Cache key', <Mono key="c">{result.cache_key}</Mono>],
+          ['Config hash', <Literal key="h">{result.config_hash}</Literal>],
+          ['Cache key', <Literal key="c">{result.cache_key}</Literal>],
           ['Implementation', `${result.implementation_version} · schema ${result.schema_version}`],
           ['Encoded universe', result.encoded_symbols.join(', ')],
         ]}

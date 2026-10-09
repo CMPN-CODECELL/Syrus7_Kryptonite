@@ -1,6 +1,7 @@
 import type { ConflictKind, Issue, PreflightReport } from '../../api/contract.gen'
 import { Badge, Disclosure, ErrorState, IconAlert, IconCheck, IconInfo, IconX, Skeleton, Tooltip } from '../../components/ui'
 import { formatDuration, formatInt, formatMemoryEstimate } from '../../lib/format'
+import { GLOSSARY } from '../../lib/glossary'
 
 const CONFLICT_LABEL: Record<ConflictKind, string> = {
   proven_infeasible: 'Proven infeasible',
@@ -14,11 +15,14 @@ const SEVERITY = {
   info: { tone: 'cobalt', icon: <IconInfo size={14} />, label: 'Note' },
 } as const
 
-function Row({ label, value, hint }: { label: React.ReactNode; value: React.ReactNode; hint?: React.ReactNode }) {
+function Row({ label, value, hint, help }: { label: string; value: React.ReactNode; hint?: React.ReactNode; help?: React.ReactNode }) {
   return (
     <div className="flex items-baseline justify-between gap-3 py-1.5">
       <dt className="text-sm text-muted">
-        {label}
+        <span className="inline-flex items-center gap-1">
+          {label}
+          {help ? <Tooltip content={help} label={`What does "${label}" mean?`} /> : null}
+        </span>
         {hint ? <span className="block text-xs text-faint">{hint}</span> : null}
       </dt>
       <dd className="text-right text-sm font-medium text-ink tabular">{value}</dd>
@@ -45,7 +49,7 @@ export function IssueList({ issues }: { issues: Issue[] }) {
                   {s.label}
                 </Badge>
                 {i.constraints.map((c) => (
-                  <span key={c} className="font-mono text-xs text-muted">
+                  <span key={c} className="text-xs text-muted tabular">
                     {c}
                   </span>
                 ))}
@@ -102,6 +106,7 @@ export function PreflightPanel({
           {status}
         </span>
       </div>
+      <p className="mt-1 text-xs leading-relaxed text-muted">A check before anything runs: how big the quantum problem is and whether your rules can all be met.</p>
       {blockedByForm ? <p className="mt-2 text-sm text-muted">The preflight runs once the highlighted fields are valid.</p> : null}
       {error && !blockedByForm ? <ErrorState className="mt-3" error={error} title="Preflight could not run" onRetry={onRetry} /> : null}
       {!r && !error && !blockedByForm ? (
@@ -120,7 +125,10 @@ export function PreflightPanel({
           ) : null}
           <div className="mt-3">
             <div className="flex items-baseline justify-between text-sm">
-              <span className="text-muted">Total qubits</span>
+              <span className="inline-flex items-center gap-1 text-muted">
+                Total qubits
+                <Tooltip content={GLOSSARY.qubits} label='What does "Total qubits" mean?' />
+              </span>
               <span className="tabular">
                 <span className="text-2xl font-semibold text-ink" data-testid="pf-qubits">
                   {r.total_qubits}
@@ -136,24 +144,29 @@ export function PreflightPanel({
             </p>
           </div>
           <dl className="mt-3 divide-y divide-line border-y border-line">
-            <Row label="Universe" value={`${r.requested_symbols.length} selected → ${r.encoded_symbols.length} encoded`} hint={r.screened_out.length ? `${r.screened_out.length} screened out (${r.screening_rule})` : undefined} />
-            <Row label="Holdings K" value={r.portfolio_size ?? 'lots mode'} />
-            <Row label="Circuit depth p" value={r.depth} />
-            <Row label="Shots per evaluation" value={formatInt(r.shots)} />
-            <Row label="Final batch shots" value={formatInt(r.final_shots)} />
-            <Row label="Evaluation budget" value={formatInt(r.evaluation_budget)} />
-            <Row label="Timeout" value={formatDuration(r.timeout_seconds)} />
             <Row
-              label={
-                <span className="inline-flex items-center gap-1">
-                  Memory estimate
-                  <Tooltip content="Statevector simulator memory for the encoded qubits, plus overhead. Estimated, not measured." />
-                </span>
-              }
-              value={formatMemoryEstimate(r.memory_estimate_mb, memoryLimitMb)}
+              label="Universe"
+              value={`${r.requested_symbols.length} selected → ${r.encoded_symbols.length} encoded`}
+              hint={r.screened_out.length ? `${r.screened_out.length} screened out (${r.screening_rule})` : undefined}
+              help="Stocks you selected, and how many made it into the problem. A stock is left out only when its price history is too short for the dates chosen."
             />
-            <Row label="Runtime estimate" value={r.estimated_runtime_s !== null ? `≈ ${formatDuration(r.estimated_runtime_s)}` : 'not available'} />
-            {r.dataset_label ? <Row label="Dataset" value={r.dataset_label} /> : null}
+            <Row label="Holdings K" value={r.portfolio_size ?? 'lots mode'} help={r.portfolio_size === null ? GLOSSARY.lots : GLOSSARY.cardinality} />
+            <Row label="Circuit depth p" value={r.depth} help={GLOSSARY.depth} />
+            <Row label="Shots per evaluation" value={formatInt(r.shots)} help={GLOSSARY.shots} />
+            <Row label="Final batch shots" value={formatInt(r.final_shots)} help="After tuning, the circuit is measured this many times; the best valid portfolio among them is QAOA's answer." />
+            <Row label="Evaluation budget" value={formatInt(r.evaluation_budget)} help={GLOSSARY.evaluations} />
+            <Row label="Timeout" value={formatDuration(r.timeout_seconds)} help="The run stops after this long, keeping whatever it has found so far." />
+            <Row
+              label="Memory estimate"
+              value={formatMemoryEstimate(r.memory_estimate_mb, memoryLimitMb)}
+              help="Statevector simulator memory for the encoded qubits, plus overhead. Estimated, not measured."
+            />
+            <Row
+              label="Runtime estimate"
+              value={r.estimated_runtime_s !== null ? `≈ ${formatDuration(r.estimated_runtime_s)}` : 'not available'}
+              help="A rough guess for the whole run from a simple timing model of the simulator. Real runs can be faster or slower."
+            />
+            {r.dataset_label ? <Row label="Dataset" value={r.dataset_label} help="Where the prices come from: daily closing prices downloaded from Yahoo Finance for NSE stocks." /> : null}
           </dl>
           {r.issues.length ? null : (
             <p className="mt-3 flex items-center gap-1.5 text-sm text-teal">

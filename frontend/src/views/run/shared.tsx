@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { downloadUrl } from '../../api/client'
 import type { DatasetInfo, PeriodMetrics } from '../../api/contract.gen'
-import { AnchorButton, Badge, Card, CardHeader, Disclosure, IconAlert, IconDownload, Notice } from '../../components/ui'
+import { AnchorButton, Badge, Card, CardHeader, Disclosure, IconAlert, IconDownload, Notice, Tooltip } from '../../components/ui'
 import { DASH, formatDate, formatDateTime, formatInt, formatNum, formatPct } from '../../lib/format'
 import { formatUnknown, humanKey, numericEntries } from '../../lib/result'
 
@@ -36,8 +36,9 @@ export function KV({ rows, className = '' }: { rows: Array<[ReactNode, ReactNode
   )
 }
 
-export function Mono({ children }: { children: ReactNode }) {
-  return <span className="font-mono text-xs break-all">{children}</span>
+/** A literal value such as an id, a hash, a bitstring or a version: even-width digits, and long values may wrap anywhere. */
+export function Literal({ children }: { children: ReactNode }) {
+  return <span className="break-all tabular">{children}</span>
 }
 
 export function DatasetCard({ dataset }: { dataset: DatasetInfo }) {
@@ -61,8 +62,8 @@ export function DatasetCard({ dataset }: { dataset: DatasetInfo }) {
           ['Downloaded', dataset.downloaded_at ? formatDateTime(dataset.downloaded_at) : DASH],
           ['Universe', `${dataset.universe_source}${dataset.universe_as_of ? ` (as of ${dataset.universe_as_of})` : ''}`],
           ['Missing data', dataset.missing_data_policy],
-          ['Dataset id', <Mono key="id">{dataset.dataset_id}</Mono>],
-          ['SHA-256', <Mono key="sha">{dataset.sha256}</Mono>],
+          ['Dataset id', <Literal key="id">{dataset.dataset_id}</Literal>],
+          ['SHA-256', <Literal key="sha">{dataset.sha256}</Literal>],
         ]}
       />
       {dataset.stale_reason ? (
@@ -90,7 +91,7 @@ export function SoftwareCard({ software, timings, extra }: { software: Record<st
   return (
     <Card>
       <CardHeader level={2} title="Provenance" />
-      <KV rows={[...extra, ...Object.entries(software).map(([k, v]): [ReactNode, ReactNode] => [humanKey(k), <Mono key={k}>{v}</Mono>])]} />
+      <KV rows={[...extra, ...Object.entries(software).map(([k, v]): [ReactNode, ReactNode] => [humanKey(k), <Literal key={k}>{v}</Literal>])]} />
       {t.length ? (
         <>
           <h3 className="mt-5 text-sm font-semibold text-ink">Wall-clock timings</h3>
@@ -122,22 +123,25 @@ export function ConfigDump({ config }: { config: unknown }) {
 export function DictTable({ dict, caption }: { dict: Record<string, unknown>; caption: string }) {
   const rows = Object.entries(dict)
   if (!rows.length) return null
-  return <KV rows={rows.map(([k, v]): [ReactNode, ReactNode] => [humanKey(k), typeof v === 'object' && v !== null ? <Mono key={k}>{formatUnknown(v)}</Mono> : formatUnknown(v)])} className="mt-1" aria-label={caption} />
+  return <KV rows={rows.map(([k, v]): [ReactNode, ReactNode] => [humanKey(k), typeof v === 'object' && v !== null ? <Literal key={k}>{formatUnknown(v)}</Literal> : formatUnknown(v)])} className="mt-1" aria-label={caption} />
 }
 
 /** Validation / held-out test window metrics. Insufficient windows say so instead of showing numbers. */
-export function PeriodBlock({ title, m }: { title: string; m: PeriodMetrics | null }) {
+export function PeriodBlock({ title, m, help }: { title: string; m: PeriodMetrics | null; help?: ReactNode }) {
+  const tip = help ? <Tooltip content={help} label={`What is the ${title.toLowerCase()}?`} /> : null
   if (!m)
     return (
       <div>
-        <h3 className="text-sm font-semibold text-ink">{title}</h3>
+        <h3 className="text-sm font-semibold text-ink">
+          {title} {tip}
+        </h3>
         <p className="mt-1 text-sm text-muted">Not evaluated.</p>
       </div>
     )
   return (
     <div>
       <h3 className="text-sm font-semibold text-ink">
-        {title}{' '}
+        {title} {tip}{' '}
         <span className="font-normal text-muted">
           {formatDate(m.start)} to {formatDate(m.end)} · {formatInt(m.n_obs)} days
         </span>

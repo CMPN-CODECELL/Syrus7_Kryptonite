@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { fieldErrors, isApiError } from '../../api/client'
 import type { RunConfig, RunConfigInput } from '../../api/contract.gen'
 import { errorMessage, useAssets, useCapabilities, useDataStatus, useOnline, usePreflight, usePresets, useSubmitJob } from '../../api/hooks'
-import { HeroStage } from '../../components/hero/HeroStage'
+
 import { Button, Card, CardHeader, ErrorState, IconArrowRight, LoadingBlock, Notice } from '../../components/ui'
 import { useMediaQuery } from '../../lib/media'
 import { rememberRunConfig } from '../../lib/storage'
@@ -22,7 +22,8 @@ export default function LabView() {
   const ds = useDataStatus()
   const lab = useLab()
   const { config, seed } = lab
-  const wide = useMediaQuery('(min-width: 1024px)')
+  // Two columns (form + sticky preflight) once there is room beside the 15 rem sidebar.
+  const wide = useMediaQuery('(min-width: 1280px)')
 
   useEffect(() => {
     if (presets.data) seed(presets.data.default_config)
@@ -55,19 +56,14 @@ export default function LabView() {
   return <LabBody config={config} wide={wide} presetsData={presets.data} assetsData={assets.data} caps={caps.data} datasets={ds.data?.available ?? []} />
 }
 
-function Shell({ children, aside }: { children: React.ReactNode; aside?: React.ReactNode }) {
+function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto max-w-[1320px] px-4 pt-8 sm:px-6">
-      <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
-        <div>
-          <p className="eyebrow">Portfolio Lab</p>
-          <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Build a constrained portfolio</h1>
-          <p className="mt-2 max-w-2xl text-muted">
-            Choose assets and constraints. The preflight shows how the problem maps to qubits before anything runs. QAOA and the classical baselines then solve exactly the same problem.
-          </p>
-        </div>
-        {aside}
-      </div>
+    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Build a portfolio</h1>
+      <p className="mt-1 max-w-3xl text-sm text-muted sm:text-base">
+        New here? Keep the Quick preset and press <span className="font-medium text-ink-2">Run optimisation</span>. Everything below is optional: pick stocks, set your
+        rules, and the check on the right tells you whether it will work before anything runs.
+      </p>
       <div className="mt-6">{children}</div>
     </div>
   )
@@ -88,7 +84,7 @@ function LabBody({
   caps: ReturnType<typeof useCapabilities>['data']
   datasets: NonNullable<ReturnType<typeof useDataStatus>['data']>['available']
 }) {
-  const { update, applyPreset, toggleSymbol, setSymbols, setHoverSymbol, hoverSymbol } = useLab()
+  const { update, applyPreset, toggleSymbol, setSymbols } = useLab()
   const navigate = useNavigate()
   const online = useOnline()
   const [forceFresh, setForceFresh] = useState(false)
@@ -103,7 +99,6 @@ function LabBody({
   const fresh = !preflight.pending && !!report && !preflight.isError
   const canSubmit = online && nErr === 0 && fresh && report.can_submit && !submit.isPending
   const presetMax = presetsData.presets.find((p) => p.name === config.preset)?.max_assets ?? null
-  const heroAssets = useMemo(() => assetsData.assets.map((a) => ({ symbol: a.symbol, sector: a.sector })), [assetsData])
 
   const onSubmit = () => {
     if (!canSubmit || submitGuard.current) return
@@ -158,7 +153,7 @@ function LabBody({
             <ul className="mt-1 list-disc pl-5">
               {fe.map((f) => (
                 <li key={f.loc}>
-                  <span className="font-mono text-xs">{f.loc}</span>: {f.msg}
+                  <span className="font-semibold">{f.loc}</span>: {f.msg}
                 </li>
               ))}
             </ul>
@@ -169,21 +164,8 @@ function LabBody({
   )
 
   return (
-    <Shell
-      aside={
-        wide ? (
-          <HeroStage
-            compact
-            className="h-60 w-full"
-            assets={heroAssets}
-            selected={config.symbols}
-            hover={hoverSymbol}
-            caption="Conceptual illustration: your selection joins the core. Not a circuit state."
-          />
-        ) : null
-      }
-    >
-      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+    <Shell>
+      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="grid grid-cols-1 min-w-0 gap-5">
           <Card>
             <PresetPicker presets={presetsData.presets} value={config.preset} onPick={applyPreset} />
@@ -199,7 +181,6 @@ function LabBody({
               selected={config.symbols}
               onToggle={toggleSymbol}
               onSet={setSymbols}
-              onHover={setHoverSymbol}
               error={errors.symbols}
               presetMax={presetMax}
             />
@@ -215,10 +196,10 @@ function LabBody({
           <DateControls config={config} update={update} errors={errors} range={{ first: assetsData.dataset.first_date, last: assetsData.dataset.last_date }} />
           <AdvancedPanel config={config} update={update} errors={errors} caps={caps} datasets={datasets} forceFresh={forceFresh} setForceFresh={setForceFresh} />
         </div>
-        <aside id="preflight" className="min-w-0 lg:sticky lg:top-20">
+        <aside id="preflight" className="min-w-0 xl:sticky xl:top-6">
           {/* On wide screens the report scrolls inside the card so the submit button below it is always in view. */}
-          <Card className="lg:flex lg:max-h-[calc(100dvh-6rem)] lg:flex-col">
-            <div className="lg:-mx-1 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:px-1">
+          <Card className="xl:flex xl:max-h-[calc(100dvh-3rem)] xl:flex-col">
+            <div className="xl:-mx-1 xl:min-h-0 xl:flex-1 xl:overflow-y-auto xl:px-1">
               <PreflightPanel
                 report={report}
                 pending={preflight.pending}
@@ -228,7 +209,7 @@ function LabBody({
                 memoryLimitMb={typeof caps?.limits?.memory_limit_mb === 'number' ? caps.limits.memory_limit_mb : null}
               />
             </div>
-            <div className="lg:shrink-0">{submitBlock}</div>
+            <div className="xl:shrink-0">{submitBlock}</div>
           </Card>
         </aside>
       </div>

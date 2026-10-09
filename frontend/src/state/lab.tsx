@@ -21,8 +21,6 @@ interface LabCtx {
   applyPreset: (p: Preset) => void
   toggleSymbol: (symbol: string) => void
   setSymbols: (symbols: string[]) => void
-  hoverSymbol: string | null
-  setHoverSymbol: (s: string | null) => void
 }
 
 const Ctx = createContext<LabCtx | null>(null)
@@ -32,7 +30,7 @@ export function LabProvider({ children }: { children: ReactNode }) {
     const p = readJson<Persisted>(KEY, 'session')
     return p && p.schema === SCHEMA_VERSION ? p.config : null
   })
-  const [hoverSymbol, setHoverSymbol] = useState<string | null>(null)
+
 
   useEffect(() => {
     if (config) writeJson(KEY, { schema: SCHEMA_VERSION, config } satisfies Persisted, 'session')
@@ -68,8 +66,8 @@ export function LabProvider({ children }: { children: ReactNode }) {
   const setSymbols = useCallback((symbols: string[]) => update((d) => void (d.symbols = [...new Set(symbols)])), [update])
 
   const value = useMemo<LabCtx>(
-    () => ({ config, seed, update, replace, applyPreset, toggleSymbol, setSymbols, hoverSymbol, setHoverSymbol }),
-    [config, seed, update, replace, applyPreset, toggleSymbol, setSymbols, hoverSymbol],
+    () => ({ config, seed, update, replace, applyPreset, toggleSymbol, setSymbols }),
+    [config, seed, update, replace, applyPreset, toggleSymbol, setSymbols],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

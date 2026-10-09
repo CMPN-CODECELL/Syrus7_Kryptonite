@@ -63,7 +63,7 @@ export default function RunView() {
       {job.cached_from ? (
         <Notice tone="info" icon={<IconDatabase size={16} />} className="mb-5" title="Cached replay">
           An identical configuration was already computed as run{' '}
-          <Link className="font-mono text-cobalt underline" to={`/runs/${job.cached_from}`} title={job.cached_from}>
+          <Link className="text-cobalt underline tabular" to={`/runs/${job.cached_from}`} title={job.cached_from}>
             {shortId(job.cached_from)}
           </Link>
           {job.cached_original_time ? ` on ${formatDateTime(job.cached_original_time)}` : ''}. The result below is that stored result, not a new computation. Tick “Compute fresh” in the Lab’s advanced settings to recompute.
@@ -99,14 +99,14 @@ export default function RunView() {
 function Page({ runId, job, aside, children }: { runId: string; job?: JobStatus; aside?: React.ReactNode; children: React.ReactNode }) {
   const kind = job?.kind === 'experiment' ? 'Experiment' : 'Run'
   return (
-    <div className="mx-auto max-w-[1320px] px-4 pt-6 pb-4 sm:px-6">
+    <div className="mx-auto max-w-[1440px] px-4 pt-6 pb-4 sm:px-6 lg:px-8">
       <Link to="/history" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-muted hover:text-ink pointer-fine:min-h-9">
         <IconArrowLeft size={15} /> History
       </Link>
       <div className="mt-2 mb-6 flex flex-wrap items-center gap-x-3 gap-y-2">
-        <h1 className="min-w-0 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+        <h1 className="min-w-0 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           {job?.label ?? kind}{' '}
-          <span className="font-mono text-lg font-normal text-muted sm:text-xl" title={runId}>
+          <span className="text-lg font-normal text-muted tabular sm:text-xl" title={runId}>
             {shortId(runId)}
           </span>
         </h1>
@@ -119,7 +119,7 @@ function Page({ runId, job, aside, children }: { runId: string; job?: JobStatus;
         <p className="-mt-4 mb-6 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
           {/* The copy button sits by the full id: next to a balanced, wrapping title it drifted far from the short id. */}
           <span className="inline-flex items-center gap-1">
-            Id <span className="font-mono select-all">{runId}</span>
+            Id <span className="select-all tabular">{runId}</span>
             <CopyButton value={runId} label="Copy full run id" className="-my-3" />
           </span>
           <span>Submitted {formatDateTime(job.created_at)}</span>
@@ -187,7 +187,7 @@ function Stopped({ job }: { job: JobStatus }) {
     <Card data-testid="run-stopped">
       <Notice tone={job.status === 'failed' ? 'danger' : job.status === 'timed_out' ? 'warning' : 'info'} icon={job.status === 'timed_out' ? <IconClock size={16} /> : undefined} title={title}>
         {body}
-        {job.error?.code ? <span className="mt-1 block font-mono text-xs">code: {job.error.code}</span> : null}
+        {job.error?.code ? <span className="mt-1 block text-xs tabular">code: {job.error.code}</span> : null}
       </Notice>
       <div className="mt-4 flex flex-wrap gap-2">
         {saved ? (

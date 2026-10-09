@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router'
 import { downloadUrl } from '../api/client'
 import type { RunSummary } from '../api/contract.gen'
@@ -14,18 +14,15 @@ export default function History() {
   const [kind, setKind] = useState('')
   const [page, setPage] = useState(0)
   const q = useRuns({ status: status || undefined, kind: kind || undefined, limit: PAGE, offset: page * PAGE })
-  useEffect(() => {
-    document.title = 'History · QuantFolio'
-  }, [])
+
   const items = q.data?.items ?? []
   const total = q.data?.total ?? null
   const pages = total !== null ? Math.max(1, Math.ceil(total / PAGE)) : null
 
   return (
-    <div className="mx-auto max-w-[1320px] px-4 pt-8 sm:px-6">
-      <p className="eyebrow">History</p>
-      <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Runs and reports</h1>
-      <p className="mt-2 max-w-2xl text-muted">Every run the server has stored, including failed, cancelled and timed-out ones. Open a run to see its result, provenance and downloads.</p>
+    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Runs and reports</h1>
+      <p className="mt-1 max-w-2xl text-sm text-muted sm:text-base">Every run the server has stored, including failed, cancelled and timed-out ones. Open a run to see its result, provenance and downloads.</p>
 
       <Card className="mt-6">
         <div className="flex flex-wrap items-end gap-4">
@@ -136,7 +133,7 @@ function RunTable({ rows }: { rows: RunSummary[] }) {
           cell: (r) => (
             <span className="flex flex-col gap-0.5">
               <Link to={`/runs/${r.run_id}`} className="font-medium text-cobalt underline-offset-2 hover:underline" data-testid="history-open">
-                {r.label ?? (r.kind === 'experiment' ? 'Experiment' : 'Run')} <span className="font-mono text-xs" title={r.run_id}>{shortId(r.run_id)}</span>
+                {r.label ?? (r.kind === 'experiment' ? 'Experiment' : 'Run')} <span className="text-xs text-muted tabular" title={r.run_id}>{shortId(r.run_id)}</span>
               </Link>
               <span className="flex flex-wrap gap-1">
                 {r.is_example ? <Badge tone="cobalt">Recorded example</Badge> : null}

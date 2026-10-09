@@ -1,7 +1,8 @@
 import { memo, useDeferredValue, useMemo, useState } from 'react'
 import type { AssetInfo } from '../../api/contract.gen'
-import { Badge, Button, Checkbox, Field, IconAlert, IconCheck, IconSearch, Select, TextInput } from '../../components/ui'
-import { formatInr, formatPct, sectorShort } from '../../lib/format'
+import { Badge, Button, Checkbox, Field, IconAlert, IconCheck, IconSearch, Select, Sparkline, TextInput, Tooltip } from '../../components/ui'
+import { DASH, formatDate, formatInr, formatPct, sectorShort } from '../../lib/format'
+import { GLOSSARY } from '../../lib/glossary'
 
 const MAX = 50
 
@@ -10,7 +11,6 @@ export function AssetPicker({
   selected,
   onToggle,
   onSet,
-  onHover,
   error,
   presetMax,
 }: {
@@ -18,7 +18,6 @@ export function AssetPicker({
   selected: string[]
   onToggle: (s: string) => void
   onSet: (s: string[]) => void
-  onHover: (s: string | null) => void
   error?: string | null
   presetMax?: number | null
 }) {
@@ -45,6 +44,7 @@ export function AssetPicker({
     [assets, sector, onlySelected, sel, query],
   )
   const gaps = assets.filter((a) => !a.data_ok).length
+  const priceDate = assets.reduce<string | null>((d, a) => (a.last_date && (!d || a.last_date > d) ? a.last_date : d), null)
 
   return (
     <div>
@@ -93,9 +93,17 @@ export function AssetPicker({
           <IconAlert size={15} /> {error}
         </p>
       ) : null}
+      <p className="mt-2 flex flex-wrap items-center gap-x-1 text-xs text-muted" data-testid="price-note">
+        <span>
+          Price: last NSE close{priceDate ? ` on ${formatDate(priceDate)}` : ''}, in ₹ per share.
+        </span>
+        <Tooltip content={GLOSSARY.price} label="What is the price?" />
+        <span className="ml-3">Line and % show the last year.</span>
+        <Tooltip content={GLOSSARY.change1y} label="What is the 1-year change?" />
+      </p>
       {gaps ? (
         <p className="mt-1 text-xs text-muted">
-          {gaps} asset{gaps === 1 ? ' has' : 's have'} incomplete price history in the active dataset (marked “Data gap”); the preflight explains how they are handled.
+          {gaps} stock{gaps === 1 ? ' has' : 's have'} a shorter price history (marked “Data gap”); the check on the right explains how they are handled.
         </p>
       ) : null}
 
@@ -103,7 +111,7 @@ export function AssetPicker({
         {shown.length === 0 ? (
           <li className="col-span-full bg-canvas px-4 py-8 text-center text-sm text-muted">No assets match these filters.</li>
         ) : (
-          shown.map((a) => <AssetRow key={a.symbol} a={a} checked={sel.has(a.symbol)} full={selected.length >= MAX} onToggle={onToggle} onHover={onHover} />)
+          shown.map((a) => <AssetRow key={a.symbol} a={a} checked={sel.has(a.symbol)} full={selected.length >= MAX} onToggle={onToggle} />)
         )}
       </ul>
     </div>
@@ -115,16 +123,14 @@ const AssetRow = memo(function AssetRow({
   checked,
   full,
   onToggle,
-  onHover,
 }: {
   a: AssetInfo
   checked: boolean
   full: boolean
   onToggle: (s: string) => void
-  onHover: (s: string | null) => void
 }) {
   return (
-    <li className={checked ? 'bg-teal-50/70' : 'bg-canvas'} onPointerEnter={() => onHover(a.symbol)} onPointerLeave={() => onHover(null)}>
+    <li className={checked ? 'bg-teal-50/70' : 'bg-canvas'}>
       <label className="flex min-h-14 cursor-pointer items-center gap-3 px-3 py-2 has-disabled:cursor-not-allowed has-focus-visible:outline-2 has-focus-visible:-outline-offset-2 has-focus-visible:outline-cobalt">
         <input
           type="checkbox"
@@ -132,17 +138,26 @@ const AssetRow = memo(function AssetRow({
           checked={checked}
           disabled={!checked && full}
           onChange={() => onToggle(a.symbol)}
-          onFocus={() => onHover(a.symbol)}
-          onBlur={() => onHover(null)}
           aria-describedby={`asset-${a.symbol}-meta`}
         />
         <span className="min-w-0 flex-1">
           <span className="flex items-baseline gap-2">
-            <span className="font-mono text-sm font-semibold text-ink">{a.symbol}</span>
+            <span className="text-sm font-semibold text-ink">{a.symbol}</span>
             {checked ? <IconCheck size={14} className="text-teal" aria-hidden="true" /> : null}
-            <span className="ml-auto text-xs text-muted tabular">{a.last_price_inr !== null ? formatInr(a.last_price_inr, { paise: true }) : ''}</span>
+            <span className="ml-auto text-sm font-medium text-ink-2 tabular" title={a.last_date ? `NSE close on ${formatDate(a.last_date)}` : undefined}>
+              {a.last_price_inr !== null ? formatInr(a.last_price_inr, { paise: true }) : DASH}
+            </span>
           </span>
-          <span className="block truncate text-xs text-muted">{a.name}</span>
+          <span className="flex items-center gap-2">
+            <span className="min-w-0 flex-1 truncate text-xs text-muted">{a.name}</span>
+            {a.trend.length > 1 ? <Sparkline values={a.trend} width={44} height={14} /> : null}
+            <span
+              className={`w-14 shrink-0 text-right text-xs font-medium tabular ${a.change_1y === null ? 'text-faint' : a.change_1y < 0 ? 'text-danger' : 'text-teal'}`}
+              title={a.change_1y === null ? (a.price_note ?? 'Not enough history for a 1-year change') : 'Change over the last year'}
+            >
+              {formatPct(a.change_1y, 1, { sign: true })}
+            </span>
+          </span>
           <span id={`asset-${a.symbol}-meta`} className="mt-1 flex flex-wrap gap-1.5">
             <Badge tone="neutral" title={a.sector}>
               {sectorShort(a.sector)}
@@ -156,6 +171,11 @@ const AssetRow = memo(function AssetRow({
                 Data gap · {formatPct(a.coverage, 0)}
               </Badge>
             )}
+            {a.price_note ? (
+              <Badge tone="amber" icon={<IconAlert size={12} />} title={a.price_note}>
+                {a.price_note.startsWith('corrected') ? 'Price corrected' : 'Price jump'}
+              </Badge>
+            ) : null}
           </span>
         </span>
       </label>
