@@ -1,0 +1,530 @@
+{
+  "machine": "i5-1135G7 4C/8T, 16 GB RAM, Windows 11",
+  "pipeline": "fake (deterministic, ~0.02 s per evaluation)",
+  "started": "2026-10-09T00:50:14",
+  "smoke": true,
+  "stages": {
+    "ramp-01": {
+      "users": 1,
+      "job_flow": {
+        "n": 0,
+        "failed": 0,
+        "p50_ms": null,
+        "p95_ms": null,
+        "max_ms": null
+      },
+      "seconds": 8,
+      "locust_exit": 0,
+      "aggregate": {
+        "n": 11,
+        "fail": 0,
+        "p50": 4.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "max": 17.245199996978045,
+        "rps": 1.95
+      },
+      "by_name": {
+        "/api/assets": {
+          "n": 1,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 4.0,
+          "p99": 4.0,
+          "max": 3.568399930372834,
+          "rps": 0.18
+        },
+        "/api/capabilities": {
+          "n": 3,
+          "fail": 0,
+          "p50": 3.0,
+          "p95": 5.0,
+          "p99": 5.0,
+          "max": 4.712199908681214,
+          "rps": 0.53
+        },
+        "/api/health": {
+          "n": 3,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 5.0,
+          "p99": 5.0,
+          "max": 5.117899971082807,
+          "rps": 0.53
+        },
+        "/api/presets": {
+          "n": 1,
+          "fail": 0,
+          "p50": 17.0,
+          "p95": 17.0,
+          "p99": 17.0,
+          "max": 17.245199996978045,
+          "rps": 0.18
+        },
+        "/api/runs": {
+          "n": 2,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 4.0,
+          "p99": 4.0,
+          "max": 3.8336999714374542,
+          "rps": 0.35
+        },
+        "POST /api/preflight": {
+          "n": 1,
+          "fail": 0,
+          "p50": 6.0,
+          "p95": 6.0,
+          "p99": 6.0,
+          "max": 5.6730000069364905,
+          "rps": 0.18
+        },
+        "Aggregated": {
+          "n": 11,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 17.0,
+          "p99": 17.0,
+          "max": 17.245199996978045,
+          "rps": 1.95
+        }
+      },
+      "jobs": {
+        "succeeded": 0,
+        "failed": 0,
+        "cancelled": 0,
+        "timed_out": 0
+      },
+      "jobs_per_min": 0.0,
+      "drain_s": 0.0,
+      "resources": {
+        "cpu_pct_avg": 0.6,
+        "cpu_pct_max": 6.1,
+        "rss_mb_start": 120.7,
+        "rss_mb_end": 120.9,
+        "rss_mb_max": 120.9,
+        "procs_max": 5,
+        "system_avail_mb_min": 2910
+      }
+    },
+    "ramp-10": {
+      "users": 10,
+      "job_flow": {
+        "n": 5,
+        "failed": 0,
+        "p50_ms": 1675.1,
+        "p95_ms": 2238.1,
+        "max_ms": 2238.1
+      },
+      "seconds": 8,
+      "locust_exit": 0,
+      "aggregate": {
+        "n": 91,
+        "fail": 0,
+        "p50": 4.0,
+        "p95": 26.0,
+        "p99": 46.0,
+        "max": 45.87889998219907,
+        "rps": 16.15
+      },
+      "by_name": {
+        "/api/assets": {
+          "n": 9,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 7.0,
+          "p99": 7.0,
+          "max": 7.071500062011182,
+          "rps": 1.6
+        },
+        "/api/capabilities": {
+          "n": 5,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 10.0,
+          "p99": 10.0,
+          "max": 9.650100022554398,
+          "rps": 0.89
+        },
+        "/api/health": {
+          "n": 17,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 9.0,
+          "p99": 9.0,
+          "max": 9.272500057704747,
+          "rps": 3.02
+        },
+        "/api/presets": {
+          "n": 10,
+          "fail": 0,
+          "p50": 26.0,
+          "p95": 46.0,
+          "p99": 46.0,
+          "max": 45.87889998219907,
+          "rps": 1.78
+        },
+        "/api/runs": {
+          "n": 16,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 9.0,
+          "p99": 9.0,
+          "max": 9.035900002345443,
+          "rps": 2.84
+        },
+        "/api/runs/{id}": {
+          "n": 14,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 7.0,
+          "p99": 7.0,
+          "max": 7.020000019110739,
+          "rps": 2.49
+        },
+        "/api/runs/{id}/events/snapshot": {
+          "n": 4,
+          "fail": 0,
+          "p50": 7.0,
+          "p95": 7.0,
+          "p99": 7.0,
+          "max": 6.989000015892088,
+          "rps": 0.71
+        },
+        "/api/runs/{id}/result": {
+          "n": 4,
+          "fail": 0,
+          "p50": 6.0,
+          "p95": 7.0,
+          "p99": 7.0,
+          "max": 6.830999976955354,
+          "rps": 0.71
+        },
+        "POST /api/preflight": {
+          "n": 3,
+          "fail": 0,
+          "p50": 3.0,
+          "p95": 6.0,
+          "p99": 6.0,
+          "max": 6.175699993036687,
+          "rps": 0.53
+        },
+        "POST /api/runs": {
+          "n": 5,
+          "fail": 0,
+          "p50": 6.0,
+          "p95": 11.0,
+          "p99": 11.0,
+          "max": 10.539500042796135,
+          "rps": 0.89
+        },
+        "SSE connect /api/runs/{id}/events": {
+          "n": 4,
+          "fail": 0,
+          "p50": 3.0,
+          "p95": 7.0,
+          "p99": 7.0,
+          "max": 6.754699978046119,
+          "rps": 0.71
+        },
+        "Aggregated": {
+          "n": 91,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 26.0,
+          "p99": 46.0,
+          "max": 45.87889998219907,
+          "rps": 16.15
+        }
+      },
+      "jobs": {
+        "succeeded": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "timed_out": 0
+      },
+      "jobs_per_min": 26.8,
+      "drain_s": 0.0,
+      "resources": {
+        "cpu_pct_avg": 6.6,
+        "cpu_pct_max": 28.6,
+        "rss_mb_start": 120.9,
+        "rss_mb_end": 123.4,
+        "rss_mb_max": 123.4,
+        "procs_max": 5,
+        "system_avail_mb_min": 2931
+      }
+    },
+    "soak-10": {
+      "users": 10,
+      "job_flow": {
+        "n": 9,
+        "failed": 0,
+        "p50_ms": 2006.5,
+        "p95_ms": 2684.0,
+        "max_ms": 2684.0
+      },
+      "seconds": 15,
+      "locust_exit": 0,
+      "aggregate": {
+        "n": 184,
+        "fail": 0,
+        "p50": 5.0,
+        "p95": 17.0,
+        "p99": 160.0,
+        "max": 218.16039993427694,
+        "rps": 13.35
+      },
+      "by_name": {
+        "/api/assets": {
+          "n": 12,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 11.0,
+          "p99": 11.0,
+          "max": 10.708100046031177,
+          "rps": 0.87
+        },
+        "/api/capabilities": {
+          "n": 16,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 11.0,
+          "p99": 11.0,
+          "max": 10.688999900594354,
+          "rps": 1.16
+        },
+        "/api/health": {
+          "n": 33,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 12.0,
+          "p99": 15.0,
+          "max": 15.385899925604463,
+          "rps": 2.39
+        },
+        "/api/presets": {
+          "n": 10,
+          "fail": 0,
+          "p50": 29.0,
+          "p95": 57.0,
+          "p99": 57.0,
+          "max": 57.09380004554987,
+          "rps": 0.73
+        },
+        "/api/runs": {
+          "n": 31,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 8.0,
+          "p99": 8.0,
+          "max": 8.250400074757636,
+          "rps": 2.25
+        },
+        "/api/runs/{id}": {
+          "n": 38,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 8.0,
+          "p99": 9.0,
+          "max": 8.994899922981858,
+          "rps": 2.76
+        },
+        "/api/runs/{id}/events/snapshot": {
+          "n": 1,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 5.0,
+          "p99": 5.0,
+          "max": 5.304899998009205,
+          "rps": 0.07
+        },
+        "/api/runs/{id}/report.html": {
+          "n": 6,
+          "fail": 0,
+          "p50": 9.0,
+          "p95": 160.0,
+          "p99": 160.0,
+          "max": 158.8952000020072,
+          "rps": 0.44
+        },
+        "/api/runs/{id}/result": {
+          "n": 13,
+          "fail": 0,
+          "p50": 6.0,
+          "p95": 220.0,
+          "p99": 220.0,
+          "max": 218.16039993427694,
+          "rps": 0.94
+        },
+        "POST /api/preflight": {
+          "n": 7,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 7.0,
+          "p99": 7.0,
+          "max": 7.147000054828823,
+          "rps": 0.51
+        },
+        "POST /api/runs": {
+          "n": 9,
+          "fail": 0,
+          "p50": 7.0,
+          "p95": 13.0,
+          "p99": 13.0,
+          "max": 12.791300076059997,
+          "rps": 0.65
+        },
+        "SSE connect /api/runs/{id}/events": {
+          "n": 8,
+          "fail": 0,
+          "p50": 4.0,
+          "p95": 5.0,
+          "p99": 5.0,
+          "max": 4.977900069206953,
+          "rps": 0.58
+        },
+        "Aggregated": {
+          "n": 184,
+          "fail": 0,
+          "p50": 5.0,
+          "p95": 17.0,
+          "p99": 160.0,
+          "max": 218.16039993427694,
+          "rps": 13.35
+        }
+      },
+      "jobs": {
+        "succeeded": 9,
+        "failed": 0,
+        "cancelled": 0,
+        "timed_out": 0
+      },
+      "jobs_per_min": 30.1,
+      "drain_s": 0.0,
+      "resources": {
+        "cpu_pct_avg": 8.3,
+        "cpu_pct_max": 47.0,
+        "rss_mb_start": 123.2,
+        "rss_mb_end": 124.1,
+        "rss_mb_max": 124.1,
+        "procs_max": 5,
+        "system_avail_mb_min": 2639
+      }
+    }
+  },
+  "scenarios": {
+    "queue_saturation_429": {
+      "submitted": 12,
+      "accepted": 8,
+      "rejected_429": 4,
+      "other_codes": [],
+      "retry_after_present": true,
+      "retry_after_values": [
+        "10"
+      ],
+      "burst_s": 0.06,
+      "accepted_all_succeeded": true,
+      "drain_s": 0.0,
+      "ok": true
+    },
+    "sse_fanout": {
+      "clients": 8,
+      "job_status": "succeeded",
+      "events_per_client": 35,
+      "all_identical": true,
+      "matches_persisted_snapshot": true,
+      "strictly_increasing": true,
+      "first_event_ms_p50": 6.5,
+      "first_event_ms_p95": 9.9,
+      "wall_s": 7.3,
+      "ok": true
+    },
+    "cancel_storm": {
+      "jobs": 4,
+      "cancel_calls": 12,
+      "codes": {
+        "200": 12
+      },
+      "final_statuses": {
+        "cancelled": 4
+      },
+      "all_terminal_s": 0.28,
+      "ok": true
+    },
+    "dropped_sse_connections": {
+      "dropped_connections": 24,
+      "job_status": "succeeded",
+      "health_ms_p95_after": 9.6,
+      "api_threads_before": 14,
+      "api_threads_after": 6,
+      "replay_events_after": 36,
+      "ok": true
+    },
+    "missing_cached_result": {
+      "replay_before_delete": {
+        "code": 200,
+        "cached_from": "run-20261008-f70e9cbb"
+      },
+      "result_after_delete": 410,
+      "report_after_delete": 410,
+      "resubmit": {
+        "code": 202,
+        "cached_from": null,
+        "status": "succeeded"
+      },
+      "ok": true
+    },
+    "worker_kill_restart": {
+      "killed_supervisor_pid": 2712,
+      "worker_ready_again_s": 1.42,
+      "saw_not_ready": true,
+      "running_job": {
+        "status": "failed",
+        "code": "interrupted_by_restart"
+      },
+      "queued_job_after_restart": "succeeded",
+      "orphans_of_old_tree": [],
+      "ok": true
+    },
+    "provider_outage_mocked": {
+      "error": {
+        "check_codes": [
+          502
+        ],
+        "expected": 502,
+        "leaked_token": false,
+        "health_ok": true,
+        "health_ms_p95": 79.4
+      },
+      "hang": {
+        "check_codes": [
+          504
+        ],
+        "expected": 504,
+        "leaked_token": false,
+        "health_ok": true,
+        "health_ms_p95": 44.1
+      },
+      "health_ms_p95_baseline": 6.1,
+      "ok": true
+    }
+  },
+  "queue_capacity": 8,
+  "final": {
+    "succeeded": 28,
+    "failed": 1,
+    "cancelled": 4,
+    "timed_out": 0,
+    "queued": 0,
+    "running": 0
+  },
+  "db_mb": 0.47,
+  "stop": {
+    "graceful": true,
+    "stop_s": 1.11,
+    "orphans_killed": [],
+    "exit_code": 0
+  },
+  "orphans_after_stop": []
+}

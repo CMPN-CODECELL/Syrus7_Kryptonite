@@ -1,0 +1,41 @@
+[2026-10-09 00:50:41,704] Hardik/INFO/locust.main: Starting Locust 2.46.7
+[2026-10-09 00:50:41,720] Hardik/INFO/locust.main: Run time limit set to 15 seconds
+[2026-10-09 00:50:41,723] Hardik/INFO/locust.runners: Ramping to 10 users at a rate of 5.00 per second
+[2026-10-09 00:50:42,731] Hardik/INFO/locust.runners: All users spawned: {"Browser": 8, "Submitter": 2} (10 total users)
+[2026-10-09 00:50:55,290] Hardik/INFO/locust.main: --run-time limit reached, shutting down
+[2026-10-09 00:50:56,057] Hardik/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /api/assets                                                                       12     0(0.00%) |      5       3      10      5 |    0.84        0.00
+GET      /api/capabilities                                                                 16     0(0.00%) |      5       3      10      5 |    1.12        0.00
+GET      /api/health                                                                       33     0(0.00%) |      5       2      15      4 |    2.30        0.00
+GET      /api/presets                                                                      10     0(0.00%) |     31      15      57     29 |    0.70        0.00
+GET      /api/runs                                                                         31     0(0.00%) |      5       3       8      5 |    2.16        0.00
+GET      /api/runs/{id}                                                                    39     0(0.00%) |      4       3       8      4 |    2.72        0.00
+GET      /api/runs/{id}/events/snapshot                                                     1     0(0.00%) |      5       5       5      5 |    0.07        0.00
+GET      /api/runs/{id}/report.html                                                         6     0(0.00%) |     34       7     158      9 |    0.42        0.00
+GET      /api/runs/{id}/result                                                             13     0(0.00%) |     22       4     218      6 |    0.91        0.00
+POST     POST /api/preflight                                                                7     0(0.00%) |      5       4       7      5 |    0.49        0.00
+POST     POST /api/runs                                                                     9     0(0.00%) |      8       5      12      7 |    0.63        0.00
+GET      SSE connect /api/runs/{id}/events                                                  9     0(0.00%) |      3       3       4      4 |    0.63        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                       186     0(0.00%) |      8       2     218      5 |   12.98        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /api/assets                                                                             5      6      7      7      9     11     11     11     11     11     11     12
+GET      /api/capabilities                                                                       5      5      6      6      7     11     11     11     11     11     11     16
+GET      /api/health                                                                             4      5      6      6      8     12     15     15     15     15     15     33
+GET      /api/presets                                                                           29     46     47     49     57     57     57     57     57     57     57     10
+GET      /api/runs                                                                               5      6      6      7      7      8      8      8      8      8      8     31
+GET      /api/runs/{id}                                                                          4      5      5      6      7      8      9      9      9      9      9     39
+GET      /api/runs/{id}/events/snapshot                                                          5      5      5      5      5      5      5      5      5      5      5      1
+GET      /api/runs/{id}/report.html                                                              9      9     15     15    160    160    160    160    160    160    160      6
+GET      /api/runs/{id}/result                                                                   6      6      7      9     10    220    220    220    220    220    220     13
+POST     POST /api/preflight                                                                     5      6      7      7      7      7      7      7      7      7      7      7
+POST     POST /api/runs                                                                          7      9     11     12     13     13     13     13     13     13     13      9
+GET      SSE connect /api/runs/{id}/events                                                       4      4      4      5      5      5      5      5      5      5      5      9
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                              5      6      7      7     11     17     49    160    220    220    220    186
+
