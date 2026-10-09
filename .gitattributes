@@ -1,0 +1,17 @@
+# Store text with LF line endings; check out with the platform's native endings.
+* text=auto
+
+# Binary files: never diff or convert.
+*.png    binary
+*.jpg    binary
+*.ico    binary
+*.parquet binary
+*.zip    binary
+*.woff2  binary
+
+# Generated or recorded files: collapsed in diffs and left out of GitHub's language statistics.
+frontend/src/api/contract.gen.ts linguist-generated=true
+frontend/package-lock.json        linguist-generated=true
+backend/requirements.lock.txt     linguist-generated=true
+evidence/**                       linguist-generated=true
+data/**                           linguist-vendored=true -text

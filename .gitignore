@@ -1,0 +1,65 @@
+# Environments and secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.eslintcache
+*.log
+
+# Caches and temporary run artifacts
+.cache/
+.tmp/
+data/*.parquet
+# Dataset cache: keep only the small bundled demo dataset (the app runs offline from it);
+# anything else in the cache, including uploaded datasets, stays local.
+data/cache/*
+!data/cache/datasets/
+data/cache/datasets/*
+!data/cache/datasets/default.txt
+!data/cache/datasets/nifty50-yahoo-*
+data/runs/
+artifacts/
+wheels/
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Runtime state (job database, PID files, server logs, uploads)
+data/state/
+data/logs/
+data/uploads/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Tool caches and test output
+.ruff_cache/
+.hypothesis/
+*.tsbuildinfo
+coverage/
+test-results/
+playwright-report/
+blob-report/
+
+# Editors
+.vscode/
+.idea/
+*.swp
