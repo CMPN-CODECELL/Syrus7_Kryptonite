@@ -1,0 +1,29 @@
+[2026-10-09 00:24:16,568] Hardik/INFO/locust.main: Starting Locust 2.46.7
+[2026-10-09 00:24:16,571] Hardik/INFO/locust.main: Run time limit set to 40 seconds
+[2026-10-09 00:24:16,573] Hardik/INFO/locust.runners: Ramping to 1 users at a rate of 1.00 per second
+[2026-10-09 00:24:16,573] Hardik/INFO/locust.runners: All users spawned: {"Browser": 1, "Submitter": 0} (1 total users)
+[2026-10-09 00:24:55,367] Hardik/INFO/locust.main: --run-time limit reached, shutting down
+[2026-10-09 00:24:55,971] Hardik/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /api/assets                                                                        7     0(0.00%) |      5       3       9      6 |    0.18        0.00
+GET      /api/capabilities                                                                  7     0(0.00%) |      5       3       9      5 |    0.18        0.00
+GET      /api/health                                                                       14     0(0.00%) |      4       3       9      4 |    0.36        0.00
+GET      /api/presets                                                                       1     0(0.00%) |     14      14      14     14 |    0.03        0.00
+GET      /api/runs                                                                         12     0(0.00%) |      5       3       8      5 |    0.31        0.00
+POST     POST /api/preflight                                                                3     0(0.00%) |     13       3      30      6 |    0.08        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        44     0(0.00%) |      6       3      30      5 |    1.14        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /api/assets                                                                             6      6      6      6     10     10     10     10     10     10     10      7
+GET      /api/capabilities                                                                       5      6      7      7      9      9      9      9      9      9      9      7
+GET      /api/health                                                                             4      5      5      6      7      9      9      9      9      9      9     14
+GET      /api/presets                                                                           14     14     14     14     14     14     14     14     14     14     14      1
+GET      /api/runs                                                                               5      6      7      7      7      9      9      9      9      9      9     12
+POST     POST /api/preflight                                                                     6      6     31     31     31     31     31     31     31     31     31      3
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                              5      6      6      7      9     10     31     31     31     31     31     44
+
