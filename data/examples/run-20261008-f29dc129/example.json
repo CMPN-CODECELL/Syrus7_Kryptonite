@@ -1,0 +1,99 @@
+{
+  "cache_key": "f8f296a9553e5ccd11dad1adede49848a5326d8f1938a01833d163377b376cca",
+  "config": {
+    "baselines": {
+      "exact": true,
+      "greedy": false,
+      "relaxation_rounding": true,
+      "sa_restarts": 8,
+      "sa_sweeps": 300,
+      "simulated_annealing": true
+    },
+    "budget_inr": 1000000.0,
+    "constraints": {
+      "cardinality": 4,
+      "lots": null,
+      "sector_caps": {
+        "basis": "count",
+        "default_max": 2.0,
+        "per_sector": {
+          "Financial Services": 1.0
+        }
+      },
+      "target_return": 0.15,
+      "transaction_costs": {
+        "enabled": true,
+        "fixed_inr_per_trade": 20.0,
+        "proportional_bps": 25.0,
+        "starting_portfolio": {
+          "type": "holdings",
+          "weights": {
+            "HDFCBANK": 0.3,
+            "HINDUNILVR": 0.2,
+            "INFY": 0.2,
+            "TCS": 0.3
+          }
+        }
+      }
+    },
+    "dataset_id": null,
+    "dates": {
+      "test_end": "2026-10-07",
+      "test_start": "2025-10-01",
+      "train_end": "2024-12-31",
+      "train_start": "2022-01-03",
+      "validation_end": "2025-09-30",
+      "validation_start": "2025-01-01"
+    },
+    "mode": "selection",
+    "noise_comparison": false,
+    "noise_trials": 3,
+    "preset": "quick",
+    "qaoa": {
+      "cvar_alpha": 0.25,
+      "depth": 1,
+      "estimator": "mean",
+      "fake_backend": null,
+      "final_shots": 1024,
+      "init_strategy": "random",
+      "max_evaluations": 25,
+      "noise": "ideal",
+      "optimizer": "COBYLA",
+      "penalty_scale": 1.0,
+      "seed": 7,
+      "shots": 256
+    },
+    "risk_aversion": 2.0,
+    "risk_free_rate": 0.065,
+    "screening": {
+      "keep": null,
+      "rule": "none"
+    },
+    "symbols": [
+      "HDFCBANK",
+      "ICICIBANK",
+      "SBIN",
+      "INFY",
+      "TCS",
+      "ITC",
+      "HINDUNILVR",
+      "BHARTIARTL"
+    ],
+    "timeout_seconds": 90
+  },
+  "config_hash": "378e109e8bf25f689f2fce5cf207f3a0a9804c45e1131de7a36fc38cf164bf2f",
+  "created_at": "2026-10-08T18:34:19.421+00:00",
+  "evaluation_budget": 25,
+  "evaluations_done": 25,
+  "finished_at": "2026-10-08T18:34:31.629+00:00",
+  "kind": "run",
+  "label": "Default example (8 NIFTY assets, K=4, depth-1 QAOA) - genuine local simulator run",
+  "summary": {
+    "best_objective": -0.18991959276728027,
+    "depth": 1,
+    "n_symbols": 8,
+    "optimizer": "COBYLA",
+    "qaoa_status": "ok",
+    "total_qubits": 10
+  }
+}
