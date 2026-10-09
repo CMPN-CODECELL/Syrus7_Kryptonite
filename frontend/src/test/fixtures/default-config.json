@@ -1,0 +1,68 @@
+{
+  "symbols": [
+    "HDFCBANK",
+    "ICICIBANK",
+    "INFY",
+    "TCS",
+    "RELIANCE",
+    "ITC"
+  ],
+  "mode": "selection",
+  "risk_aversion": 1,
+  "budget_inr": 1000000,
+  "risk_free_rate": 0.065,
+  "dates": {
+    "train_start": "2019-01-01",
+    "train_end": "2023-12-31",
+    "validation_start": "2024-01-01",
+    "validation_end": "2024-12-31",
+    "test_start": "2025-01-01",
+    "test_end": "2026-10-08"
+  },
+  "screening": {
+    "rule": "none",
+    "keep": null
+  },
+  "constraints": {
+    "cardinality": 3,
+    "sector_caps": null,
+    "target_return": null,
+    "lots": null,
+    "transaction_costs": {
+      "enabled": true,
+      "proportional_bps": 10,
+      "fixed_inr_per_trade": 0,
+      "starting_portfolio": {
+        "type": "cash",
+        "weights": {}
+      }
+    }
+  },
+  "qaoa": {
+    "depth": 1,
+    "optimizer": "COBYLA",
+    "init_strategy": "random",
+    "shots": 512,
+    "final_shots": 2048,
+    "max_evaluations": 30,
+    "estimator": "mean",
+    "cvar_alpha": 0.25,
+    "seed": 7,
+    "noise": "ideal",
+    "fake_backend": null,
+    "penalty_scale": 1
+  },
+  "baselines": {
+    "exact": true,
+    "relaxation_rounding": true,
+    "simulated_annealing": true,
+    "greedy": false,
+    "sa_sweeps": 2000,
+    "sa_restarts": 8
+  },
+  "preset": "quick",
+  "noise_comparison": false,
+  "noise_trials": 3,
+  "timeout_seconds": 120,
+  "dataset_id": null
+}
