@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="45" failures="0" errors="0" time="0.9871556">
+    <testsuite name="src/api/client.test.ts" timestamp="2026-10-08T21:50:19.774Z" hostname="Hardik" tests="7" failures="0" errors="0" skipped="0" time="0.0246593">
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; parses the error envelope with request id and Retry-After" time="0.012864">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; understands FastAPI validation details and exposes field errors" time="0.00144">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; explains a proxy 502 without a JSON body" time="0.0007684">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api client errors &gt; turns a network failure into status 0" time="0.0006215">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api requests &gt; sends the idempotency key and force_fresh flag and returns the HTTP status" time="0.0015677">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api requests &gt; reads the total from X-Total-Count when listing runs" time="0.0025573">
+        </testcase>
+        <testcase classname="src/api/client.test.ts" name="api requests &gt; fetches the stored config of a run" time="0.0007496">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/api/events.test.ts" timestamp="2026-10-08T21:50:19.778Z" hostname="Hardik" tests="7" failures="0" errors="0" skipped="0" time="0.0375092">
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; streams over SSE, deduplicates by id and point, and resumes after the last id" time="0.018152">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; closes on a terminal status event" time="0.0023938">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; falls back to polling the snapshot after repeated SSE failures" time="0.0046924">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; loads the recorded history once for a run that already finished" time="0.0016687">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="RunStream &gt; goes quiet while offline and reconnects from the last id when back online" time="0.002724">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="parseSseData &gt; reads a full RunEvent body and ignores heartbeats and junk" time="0.0020111">
+        </testcase>
+        <testcase classname="src/api/events.test.ts" name="parseSseData &gt; accepts a bare payload named by the SSE event field, taking the id from the header" time="0.000543">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/components/components.test.tsx" timestamp="2026-10-08T21:50:19.782Z" hostname="Hardik" tests="5" failures="0" errors="0" skipped="0" time="0.8040335">
+        <testcase classname="src/components/components.test.tsx" name="ErrorState &gt; shows the server message, code and request id, and retries" time="0.4988296">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="ErrorState &gt; says the API is unreachable on a network error" time="0.0156428">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="Segmented &gt; is a labelled radio group that works by keyboard and skips disabled options" time="0.2239936">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="ChartFrame &gt; gives every chart a text summary and a data table" time="0.0552742">
+        </testcase>
+        <testcase classname="src/components/components.test.tsx" name="toConvergenceRows &gt; orders warm-start preparation before optimisation and splits the series" time="0.0016187">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/components/hero/support.test.ts" timestamp="2026-10-08T21:50:19.784Z" hostname="Hardik" tests="5" failures="0" errors="0" skipped="0" time="0.0798936">
+        <testcase classname="src/components/hero/support.test.ts" name="static hero layout &gt; never overlaps two tiles, for any number of docked tiles" time="0.062328">
+        </testcase>
+        <testcase classname="src/components/hero/support.test.ts" name="pickHeroAssets &gt; docks the selection and fills the orbits with the rest" time="0.0048509">
+        </testcase>
+        <testcase classname="src/components/hero/support.test.ts" name="pickHeroAssets &gt; summarises a large selection as &quot;+N&quot;" time="0.0010173">
+        </testcase>
+        <testcase classname="src/components/hero/support.test.ts" name="pickHeroAssets &gt; always shows the hovered asset" time="0.0009987">
+        </testcase>
+        <testcase classname="src/components/hero/support.test.ts" name="pickHeroAssets &gt; ignores symbols outside the universe" time="0.0006721">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/experiment.test.ts" timestamp="2026-10-08T21:50:19.786Z" hostname="Hardik" tests="6" failures="0" errors="0" skipped="0" time="0.0092671">
+        <testcase classname="src/lib/experiment.test.ts" name="experiment cell count (mirrors backend experiment_cell_count) &gt; sums factor levels for one-factor-at-a-time" time="0.0024012">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="experiment cell count (mirrors backend experiment_cell_count) &gt; multiplies factor levels for full factorial, treating empty lists as one level" time="0.0004304">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="experiment cell count (mirrors backend experiment_cell_count) &gt; never returns zero" time="0.0003368">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="parseIntList &gt; accepts commas and whitespace and removes duplicates" time="0.0011565">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="parseIntList &gt; reports entries that are not whole numbers" time="0.0003118">
+        </testcase>
+        <testcase classname="src/lib/experiment.test.ts" name="parseIntList &gt; returns nothing for an empty string" time="0.000229">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/format.test.ts" timestamp="2026-10-08T21:50:19.788Z" hostname="Hardik" tests="8" failures="0" errors="0" skipped="0" time="0.0146251">
+        <testcase classname="src/lib/format.test.ts" name="format &gt; uses Indian digit grouping for rupees" time="0.0037702">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; compacts to lakh and crore" time="0.0009558">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; renders missing and non-finite values as a dash" time="0.0014999">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; formats percentages with a true minus sign and optional plus" time="0.0004301">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; formats decimals and durations" time="0.0007098">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; humanises memory with at most three significant figures" time="0.0004861">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; states a memory estimate against the limit" time="0.0007325">
+        </testcase>
+        <testcase classname="src/lib/format.test.ts" name="format &gt; gives relative times and short ids" time="0.0007575">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/lib/validate.test.ts" timestamp="2026-10-08T21:50:19.791Z" hostname="Hardik" tests="7" failures="0" errors="0" skipped="0" time="0.0171678">
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; accepts the default configuration with K set" time="0.0053376">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; requires K in selection mode and forbids it in lots mode" time="0.0026399">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; rejects K larger than the selected universe" time="0.0006685">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; rejects duplicate and malformed symbols" time="0.0008379">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; requires dates in train → validation → test order" time="0.0010458">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; checks numeric bounds generated from the contract" time="0.0018086">
+        </testcase>
+        <testcase classname="src/lib/validate.test.ts" name="validateRunConfig &gt; checks sector caps by basis" time="0.0007957">
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,253 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "E:\\All projects\\QuantFolio\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--project=webkit"
+    ],
+    "configFile": "E:\\All projects\\QuantFolio\\frontend\\playwright.config.ts",
+    "rootDir": "E:/All projects/QuantFolio/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "E:\\All projects\\QuantFolio\\frontend\\e2e\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(journey|views|perf)\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-states",
+        "name": "chromium-states",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/states\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/journey\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "E:/All projects/QuantFolio/.tmp/pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "E:/All projects/QuantFolio/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/journey\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "E:\\All projects\\QuantFolio\\.tmp\\pw-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "webkit",
+        "testDir": "E:\\All projects\\QuantFolio\\frontend\\e2e",
+        "snapshotDir": "E:\\All projects\\QuantFolio\\frontend\\e2e",
+        "testIgnore": [],
+        "testMatch": {},
+        "timeout": 120000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5201",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "actionTimeout": 15000,
+          "navigationTimeout": 30000,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1792,
+            "height": 1120
+          },
+          "deviceScaleFactor": 2,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "webkit"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "../evidence/e2e/playwright-webkit.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../evidence/e2e/playwright-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "journey.spec.ts",
+      "file": "journey.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "primary journey: select, constrain, preflight, run, compare, export, reopen from History",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "the overview leads to the Lab",
+                      "duration": 1929
+                    },
+                    {
+                      "title": "select assets",
+                      "duration": 1058
+                    },
+                    {
+                      "title": "set constraints",
+                      "duration": 1463
+                    },
+                    {
+                      "title": "the preflight reflects the new problem",
+                      "duration": 198
+                    },
+                    {
+                      "title": "submit and watch live progress",
+                      "duration": 847
+                    },
+                    {
+                      "title": "results",
+                      "duration": 6677
+                    },
+                    {
+                      "title": "compare QAOA with the classical baselines",
+                      "duration": 946
+                    },
+                    {
+                      "title": "export the JSON report",
+                      "duration": 304
+                    },
+                    {
+                      "title": "reopen the run from History",
+                      "duration": 1543
+                    }
+                  ],
+                  "startTime": "2026-10-08T21:45:01.940Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bf222bad70f76648f722-ebb362545effae05ceab",
+          "file": "journey.spec.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T21:45:00.830Z",
+    "duration": 27177.064000000002,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

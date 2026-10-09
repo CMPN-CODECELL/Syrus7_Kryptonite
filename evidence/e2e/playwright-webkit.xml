@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="27.177064">
+<testsuite name="journey.spec.ts" timestamp="2026-10-08T21:45:01.103Z" hostname="webkit" tests="1" failures="0" skipped="0" time="16.262" errors="0">
+<testcase name="primary journey: select, constrain, preflight, run, compare, export, reopen from History" classname="journey.spec.ts" time="16.262">
+</testcase>
+</testsuite>
+</testsuites>
