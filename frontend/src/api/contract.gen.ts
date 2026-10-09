@@ -42,6 +42,7 @@ export type Stage = (typeof STAGE_VALUES)[number]
 
 // ---- Response shapes (server always sends every property) -------------------
 export interface AssetInfo {
+  change_1y: number | null
   coverage: number
   data_note: string | null
   data_ok: boolean
@@ -51,8 +52,10 @@ export interface AssetInfo {
   last_price_inr: number | null
   n_obs: number
   name: string
+  price_note: string | null
   sector: string
   symbol: string
+  trend: Array<number>
 }
 
 export interface AssetsResponse {
@@ -660,6 +663,7 @@ export interface VariableInfo {
 
 // ---- Request shapes (properties with server defaults are optional) ----------
 export interface AssetInfoInput {
+  change_1y?: number | null
   coverage?: number
   data_note?: string | null
   data_ok?: boolean
@@ -669,8 +673,10 @@ export interface AssetInfoInput {
   last_price_inr?: number | null
   n_obs?: number
   name: string
+  price_note?: string | null
   sector: string
   symbol: string
+  trend?: Array<number>
 }
 
 export interface AssetsResponseInput {

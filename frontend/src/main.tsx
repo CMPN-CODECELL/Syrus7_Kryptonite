@@ -1,6 +1,4 @@
-import '@fontsource-variable/fraunces/opsz.css'
-import '@fontsource-variable/inter/index.css'
-import '@fontsource-variable/jetbrains-mono/index.css'
+import '@fontsource-variable/plus-jakarta-sans/index.css'
 import './styles.css'
 
 import { StrictMode } from 'react'
