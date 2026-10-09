@@ -1,0 +1,64 @@
+{
+ "eval_model": {
+  "c0": 0.012594983145895505,
+  "c_amp": 2.5723871058370934e-08,
+  "c_shot": 2.564468680269616e-05,
+  "c_noisy": 6.04501808711382e-07,
+  "form": "ideal: c0 + c_amp*depth*2^n*n + c_shot*shots; noisy: c0 + shots*(c_noisy*depth*2^n*n) + c_shot*shots",
+  "fit": "non-negative least squares on relative error (each row scaled by 1/measured seconds)"
+ },
+ "qubit_caps_basis": "Measured on this machine: an ideal depth-1 evaluation (256 shots) takes 7.05 s at 24 qubits and a fresh process peaks at 521 MB resident (preflight predicts 1118 MB, deliberately conservative). One more qubit doubles the statevector: the prediction for 25 qubits is 1886 MB, above MEMORY_LIMIT_MB = 1500.0 (set for a 16 GB laptop with about 3.5 GB free), hence MAX_QUBITS = 24. Noisy (fake-backend) simulation runs one trajectory per shot: 6.09 s per 256-shot evaluation at 12 qubits and 30.22 s at 14 qubits (peak 409 MB), i.e. x5.0 for two more qubits, hence MAX_QUBITS_NOISE = 14.",
+ "presets": {
+  "quick": {
+   "median_s": 2.49,
+   "p95_s": 2.86,
+   "min_s": 2.07,
+   "max_s": 2.87,
+   "repeats": 5,
+   "runs_s": [
+    2.07,
+    2.49,
+    2.81,
+    2.87,
+    2.45
+   ],
+   "machine": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel, 8 logical CPUs",
+   "measured_at": "2026-10-08",
+   "conditions": "warm worker process (pipeline.warmup() done), default example config with the preset applied, Aer statevector",
+   "cold_process_s": [
+    9.76,
+    8.33
+   ]
+  },
+  "balanced": {
+   "median_s": 9.07,
+   "p95_s": 9.7,
+   "min_s": 7.57,
+   "max_s": 9.76,
+   "repeats": 3,
+   "runs_s": [
+    7.57,
+    9.76,
+    9.07
+   ],
+   "machine": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel, 8 logical CPUs",
+   "measured_at": "2026-10-08",
+   "conditions": "warm worker process (pipeline.warmup() done), default example config with the preset applied, Aer statevector"
+  },
+  "research": {
+   "median_s": 26.75,
+   "p95_s": 28.28,
+   "min_s": 25.04,
+   "max_s": 28.45,
+   "repeats": 3,
+   "runs_s": [
+    28.45,
+    25.04,
+    26.75
+   ],
+   "machine": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel, 8 logical CPUs",
+   "measured_at": "2026-10-08",
+   "conditions": "warm worker process (pipeline.warmup() done), default example config with the preset applied, Aer statevector"
+  }
+ }
+}
