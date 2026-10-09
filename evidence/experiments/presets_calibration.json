@@ -1,0 +1,69 @@
+{
+ "generated_at": "2026-10-08T18:38:55+00:00",
+ "machine": {
+  "platform": "Windows-11",
+  "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+  "logical_cpus": 8,
+  "ram_gb": 15.8,
+  "python": "3.13.2"
+ },
+ "warmup_s": {
+  "data": 0.001,
+  "cvxpy": 0.01,
+  "qiskit": 0.005,
+  "total": 0.016
+ },
+ "presets": {
+  "quick": {
+   "median_s": 2.49,
+   "p95_s": 2.86,
+   "min_s": 2.07,
+   "max_s": 2.87,
+   "repeats": 5,
+   "runs_s": [
+    2.07,
+    2.49,
+    2.81,
+    2.87,
+    2.45
+   ],
+   "machine": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel, 8 logical CPUs",
+   "measured_at": "2026-10-08",
+   "conditions": "warm worker process (pipeline.warmup() done), default example config with the preset applied, Aer statevector",
+   "cold_process_s": [
+    9.76,
+    8.33
+   ]
+  },
+  "balanced": {
+   "median_s": 9.07,
+   "p95_s": 9.7,
+   "min_s": 7.57,
+   "max_s": 9.76,
+   "repeats": 3,
+   "runs_s": [
+    7.57,
+    9.76,
+    9.07
+   ],
+   "machine": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel, 8 logical CPUs",
+   "measured_at": "2026-10-08",
+   "conditions": "warm worker process (pipeline.warmup() done), default example config with the preset applied, Aer statevector"
+  },
+  "research": {
+   "median_s": 26.75,
+   "p95_s": 28.28,
+   "min_s": 25.04,
+   "max_s": 28.45,
+   "repeats": 3,
+   "runs_s": [
+    28.45,
+    25.04,
+    26.75
+   ],
+   "machine": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel, 8 logical CPUs",
+   "measured_at": "2026-10-08",
+   "conditions": "warm worker process (pipeline.warmup() done), default example config with the preset applied, Aer statevector"
+  }
+ }
+}

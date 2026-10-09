@@ -1,0 +1,226 @@
+{
+ "generated_at": "2026-10-08T18:54:24+00:00",
+ "machine": {
+  "platform": "Windows-11",
+  "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+  "logical_cpus": 8,
+  "ram_gb": 15.8,
+  "python": "3.13.2"
+ },
+ "conditions": "one process, Aer statevector via SamplerV2, first call excluded; other development processes were running on the same laptop",
+ "rows": [
+  {
+   "kind": "ideal",
+   "qubits": 8,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.0137,
+   "repeats": 3,
+   "model_over_measured": 1.4
+  },
+  {
+   "kind": "ideal",
+   "qubits": 8,
+   "depth": 3,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.024,
+   "repeats": 3,
+   "model_over_measured": 0.8
+  },
+  {
+   "kind": "ideal",
+   "qubits": 12,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.0283,
+   "repeats": 3,
+   "model_over_measured": 0.72
+  },
+  {
+   "kind": "ideal",
+   "qubits": 12,
+   "depth": 3,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.1596,
+   "repeats": 3,
+   "model_over_measured": 0.14
+  },
+  {
+   "kind": "ideal",
+   "qubits": 12,
+   "depth": 1,
+   "shots": 4096,
+   "seconds_per_evaluation_median": 0.1189,
+   "repeats": 3,
+   "model_over_measured": 1.0
+  },
+  {
+   "kind": "ideal",
+   "qubits": 16,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.0573,
+   "repeats": 3,
+   "model_over_measured": 0.81
+  },
+  {
+   "kind": "ideal",
+   "qubits": 16,
+   "depth": 3,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.1508,
+   "repeats": 3,
+   "model_over_measured": 0.66
+  },
+  {
+   "kind": "ideal",
+   "qubits": 20,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 1.5627,
+   "repeats": 3,
+   "model_over_measured": 0.36
+  },
+  {
+   "kind": "ideal",
+   "qubits": 20,
+   "depth": 3,
+   "shots": 256,
+   "seconds_per_evaluation_median": 1.6283,
+   "repeats": 3,
+   "model_over_measured": 1.01
+  },
+  {
+   "kind": "ideal",
+   "qubits": 22,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 3.0862,
+   "repeats": 2,
+   "model_over_measured": 0.78
+  },
+  {
+   "kind": "ideal",
+   "qubits": 24,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 7.0491,
+   "repeats": 2,
+   "model_over_measured": 1.47
+  },
+  {
+   "kind": "noisy",
+   "qubits": 6,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.3132,
+   "repeats": 2,
+   "noise_setup_seconds": 12.61,
+   "noisy_circuit_ops": 329,
+   "active_physical_qubits": 6,
+   "model_over_measured": 0.25
+  },
+  {
+   "kind": "noisy",
+   "qubits": 8,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 0.8369,
+   "repeats": 2,
+   "noise_setup_seconds": 13.0,
+   "noisy_circuit_ops": 600,
+   "active_physical_qubits": 8,
+   "model_over_measured": 0.4
+  },
+  {
+   "kind": "noisy",
+   "qubits": 10,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 1.9824,
+   "repeats": 2,
+   "noise_setup_seconds": 9.24,
+   "noisy_circuit_ops": 1013,
+   "active_physical_qubits": 10,
+   "model_over_measured": 0.81
+  },
+  {
+   "kind": "noisy",
+   "qubits": 12,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 6.0879,
+   "repeats": 2,
+   "noise_setup_seconds": 8.13,
+   "noisy_circuit_ops": 1491,
+   "active_physical_qubits": 12,
+   "model_over_measured": 1.25
+  },
+  {
+   "kind": "noisy",
+   "qubits": 14,
+   "depth": 1,
+   "shots": 256,
+   "seconds_per_evaluation_median": 30.2202,
+   "repeats": 2,
+   "noise_setup_seconds": 6.66,
+   "noisy_circuit_ops": 2031,
+   "active_physical_qubits": 14,
+   "model_over_measured": 1.18
+  }
+ ],
+ "memory_rows": [
+  {
+   "kind": "ideal",
+   "qubits": 16,
+   "peak_rss_before_eval_mb": 271.8,
+   "peak_rss_mb": 274.4,
+   "predicted_memory_mb": 353.0
+  },
+  {
+   "kind": "ideal",
+   "qubits": 20,
+   "peak_rss_before_eval_mb": 263.1,
+   "peak_rss_mb": 281.0,
+   "predicted_memory_mb": 398.0
+  },
+  {
+   "kind": "ideal",
+   "qubits": 22,
+   "peak_rss_before_eval_mb": 263.7,
+   "peak_rss_mb": 329.2,
+   "predicted_memory_mb": 542.0
+  },
+  {
+   "kind": "ideal",
+   "qubits": 24,
+   "peak_rss_before_eval_mb": 263.3,
+   "peak_rss_mb": 521.2,
+   "predicted_memory_mb": 1118.0
+  },
+  {
+   "kind": "noisy",
+   "qubits": 10,
+   "peak_rss_before_eval_mb": 374.4,
+   "peak_rss_mb": 399.8,
+   "predicted_memory_mb": 400.0
+  },
+  {
+   "kind": "noisy",
+   "qubits": 14,
+   "peak_rss_before_eval_mb": 376.9,
+   "peak_rss_mb": 408.6,
+   "predicted_memory_mb": 400.8
+  }
+ ],
+ "memory_method": "peak resident set reported by the OS for a fresh process that loads the data, builds the circuit and runs one depth-1 evaluation",
+ "eval_model": {
+  "c0": 0.012594983145895505,
+  "c_amp": 2.5723871058370934e-08,
+  "c_shot": 2.564468680269616e-05,
+  "c_noisy": 6.04501808711382e-07,
+  "form": "ideal: c0 + c_amp*depth*2^n*n + c_shot*shots; noisy: c0 + shots*(c_noisy*depth*2^n*n) + c_shot*shots",
+  "fit": "non-negative least squares on relative error (each row scaled by 1/measured seconds)"
+ },
+ "qubit_caps_basis": "Measured on this machine: an ideal depth-1 evaluation (256 shots) takes 7.05 s at 24 qubits and a fresh process peaks at 521 MB resident (preflight predicts 1118 MB, deliberately conservative). One more qubit doubles the statevector: the prediction for 25 qubits is 1886 MB, above MEMORY_LIMIT_MB = 1500.0 (set for a 16 GB laptop with about 3.5 GB free), hence MAX_QUBITS = 24. Noisy (fake-backend) simulation runs one trajectory per shot: 6.09 s per 256-shot evaluation at 12 qubits and 30.22 s at 14 qubits (peak 409 MB), i.e. x5.0 for two more qubits, hence MAX_QUBITS_NOISE = 14."
+}

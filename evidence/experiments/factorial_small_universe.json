@@ -1,0 +1,2516 @@
+{
+ "schema_version": "1.0",
+ "run_id": "exp-factorial_small_universe",
+ "created_at": "2026-10-08T18:57:39.503796Z",
+ "implementation_version": "0.1.0",
+ "config": {
+  "base": {
+   "symbols": [
+    "HDFCBANK",
+    "ICICIBANK",
+    "SBIN",
+    "INFY",
+    "TCS",
+    "ITC",
+    "HINDUNILVR",
+    "BHARTIARTL"
+   ],
+   "mode": "selection",
+   "risk_aversion": 2.0,
+   "budget_inr": 1000000.0,
+   "risk_free_rate": 0.065,
+   "dates": {
+    "train_start": "2022-01-03",
+    "train_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-09-30",
+    "test_start": "2025-10-01",
+    "test_end": "2026-10-07"
+   },
+   "screening": {
+    "rule": "none",
+    "keep": null
+   },
+   "constraints": {
+    "cardinality": 4,
+    "sector_caps": {
+     "basis": "count",
+     "default_max": 2.0,
+     "per_sector": {
+      "Financial Services": 1.0
+     }
+    },
+    "target_return": 0.15,
+    "lots": null,
+    "transaction_costs": {
+     "enabled": true,
+     "proportional_bps": 25.0,
+     "fixed_inr_per_trade": 20.0,
+     "starting_portfolio": {
+      "type": "holdings",
+      "weights": {
+       "HDFCBANK": 0.3,
+       "TCS": 0.3,
+       "HINDUNILVR": 0.2,
+       "INFY": 0.2
+      }
+     }
+    }
+   },
+   "qaoa": {
+    "depth": 1,
+    "optimizer": "COBYLA",
+    "init_strategy": "random",
+    "shots": 256,
+    "final_shots": 1024,
+    "max_evaluations": 30,
+    "estimator": "mean",
+    "cvar_alpha": 0.25,
+    "seed": 7,
+    "noise": "ideal",
+    "fake_backend": null,
+    "penalty_scale": 1.0
+   },
+   "baselines": {
+    "exact": true,
+    "relaxation_rounding": true,
+    "simulated_annealing": true,
+    "greedy": false,
+    "sa_sweeps": 300,
+    "sa_restarts": 8
+   },
+   "preset": "custom",
+   "noise_comparison": true,
+   "noise_trials": 5,
+   "timeout_seconds": 600,
+   "dataset_id": null
+  },
+  "depths": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "optimizers": [
+   "COBYLA",
+   "SPSA"
+  ],
+  "init_strategies": [
+   "random",
+   "warm_interp"
+  ],
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "universe_sizes": [
+   6
+  ],
+  "design": "full_factorial",
+  "max_cells": 60
+ },
+ "dataset": {
+  "dataset_id": "nifty50-yahoo-aaa53c0c94ef",
+  "label": "downloaded historical",
+  "source": "Yahoo Finance via yfinance 1.7.0 — daily adjusted close, NSE (.NS) tickers",
+  "downloaded_at": "2026-10-08T17:38:53.763584Z",
+  "first_date": "2019-01-01",
+  "last_date": "2026-10-08",
+  "n_symbols": 50,
+  "sha256": "aaa53c0c94ef942dfb631ae14ca2c91e2bf0e72ca3b1b40d579efec14ded4a78",
+  "stale": false,
+  "stale_reason": null,
+  "survivorship_note": "Universe is the NIFTY 50 membership as of 2026-10-08, applied to earlier periods. Stocks that left the index are absent and recent entrants are included before they joined, so historical (including held-out) performance is subject to survivorship bias.",
+  "universe_source": "NSE Indices official NIFTY 50 constituent list (ind_nifty50list.csv)",
+  "universe_as_of": "2026-10-08",
+  "missing_data_policy": "Prices stored as received; no back-filling with later data. At estimation time gaps are forward-filled from the last past observation for at most 5 trading days. Assets without a price within 5 trading days of the training start, or with < 95 % training coverage, are dropped with an explicit issue. Held-out metrics use buy-and-hold from the last close before the segment.",
+  "issues": [
+   "3 weekend dates present (calendar misalignment)",
+   "ETERNAL: history starts 2021-07-23 (later than dataset start 2019-01-01)",
+   "INDIGO: 1 interior missing price(s) (forward-filled up to 5 days at estimation)",
+   "JIOFIN: history starts 2023-08-21 (later than dataset start 2019-01-01)",
+   "MAXHEALTH: history starts 2020-08-21 (later than dataset start 2019-01-01)"
+  ]
+ },
+ "cells": [
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.15625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 28,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.5312,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.134765625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 28,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.6011,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1728515625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.8104,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1552734375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.6708,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1943359375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.5945,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1748046875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.5664,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1552734375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.4842,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1728515625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.5143,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.14453125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.5259,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.109375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.7268,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2041015625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.7705,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 1,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1123046875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.1723,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.037109375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.9815,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1689453125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.7473,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1708984375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.6479,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.19921875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 15,
+   "runtime_s": 2.0795,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1806640625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 15,
+   "runtime_s": 2.377,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1982421875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 15,
+   "runtime_s": 3.0029,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.0849609375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.6468,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.177734375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 2.4291,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2001953125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 2.4175,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1123046875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 14,
+   "runtime_s": 2.182,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.208984375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 14,
+   "runtime_s": 1.8332,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 2,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1796875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 14,
+   "runtime_s": 1.7028,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.111328125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.2636,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.0810546875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.2446,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1318359375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.7059,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2587890625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 14,
+   "runtime_s": 2.8417,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1259765625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 14,
+   "runtime_s": 2.0455,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2646484375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 14,
+   "runtime_s": 2.2001,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.0400390625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.2369,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.171875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.0064,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.248046875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.0546,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.099609375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 12,
+   "runtime_s": 1.6862,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1083984375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 12,
+   "runtime_s": 1.8497,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 3,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2255859375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 12,
+   "runtime_s": 1.7279,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.078125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.3015,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.0849609375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.3752,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.0517578125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.3746,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.33203125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 15,
+   "runtime_s": 1.859,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.095703125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 15,
+   "runtime_s": 2.0026,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2958984375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 15,
+   "runtime_s": 1.9928,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1142578125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.5845,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2822265625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.111,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.3076171875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.1341,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.16796875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 12,
+   "runtime_s": 1.9741,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.142578125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 12,
+   "runtime_s": 3.2722,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 4,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.3125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 12,
+   "runtime_s": 2.6809,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.072265625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.5351,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1083984375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.7397,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.13671875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.4143,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.3994140625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 20,
+   "runtime_s": 3.35,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1484375,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 20,
+   "runtime_s": 2.9851,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "COBYLA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.3310546875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 20,
+   "runtime_s": 2.6472,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.0810546875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.1728,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1064453125,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.3433,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "SPSA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1513671875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 4.853,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.0654296875,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 16,
+   "runtime_s": 5.6175,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.166015625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 16,
+   "runtime_s": 2.4201,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "full_factorial",
+   "depth": 5,
+   "optimizer": "SPSA",
+   "init_strategy": "warm_interp",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.2509765625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 16,
+   "runtime_s": 2.5881,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  }
+ ],
+ "summary": [
+  {
+   "factor": "full_factorial",
+   "level": "p1-COBYLA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.15462239583333334,
+    "std": 0.019095064291748003,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 28.666666666666668,
+    "std": 1.1547005383792515,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 0.9809,
+    "std": 0.4879284681180224,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p1-COBYLA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.1748046875,
+    "std": 0.01953125,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 0.6105666666666666,
+    "std": 0.05402261871969304,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p1-SPSA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.15755208333333334,
+    "std": 0.014296999515623535,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 0.5081333333333333,
+    "std": 0.021523088378142513,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p1-SPSA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.14192708333333334,
+    "std": 0.05386460026721274,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 0.8898666666666667,
+    "std": 0.24556844938495928,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p2-COBYLA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.12565104166666666,
+    "std": 0.07668555096235366,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.1255666666666666,
+    "std": 0.46726490702098883,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p2-COBYLA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.19270833333333334,
+    "std": 0.010442067013245728,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 15.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 2.486466666666667,
+    "std": 0.4713322642609281,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p2-SPSA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.154296875,
+    "std": 0.06108786786341177,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 2.1644666666666663,
+    "std": 0.44835000092933347,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p2-SPSA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.1669921875,
+    "std": 0.04957437557225412,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 14.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.906,
+    "std": 0.24775600900886333,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p3-COBYLA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.10807291666666667,
+    "std": 0.02554664603936644,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.4047,
+    "std": 0.26101978852186664,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p3-COBYLA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.21647135416666666,
+    "std": 0.07842552873868756,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 14.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 2.362433333333333,
+    "std": 0.4221939048983693,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p3-SPSA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.1533203125,
+    "std": 0.10523792014490681,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.0993000000000002,
+    "std": 0.12157767064720404,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p3-SPSA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.14453125,
+    "std": 0.07033284210949546,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 12.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.7546,
+    "std": 0.08495722453093672,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p4-COBYLA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.07161458333333333,
+    "std": 0.017532855481113583,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.3504333333333334,
+    "std": 0.042378571629224704,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p4-COBYLA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.2412109375,
+    "std": 0.12730195465385205,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 15.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.9514666666666667,
+    "std": 0.08022825769847766,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p4-SPSA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.23470052083333334,
+    "std": 0.10507618879876619,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.2765333333333333,
+    "std": 0.26695693160757844,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p4-SPSA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.20768229166666666,
+    "std": 0.09165825082697934,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 12.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 2.6424,
+    "std": 0.6499058316402463,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p5-COBYLA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.10579427083333333,
+    "std": 0.03230538025758619,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.5630333333333333,
+    "std": 0.16448858116396212,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p5-COBYLA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.29296875,
+    "std": 0.12975057883308086,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 20.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 2.9941,
+    "std": 0.35148642932551455,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p5-SPSA-random-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.11295572916666667,
+    "std": 0.03560549196321697,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 2.4563666666666664,
+    "std": 2.0772953721927303,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "full_factorial",
+   "level": "p5-SPSA-warm_interp-n6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.16080729166666666,
+    "std": 0.09288302190201253,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 30.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 16.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 3.5418999999999996,
+    "std": 1.7994839593616831,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  }
+ ],
+ "selected_configuration": {
+  "depth": 5,
+  "optimizer": "COBYLA",
+  "init_strategy": "warm_interp",
+  "n_assets": 6,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "mean_approximation_ratio": 1.0,
+  "mean_feasible_probability": 0.29296875,
+  "mean_circuit_evaluations": 50.0,
+  "mean_runtime_s": 2.9941,
+  "mean_validation_sharpe": -1.3737183715374626
+ },
+ "selection_rule": "Configuration (depth, optimizer, init, universe size) with the highest mean approximation ratio on the TRAINING objective across seeds (1 = exact optimum, 0 = worst feasible portfolio; a seed without a feasible sample counts as 0; compared to 9 decimals); ties -> higher mean final-batch feasible probability, then fewer mean circuit evaluations (optimisation + warm-start preparation), then lower depth. Every criterion is deterministic for fixed seeds (wall time is not used). Validation Sharpe is reported only; test data is never used.",
+ "noise_comparison": {
+  "backend": "FakeTorino",
+  "noise_model_summary": "FakeTorino (qiskit-ibm-runtime snapshot) NoiseModel.from_backend restricted to 8 active physical qubits [73, 80, 81, 82, 83, 92, 98, 99]: 46 local gate errors, 8 readout errors; basis ['cz', 'delay', 'for_loop', 'id', 'if_else', 'measure', 'reset', 'rz', 'switch_case', 'sx', 'x']",
+  "shots": 1024,
+  "parameters_source": "optimal parameters of the noise-free optimisation (fixed, not re-optimised under noise)",
+  "ideal": [
+   {
+    "seed": 1007923,
+    "feasible_probability": 0.408203125,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 0.0359
+   },
+   {
+    "seed": 1015842,
+    "feasible_probability": 0.3955078125,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 0.0511
+   },
+   {
+    "seed": 1023761,
+    "feasible_probability": 0.3740234375,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 0.0508
+   },
+   {
+    "seed": 1031680,
+    "feasible_probability": 0.4140625,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 0.0413
+   },
+   {
+    "seed": 1039599,
+    "feasible_probability": 0.3701171875,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 0.0356
+   }
+  ],
+  "noisy": [
+   {
+    "seed": 1007923,
+    "feasible_probability": 0.17578125,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 14.7657
+   },
+   {
+    "seed": 1015842,
+    "feasible_probability": 0.1875,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 14.6787
+   },
+   {
+    "seed": 1023761,
+    "feasible_probability": 0.1865234375,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 14.6086
+   },
+   {
+    "seed": 1031680,
+    "feasible_probability": 0.1669921875,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 14.5302
+   },
+   {
+    "seed": 1039599,
+    "feasible_probability": 0.197265625,
+    "best_objective": -0.158580864086691,
+    "expected_return": 0.20947160942814627,
+    "volatility": 0.15373800008692584,
+    "runtime_s": 14.7686
+   }
+  ],
+  "summary": {
+   "trials": 5,
+   "shots_per_trial": 1024,
+   "feasible_probability_ideal": {
+    "mean": 0.3923828125,
+    "std": 0.019766647855203993,
+    "n": 5
+   },
+   "feasible_probability_noisy": {
+    "mean": 0.1828125,
+    "std": 0.011665732936732775,
+    "n": 5
+   },
+   "delta_feasible_probability": {
+    "mean": -0.2095703125,
+    "std": 0.03068489290494413,
+    "n": 5
+   },
+   "best_objective_ideal": {
+    "mean": -0.158580864086691,
+    "std": 0.0,
+    "n": 5
+   },
+   "best_objective_noisy": {
+    "mean": -0.158580864086691,
+    "std": 0.0,
+    "n": 5
+   },
+   "delta_best_objective": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 5
+   },
+   "noisy_trials_without_feasible_sample": 0,
+   "method": "same trained parameters, same shots and simulator seed in each paired trial; delta = noisy - ideal per trial; std = sample std over trials (ddof=1)",
+   "active_physical_qubits": [
+    73,
+    80,
+    81,
+    82,
+    83,
+    92,
+    98,
+    99
+   ]
+  }
+ },
+ "timings_s": {
+  "total": 189.1425,
+  "cells_sum": 105.2077
+ },
+ "software": {
+  "python": "3.13.2",
+  "platform": "Windows-11",
+  "quantfolio": "0.1.0",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "pandas": "3.0.6",
+  "scikit-learn": "1.9.1",
+  "cvxpy": "1.9.3",
+  "clarabel": "0.11.1",
+  "qiskit": "2.5.2",
+  "qiskit-aer": "0.17.2",
+  "qiskit-ibm-runtime": "0.50.0",
+  "pydantic": "2.14.0",
+  "pyarrow": "25.0.1"
+ },
+ "warnings": [],
+ "disclaimer": "Research demonstration — not investment advice."
+}

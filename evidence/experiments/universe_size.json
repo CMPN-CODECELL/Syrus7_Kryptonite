@@ -1,0 +1,616 @@
+{
+ "schema_version": "1.0",
+ "run_id": "exp-universe_size",
+ "created_at": "2026-10-08T18:59:16.212985Z",
+ "implementation_version": "0.1.0",
+ "config": {
+  "base": {
+   "symbols": [
+    "HDFCBANK",
+    "ICICIBANK",
+    "SBIN",
+    "INFY",
+    "TCS",
+    "ITC",
+    "HINDUNILVR",
+    "BHARTIARTL",
+    "RELIANCE",
+    "LT",
+    "MARUTI",
+    "SUNPHARMA"
+   ],
+   "mode": "selection",
+   "risk_aversion": 2.0,
+   "budget_inr": 1000000.0,
+   "risk_free_rate": 0.065,
+   "dates": {
+    "train_start": "2022-01-03",
+    "train_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-09-30",
+    "test_start": "2025-10-01",
+    "test_end": "2026-10-07"
+   },
+   "screening": {
+    "rule": "none",
+    "keep": null
+   },
+   "constraints": {
+    "cardinality": 6,
+    "sector_caps": {
+     "basis": "count",
+     "default_max": 2.0,
+     "per_sector": {
+      "Financial Services": 1.0
+     }
+    },
+    "target_return": 0.15,
+    "lots": null,
+    "transaction_costs": {
+     "enabled": true,
+     "proportional_bps": 25.0,
+     "fixed_inr_per_trade": 20.0,
+     "starting_portfolio": {
+      "type": "holdings",
+      "weights": {
+       "HDFCBANK": 0.3,
+       "TCS": 0.3,
+       "HINDUNILVR": 0.2,
+       "INFY": 0.2
+      }
+     }
+    }
+   },
+   "qaoa": {
+    "depth": 1,
+    "optimizer": "COBYLA",
+    "init_strategy": "random",
+    "shots": 256,
+    "final_shots": 1024,
+    "max_evaluations": 30,
+    "estimator": "mean",
+    "cvar_alpha": 0.25,
+    "seed": 7,
+    "noise": "ideal",
+    "fake_backend": null,
+    "penalty_scale": 1.0
+   },
+   "baselines": {
+    "exact": true,
+    "relaxation_rounding": true,
+    "simulated_annealing": true,
+    "greedy": false,
+    "sa_sweeps": 300,
+    "sa_restarts": 8
+   },
+   "preset": "custom",
+   "noise_comparison": false,
+   "noise_trials": 3,
+   "timeout_seconds": 600,
+   "dataset_id": null
+  },
+  "depths": [],
+  "optimizers": [],
+  "init_strategies": [],
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "universe_sizes": [
+   6,
+   8,
+   10,
+   12
+  ],
+  "design": "one_factor_at_a_time",
+  "max_cells": 12
+ },
+ "dataset": {
+  "dataset_id": "nifty50-yahoo-aaa53c0c94ef",
+  "label": "downloaded historical",
+  "source": "Yahoo Finance via yfinance 1.7.0 — daily adjusted close, NSE (.NS) tickers",
+  "downloaded_at": "2026-10-08T17:38:53.763584Z",
+  "first_date": "2019-01-01",
+  "last_date": "2026-10-08",
+  "n_symbols": 50,
+  "sha256": "aaa53c0c94ef942dfb631ae14ca2c91e2bf0e72ca3b1b40d579efec14ded4a78",
+  "stale": false,
+  "stale_reason": null,
+  "survivorship_note": "Universe is the NIFTY 50 membership as of 2026-10-08, applied to earlier periods. Stocks that left the index are absent and recent entrants are included before they joined, so historical (including held-out) performance is subject to survivorship bias.",
+  "universe_source": "NSE Indices official NIFTY 50 constituent list (ind_nifty50list.csv)",
+  "universe_as_of": "2026-10-08",
+  "missing_data_policy": "Prices stored as received; no back-filling with later data. At estimation time gaps are forward-filled from the last past observation for at most 5 trading days. Assets without a price within 5 trading days of the training start, or with < 95 % training coverage, are dropped with an explicit issue. Held-out metrics use buy-and-hold from the last close before the segment.",
+  "issues": [
+   "3 weekend dates present (calendar misalignment)",
+   "ETERNAL: history starts 2021-07-23 (later than dataset start 2019-01-01)",
+   "INDIGO: 1 interior missing price(s) (forward-filled up to 5 days at estimation)",
+   "JIOFIN: history starts 2023-08-21 (later than dataset start 2019-01-01)",
+   "MAXHEALTH: history starts 2020-08-21 (later than dataset start 2019-01-01)"
+  ]
+ },
+ "cells": [
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.15625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 28,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.9295,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.134765625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 28,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.7696,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 6,
+   "total_qubits": 8,
+   "status": "ok",
+   "feasible_probability": 0.1728515625,
+   "best_objective": -0.15858086408669103,
+   "exact_objective": -0.158580864086691,
+   "gap_abs": -2.7755575615628914e-17,
+   "approximation_ratio": 1.0000000000000004,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 0.8764,
+   "validation_sharpe": -1.3737183715374626,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 8,
+   "total_qubits": 10,
+   "status": "ok",
+   "feasible_probability": 0.1279296875,
+   "best_objective": -0.18991959276728027,
+   "exact_objective": -0.18991959276728027,
+   "gap_abs": 0.0,
+   "approximation_ratio": 1.0,
+   "evaluations": 24,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.6592,
+   "validation_sharpe": -0.6931057348524441,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 8,
+   "total_qubits": 10,
+   "status": "ok",
+   "feasible_probability": 0.1201171875,
+   "best_objective": -0.18991959276728027,
+   "exact_objective": -0.18991959276728027,
+   "gap_abs": 0.0,
+   "approximation_ratio": 1.0,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.1294,
+   "validation_sharpe": -0.6931057348524441,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 8,
+   "total_qubits": 10,
+   "status": "ok",
+   "feasible_probability": 0.1650390625,
+   "best_objective": -0.18991959276728027,
+   "exact_objective": -0.18991959276728027,
+   "gap_abs": 0.0,
+   "approximation_ratio": 1.0,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 1.2326,
+   "validation_sharpe": -0.6931057348524441,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 10,
+   "total_qubits": 17,
+   "status": "ok",
+   "feasible_probability": 0.083984375,
+   "best_objective": -0.18690688960155558,
+   "exact_objective": -0.19220344679136675,
+   "gap_abs": 0.005296557189811174,
+   "approximation_ratio": 0.9441396268307343,
+   "evaluations": 28,
+   "preparation_evaluations": 0,
+   "runtime_s": 4.0389,
+   "validation_sharpe": 0.18036972354769626,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 10,
+   "total_qubits": 17,
+   "status": "ok",
+   "feasible_probability": 0.06640625,
+   "best_objective": -0.18690688960155558,
+   "exact_objective": -0.19220344679136675,
+   "gap_abs": 0.005296557189811174,
+   "approximation_ratio": 0.9441396268307343,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 2.8448,
+   "validation_sharpe": 0.18036972354769626,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 10,
+   "total_qubits": 17,
+   "status": "ok",
+   "feasible_probability": 0.0947265625,
+   "best_objective": -0.1922034467913668,
+   "exact_objective": -0.19220344679136675,
+   "gap_abs": -5.551115123125783e-17,
+   "approximation_ratio": 1.0000000000000007,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 3.3649,
+   "validation_sharpe": -0.5790314757252282,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 1,
+   "n_assets": 12,
+   "total_qubits": 20,
+   "status": "ok",
+   "feasible_probability": 0.087890625,
+   "best_objective": -0.22060685322661025,
+   "exact_objective": -0.22060685322661025,
+   "gap_abs": 0.0,
+   "approximation_ratio": 1.0,
+   "evaluations": 23,
+   "preparation_evaluations": 0,
+   "runtime_s": 10.8352,
+   "validation_sharpe": 0.5161382632955765,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 2,
+   "n_assets": 12,
+   "total_qubits": 20,
+   "status": "ok",
+   "feasible_probability": 0.1064453125,
+   "best_objective": -0.20403148326967271,
+   "exact_objective": -0.22060685322661025,
+   "gap_abs": 0.016575369956937536,
+   "approximation_ratio": 0.8584229483794841,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 26.9602,
+   "validation_sharpe": -0.21681832631739975,
+   "error": null
+  },
+  {
+   "factor": "universe_size",
+   "depth": 1,
+   "optimizer": "COBYLA",
+   "init_strategy": "random",
+   "seed": 3,
+   "n_assets": 12,
+   "total_qubits": 20,
+   "status": "ok",
+   "feasible_probability": 0.10546875,
+   "best_objective": -0.203779461175152,
+   "exact_objective": -0.22060685322661025,
+   "gap_abs": 0.01682739205145825,
+   "approximation_ratio": 0.8562703240230946,
+   "evaluations": 30,
+   "preparation_evaluations": 0,
+   "runtime_s": 41.8492,
+   "validation_sharpe": -0.7284926545153803,
+   "error": null
+  }
+ ],
+ "summary": [
+  {
+   "factor": "universe_size",
+   "level": "6",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.15462239583333334,
+    "std": 0.019095064291748003,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": -2.7755575615628914e-17,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0000000000000004,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 28.666666666666668,
+    "std": 1.1547005383792515,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 0.8584999999999999,
+    "std": 0.08143899557337383,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -1.3737183715374626,
+    "std": 0.0,
+    "n": 3
+   },
+   "total_qubits": [
+    8
+   ]
+  },
+  {
+   "factor": "universe_size",
+   "level": "8",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 1.0,
+   "feasible_probability": {
+    "mean": 0.1376953125,
+    "std": 0.024000401811415054,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 1.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 28.0,
+    "std": 3.4641016151377544,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 1.3403999999999998,
+    "std": 0.28086943585943985,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -0.6931057348524442,
+    "std": 1.3597399555105182e-16,
+    "n": 3
+   },
+   "total_qubits": [
+    10
+   ]
+  },
+  {
+   "factor": "universe_size",
+   "level": "10",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 0.3333333333333333,
+   "feasible_probability": {
+    "mean": 0.08170572916666667,
+    "std": 0.014296999515623535,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": 0.003531038126540764,
+    "std": 0.0030579687193157614,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 0.9627597512204898,
+    "std": 0.032251001486308904,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 29.333333333333332,
+    "std": 1.1547005383792515,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 3.4162,
+    "std": 0.5987006514110368,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -0.07276400954327855,
+    "std": 0.43844048682314757,
+    "n": 3
+   },
+   "total_qubits": [
+    17
+   ]
+  },
+  {
+   "factor": "universe_size",
+   "level": "12",
+   "cells": 3,
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "feasible_result_rate": 1.0,
+   "optimum_found_rate": 0.3333333333333333,
+   "feasible_probability": {
+    "mean": 0.09993489583333333,
+    "std": 0.01044206701324573,
+    "n": 3
+   },
+   "gap_abs": {
+    "mean": 0.011134254002798596,
+    "std": 0.009643370154316334,
+    "n": 3
+   },
+   "approximation_ratio": {
+    "mean": 0.9048977574675262,
+    "std": 0.08236799043884724,
+    "n": 3
+   },
+   "evaluations": {
+    "mean": 27.666666666666668,
+    "std": 4.041451884327381,
+    "n": 3
+   },
+   "preparation_evaluations": {
+    "mean": 0.0,
+    "std": 0.0,
+    "n": 3
+   },
+   "runtime_s": {
+    "mean": 26.548199999999998,
+    "std": 15.511104312717391,
+    "n": 3
+   },
+   "validation_sharpe": {
+    "mean": -0.14305757251240114,
+    "std": 0.6255853394974561,
+    "n": 3
+   },
+   "total_qubits": [
+    20
+   ]
+  }
+ ],
+ "selected_configuration": {
+  "depth": 1,
+  "optimizer": "COBYLA",
+  "init_strategy": "random",
+  "n_assets": 6,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "mean_approximation_ratio": 1.0,
+  "mean_feasible_probability": 0.15462239583333334,
+  "mean_circuit_evaluations": 28.666666666666668,
+  "mean_runtime_s": 0.8584999999999999,
+  "mean_validation_sharpe": -1.3737183715374626
+ },
+ "selection_rule": "Configuration (depth, optimizer, init, universe size) with the highest mean approximation ratio on the TRAINING objective across seeds (1 = exact optimum, 0 = worst feasible portfolio; a seed without a feasible sample counts as 0; compared to 9 decimals); ties -> higher mean final-batch feasible probability, then fewer mean circuit evaluations (optimisation + warm-start preparation), then lower depth. Every criterion is deterministic for fixed seeds (wall time is not used). Validation Sharpe is reported only; test data is never used.",
+ "noise_comparison": null,
+ "timings_s": {
+  "total": 96.6267,
+  "cells_sum": 96.4899
+ },
+ "software": {
+  "python": "3.13.2",
+  "platform": "Windows-11",
+  "quantfolio": "0.1.0",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "pandas": "3.0.6",
+  "scikit-learn": "1.9.1",
+  "cvxpy": "1.9.3",
+  "clarabel": "0.11.1",
+  "qiskit": "2.5.2",
+  "qiskit-aer": "0.17.2",
+  "qiskit-ibm-runtime": "0.50.0",
+  "pydantic": "2.14.0",
+  "pyarrow": "25.0.1"
+ },
+ "warnings": [],
+ "disclaimer": "Research demonstration — not investment advice."
+}
