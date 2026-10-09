@@ -1,0 +1,19 @@
+{
+  "name": "not-found",
+  "note": "Real pipeline, desktop 1280 px",
+  "url": "http://127.0.0.1:5201/no-such-page",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "passes": 15,
+  "incomplete": 0,
+  "violations": []
+}
