@@ -176,7 +176,7 @@ test('reduced motion: the hero stays a still illustration', async ({ page }) => 
   await expect(hero).toHaveAttribute('data-hero-reason', 'reduced-motion')
   await expect(hero).toHaveAttribute('data-hero-mode', 'svg')
   await expect(hero.locator('canvas')).toHaveCount(0)
-  await shot(page, 'overview-reduced-motion')
+  await shot(page, 'landing-reduced-motion')
 })
 
 test('WebGL unavailable: the hero falls back to the SVG without errors', async ({ page }) => {
@@ -190,8 +190,8 @@ test('WebGL unavailable: the hero falls back to the SVG without errors', async (
   const hero = page.getByTestId('hero-stage').first()
   await expect(hero).toHaveAttribute('data-hero-reason', 'no-webgl')
   await expect(hero).toHaveAttribute('data-hero-mode', 'svg')
-  await expect(page.getByTestId('cta-optimiser')).toBeVisible()
-  await shot(page, 'overview-no-webgl')
+  await expect(page.getByTestId('cta-dashboard')).toBeVisible()
+  await shot(page, 'landing-no-webgl')
 })
 
 test('no feasible QAOA sample (result mocked in the browser)', async ({ page }) => {

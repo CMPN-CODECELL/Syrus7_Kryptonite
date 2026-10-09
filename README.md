@@ -6,56 +6,11 @@
 
 SYRUS 7.0 · Problem statement PS-03 (Portfolio Optimisation using Quantum Computing) · Team Kryptonite
 
-<!-- Project -->
 ![SYRUS 7.0](https://img.shields.io/badge/SYRUS_7.0-PS--03-6f42c1)
-![Team](https://img.shields.io/badge/team-Kryptonite-0b7285)
-![Platform](https://img.shields.io/badge/platform-Windows_11-0078D4?logo=windows&logoColor=white)
-![Runs offline](https://img.shields.io/badge/runs-offline_on_127.0.0.1-2ea44f)
-![IBM Quantum](https://img.shields.io/badge/IBM_Quantum-optional-052FAD?logo=ibm&logoColor=white)
-![Dataset](https://img.shields.io/badge/dataset-NIFTY_50,_2019--2026-f59f00)
-
-<!-- Quantum and numerics -->
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
-![Qiskit](https://img.shields.io/badge/Qiskit-2.5.2-6929C4?logo=qiskit&logoColor=white)
-![Qiskit Aer](https://img.shields.io/badge/Qiskit_Aer-0.17.2-6929C4?logo=qiskit&logoColor=white)
-![qiskit-ibm-runtime](https://img.shields.io/badge/qiskit--ibm--runtime-0.50.0-6929C4?logo=qiskit&logoColor=white)
-![CVXPY](https://img.shields.io/badge/CVXPY-1.9.3-1f6feb)
-![NumPy](https://img.shields.io/badge/NumPy-2.5-013243?logo=numpy&logoColor=white)
-![SciPy](https://img.shields.io/badge/SciPy-1.18-8CAAE6?logo=scipy&logoColor=white)
-![pandas](https://img.shields.io/badge/pandas-3.0-150458?logo=pandas&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-1.9-F7931E?logo=scikitlearn&logoColor=white)
-![Apache Arrow](https://img.shields.io/badge/PyArrow-25-D22128?logo=apache&logoColor=white)
-
-<!-- Platform -->
+![Qiskit](https://img.shields.io/badge/Qiskit-2.5-6929C4?logo=qiskit&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.143-009688?logo=fastapi&logoColor=white)
-![Uvicorn](https://img.shields.io/badge/Uvicorn-0.54-499848)
-![Pydantic](https://img.shields.io/badge/Pydantic-2.14-E92063?logo=pydantic&logoColor=white)
-![SSE](https://img.shields.io/badge/live_updates-Server--Sent_Events-555555)
-![SQLite](https://img.shields.io/badge/SQLite-WAL-003B57?logo=sqlite&logoColor=white)
-
-<!-- Frontend -->
-![Node.js](https://img.shields.io/badge/Node.js-24-5FA04E?logo=nodedotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
-![React Router](https://img.shields.io/badge/React_Router-8-CA4245?logo=reactrouter&logoColor=white)
-![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)
-![three.js](https://img.shields.io/badge/three.js-3D_hero-000000?logo=threedotjs&logoColor=white)
-![Recharts](https://img.shields.io/badge/Recharts-3-22b5bf)
-
-<!-- Quality -->
-![Core tests](https://img.shields.io/badge/core_tests-154_passed-brightgreen?logo=pytest&logoColor=white)
-![API tests](https://img.shields.io/badge/API_tests-146_passed-brightgreen?logo=pytest&logoColor=white)
-![Load test](https://img.shields.io/badge/load_test-6611_requests,_0_failed-brightgreen?logo=locust&logoColor=white)
-![Failure scenarios](https://img.shields.io/badge/failure_scenarios-7%2F7_passed-brightgreen)
-![Vitest](https://img.shields.io/badge/Vitest-45_passed-6E9F18?logo=vitest&logoColor=white)
-![Playwright](https://img.shields.io/badge/Playwright-32_passed-2EAD33?logo=playwright&logoColor=white)
-![Browsers](https://img.shields.io/badge/browsers-Chromium_%7C_Firefox_%7C_WebKit-2EAD33)
-![axe-core](https://img.shields.io/badge/axe--core-0_violations-4b32c3)
-![LCP](https://img.shields.io/badge/LCP_slow_4G-2.4_s-brightgreen)
-![CLS](https://img.shields.io/badge/CLS-0.002-brightgreen)
-![ESLint](https://img.shields.io/badge/lint-ESLint,_0_warnings-4B32C3?logo=eslint&logoColor=white)
 
 </div>
 

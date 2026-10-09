@@ -6,9 +6,11 @@ import { asset, configure, expect, holdings, runIdOf, test } from './helpers'
 test('primary journey: select, constrain, preflight, run, compare, export, reopen from History', async ({ page }) => {
   test.setTimeout(300_000)
 
-  await test.step('the overview leads to the Lab', async () => {
+  await test.step('the landing page leads to the dashboard, and the dashboard to the Lab', async () => {
     await page.goto('/')
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    await page.getByTestId('cta-dashboard').click()
+    await expect(page).toHaveURL(/\/dashboard$/)
     await page.getByTestId('cta-optimiser').click()
     await expect(page).toHaveURL(/\/lab$/)
     await expect(page.getByTestId('asset-list')).toBeVisible()

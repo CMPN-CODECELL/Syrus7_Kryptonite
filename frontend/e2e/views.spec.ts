@@ -9,7 +9,15 @@ interface View {
 }
 
 const VIEWS: View[] = [
-  { name: 'overview', path: () => '/', ready: (p) => expect(p.getByTestId('cta-optimiser')).toBeVisible() },
+  { name: 'landing', path: () => '/', ready: (p) => expect(p.getByTestId('cta-dashboard')).toBeVisible() },
+  {
+    name: 'dashboard',
+    path: () => '/dashboard',
+    ready: async (p) => {
+      await expect(p.getByTestId('cta-optimiser')).toBeVisible()
+      await expect(p.getByTestId('recent-runs')).toBeVisible()
+    },
+  },
   {
     name: 'lab',
     path: () => '/lab',
@@ -21,6 +29,7 @@ const VIEWS: View[] = [
   { name: 'run', path: (id) => `/runs/${id}`, ready: (p) => expect(p.getByTestId('run-result')).toBeVisible() },
   { name: 'experiments', path: () => '/experiments', ready: (p) => expect(p.getByTestId('submit-experiment')).toBeVisible() },
   { name: 'history', path: () => '/history', ready: (p) => expect(p.getByTestId('history-open').first()).toBeVisible() },
+  { name: 'guardrails', path: () => '/guardrails', ready: (p) => expect(p.getByTestId('guard-family').first()).toBeVisible() },
   { name: 'not-found', path: () => '/no-such-page', ready: (p) => expect(p.getByRole('heading', { level: 1 })).toBeVisible() },
 ]
 
@@ -75,3 +84,26 @@ for (const view of VIEWS) {
     expect(await axeScan(page, `${view.name}-mobile`, 'Real pipeline, mobile 390 px')).toEqual([])
   })
 }
+
+test('sidebar: a rail of icons that opens on hover or keyboard focus without moving the page', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 })
+  await page.goto('/dashboard')
+  await expect(page.getByTestId('cta-optimiser')).toBeVisible()
+  const rail = page.getByTestId('sidebar')
+  const main = page.locator('#main')
+  await expect(rail).toHaveAttribute('data-open', 'false')
+  const before = await main.boundingBox()
+
+  await rail.hover()
+  await expect(rail).toHaveAttribute('data-open', 'true')
+  await expect(rail.getByRole('link', { name: 'Portfolio Lab' })).toBeVisible()
+  expect(await main.boundingBox()).toEqual(before)
+  await page.mouse.move(900, 450)
+  await expect(rail).toHaveAttribute('data-open', 'false')
+
+  // Keyboard: tabbing into the rail opens it, and Escape closes it again.
+  for (let i = 0; i < 6 && !(await rail.evaluate((el) => el.contains(document.activeElement))); i++) await page.keyboard.press('Tab')
+  await expect(rail).toHaveAttribute('data-open', 'true')
+  await page.keyboard.press('Escape')
+  await expect(rail).toHaveAttribute('data-open', 'false')
+})
