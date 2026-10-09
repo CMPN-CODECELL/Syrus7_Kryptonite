@@ -1,0 +1,19 @@
+{
+  "name": "run-stopped",
+  "note": "Failed run on the fake pipeline (seed 777)",
+  "url": "http://127.0.0.1:5200/runs/run-20261008-25039ce1",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "passes": 20,
+  "incomplete": 0,
+  "violations": []
+}
