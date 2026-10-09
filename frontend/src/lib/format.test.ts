@@ -1,5 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { DASH, formatBytesMb, formatDuration, formatInr, formatMemoryEstimate, formatInrCompact, formatInt, formatNum, formatPct, formatRelative, shortId } from './format'
+import {
+  DASH,
+  formatAxisNum,
+  formatBytesMb,
+  formatDuration,
+  formatInr,
+  formatMemoryEstimate,
+  formatInrCompact,
+  formatInt,
+  formatNum,
+  formatPct,
+  formatRelative,
+  shortId,
+} from './format'
 
 describe('format', () => {
   it('uses Indian digit grouping for rupees', () => {
@@ -32,6 +45,13 @@ describe('format', () => {
 
   it('formats decimals and durations', () => {
     expect(formatNum(-0.123456, 3)).toBe('−0.123')
+    expect(formatAxisNum(-0.123456)).toBe('−0.123')
+    expect(formatAxisNum(0)).toBe('0')
+    expect(formatAxisNum(42.25)).toBe('42.3')
+    expect(formatAxisNum(512.4)).toBe('512')
+    expect(formatAxisNum(9764.68)).toBe('9.76k')
+    expect(formatAxisNum(-2500)).toBe('−2.5k')
+    expect(formatAxisNum(1_250_000)).toBe('1.25M')
     expect(formatDuration(0.84)).toBe('840 ms')
     expect(formatDuration(5)).toBe('5.00 s')
     expect(formatDuration(12.44)).toBe('12.4 s')

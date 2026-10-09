@@ -1,9 +1,9 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
-  --font-sans: 'Inter Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  /* One typeface for every heading, label, figure and chart. Monospace is only for raw code blocks. */
+  --font-sans: 'Plus Jakarta Sans Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
   --color-ink: #0b1220;
   --color-ink-2: #1e293b;
@@ -54,20 +54,32 @@
   }
   body {
     @apply bg-canvas text-ink font-sans antialiased;
-    font-feature-settings: 'cv11', 'ss01';
     min-height: 100vh;
+  }
+  /* Plus Jakarta Sans has a narrow space (0.17 em). Widen it on every element, so the extra space scales with each
+     element's own size (an inherited em value would not). */
+  *,
+  ::before,
+  ::after {
+    word-spacing: 0.06em;
   }
   h1,
   h2,
   h3 {
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
   p {
     text-wrap: pretty;
   }
-  /* In-page targets clear the 64 px sticky header. */
+  /* In-page targets clear the 64 px sticky header (narrow screens; wide screens use the sidebar). */
   [id] {
     scroll-margin-top: 5rem;
+  }
+  @media (min-width: 64rem) {
+    [id] {
+      scroll-margin-top: 1.5rem;
+    }
   }
   :focus-visible {
     outline: 2.5px solid var(--color-cobalt);
@@ -94,10 +106,6 @@
 @layer utilities {
   .tabular {
     font-variant-numeric: tabular-nums lining-nums;
-  }
-  .font-display {
-    font-optical-sizing: auto;
-    letter-spacing: -0.02em;
   }
   .eyebrow {
     @apply text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-muted;

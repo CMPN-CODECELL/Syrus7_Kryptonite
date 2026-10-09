@@ -14,7 +14,7 @@ import {
   YAxis,
 } from 'recharts'
 import type { ExperimentCell, FinalBatch, FrontierPoint, IterationPoint, NoiseComparison, SolverName, SolverResult } from '../../api/contract.gen'
-import { DASH, SOLVER_LABEL, formatNum, formatPct, sectorShort } from '../../lib/format'
+import { DASH, SOLVER_LABEL, formatAxisNum, formatNum, formatPct, sectorShort } from '../../lib/format'
 import { Table, Tooltip } from '../ui'
 import { ChartFrame, LegendItem } from './ChartFrame'
 import { FACTOR_LABEL, METRIC_LABEL, levelOf, toConvergenceRows, type ConvergenceRow, type ExpMetric } from './chartData'
@@ -257,7 +257,7 @@ export function ConvergenceChart({ points, budget, live = false }: { points: Ite
           <LineChart responsive accessibilityLayer={false} data={rows} syncId="conv" style={{ width: '100%', height: '100%' }} margin={{ top: 6, right: 16, bottom: 0, left: 4 }}>
             <CartesianGrid stroke={C.line} />
             <XAxis dataKey="i" type="number" domain={[1, Math.max(rows.length, budget ? budget + prep : 1)]} hide />
-            <YAxis domain={['auto', 'auto']} width={58} tickFormatter={(v: number) => formatNum(v, 3)} {...AXIS} />
+            <YAxis domain={['auto', 'auto']} width={58} tickFormatter={formatAxisNum} {...AXIS} />
             <RTooltip content={({ active, payload }) => (active && payload?.[0] ? <ConvTip r={payload[0].payload as ConvergenceRow} /> : null)} />
             {prep ? <Line dataKey="prepEnergy" stroke={C.faint} strokeDasharray="2 2" dot={false} isAnimationActive={false} connectNulls={false} /> : null}
             <Line dataKey="optEnergy" stroke={C.cobalt} strokeWidth={1.6} dot={rows.length < 30 ? { r: 2 } : false} isAnimationActive={false} connectNulls={false} />
@@ -265,7 +265,7 @@ export function ConvergenceChart({ points, budget, live = false }: { points: Ite
           <LineChart responsive accessibilityLayer={false} data={rows} syncId="conv" style={{ width: '100%', height: '100%' }} margin={{ top: 6, right: 16, bottom: 4, left: 4 }}>
             <CartesianGrid stroke={C.line} />
             <XAxis dataKey="i" type="number" domain={[1, Math.max(rows.length, budget ? budget + prep : 1)]} allowDecimals={false} {...AXIS} />
-            <YAxis domain={['auto', 'auto']} width={58} tickFormatter={(v: number) => formatNum(v, 3)} {...AXIS} />
+            <YAxis domain={['auto', 'auto']} width={58} tickFormatter={formatAxisNum} {...AXIS} />
             <RTooltip content={({ active, payload }) => (active && payload?.[0] ? <ConvTip r={payload[0].payload as ConvergenceRow} /> : null)} />
             <Line dataKey="best" type="stepAfter" stroke={C.teal} strokeWidth={1.8} dot={false} isAnimationActive={false} connectNulls={false} />
           </LineChart>

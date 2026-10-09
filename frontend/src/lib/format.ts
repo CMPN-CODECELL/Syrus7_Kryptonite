@@ -54,6 +54,22 @@ function sig3(v: number): string {
   return String(Number(v.toPrecision(3)))
 }
 
+/**
+ * Short tick labels for a numeric chart axis, so large values never overflow it: three decimals near zero,
+ * fewer as values grow, thousands as "9.76k". 0.1234 -> "0.123", 512.4 -> "512", 9764.7 -> "9.76k".
+ */
+export function formatAxisNum(v: number | null | undefined): string {
+  if (!isNum(v)) return DASH
+  const a = Math.abs(v)
+  if (a < 5e-4) return '0'
+  const sign = v < 0 ? '−' : ''
+  if (a >= 1e6) return `${sign}${sig3(a / 1e6)}M`
+  if (a >= 1e3) return `${sign}${sig3(a / 1e3)}k`
+  if (a >= 100) return `${sign}${a.toFixed(0)}`
+  if (a >= 10) return `${sign}${a.toFixed(1)}`
+  return `${sign}${a.toFixed(3)}`
+}
+
 const pad2 = (n: number) => String(n).padStart(2, '0')
 const YEAR_S = 365.25 * 86400
 
