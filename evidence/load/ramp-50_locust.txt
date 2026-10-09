@@ -1,0 +1,44 @@
+[2026-10-09 00:26:51,266] Hardik/INFO/locust.main: Starting Locust 2.46.7
+[2026-10-09 00:26:51,269] Hardik/INFO/locust.main: Run time limit set to 40 seconds
+[2026-10-09 00:26:51,272] Hardik/INFO/locust.runners: Ramping to 50 users at a rate of 25.00 per second
+[2026-10-09 00:26:52,280] Hardik/INFO/locust.runners: All users spawned: {"Browser": 40, "Submitter": 10} (50 total users)
+[2026-10-09 00:27:27,440] Hardik/INFO/locust.main: --run-time limit reached, shutting down
+[2026-10-09 00:27:43,322] Hardik/INFO/locust.runners: Not all users finished their tasks & terminated in 15.0 seconds. Stopping them...
+[2026-10-09 00:27:43,325] Hardik/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /api/assets                                                                      215     0(0.00%) |     13       4     313      7 |    4.29        0.00
+GET      /api/capabilities                                                                254     0(0.00%) |     15       3     380      6 |    5.07        0.00
+GET      /api/health                                                                      358     0(0.00%) |     13       3     346      6 |    7.14        0.00
+GET      /api/presets                                                                      50     0(0.00%) |    485     134     806    580 |    1.00        0.00
+GET      /api/runs                                                                        327     0(0.00%) |     17       4     378      9 |    6.52        0.00
+GET      /api/runs/{id}                                                                   451     0(0.00%) |     11       3     348      7 |    8.99        0.00
+GET      /api/runs/{id}/events/snapshot                                                    89     0(0.00%) |     11       4     162      7 |    1.78        0.00
+GET      /api/runs/{id}/report.html                                                       119     0(0.00%) |     24       7     342     12 |    2.37        0.00
+GET      /api/runs/{id}/result                                                            209     0(0.00%) |     13       5     195      9 |    4.17        0.00
+POST     POST /api/preflight                                                              131     0(0.00%) |     13       4     211      7 |    2.61        0.00
+POST     POST /api/runs                                                                    17     0(0.00%) |     57       7     204     19 |    0.34        0.00
+POST     POST /api/runs [429 queue full]                                                   16     0(0.00%) |     20       5      92     12 |    0.32        0.00
+GET      SSE connect /api/runs/{id}/events                                                 14     0(0.00%) |     41       4     101     20 |    0.28        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                      2250     0(0.00%) |     25       3     806      8 |   44.87        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /api/assets                                                                             7      8      9     10     14     26    120    160    310    310    310    215
+GET      /api/capabilities                                                                       6      8      9     10     13     38    150    320    380    380    380    254
+GET      /api/health                                                                             6      7      8      9     13     24    110    270    350    350    350    358
+GET      /api/presets                                                                          580    710    740    740    770    800    810    810    810    810    810     50
+GET      /api/runs                                                                               9     11     12     14     18     23    170    220    380    380    380    327
+GET      /api/runs/{id}                                                                          7      8     10     10     13     18     33    130    350    350    350    451
+GET      /api/runs/{id}/events/snapshot                                                          7      9     11     11     14     27     44    160    160    160    160     89
+GET      /api/runs/{id}/report.html                                                             12     15     16     17     23     46    240    330    340    340    340    119
+GET      /api/runs/{id}/result                                                                   9     11     13     14     17     22     41    160    200    200    200    209
+POST     POST /api/preflight                                                                     7      8      9     10     13     45    120    160    210    210    210    131
+POST     POST /api/runs                                                                         19     81     81    110    160    200    200    200    200    200    200     17
+POST     POST /api/runs [429 queue full]                                                        12     17     18     18     78     93     93     93     93     93     93     16
+GET      SSE connect /api/runs/{id}/events                                                      20     84     85     85    100    100    100    100    100    100    100     14
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                              8     10     11     12     19    100    270    700    800    810    810   2250
+
