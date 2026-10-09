@@ -1,90 +1,178 @@
-import { useEffect, useMemo } from 'react'
-import { Link } from 'react-router'
-import type { RunResult } from '../api/contract.gen'
+import { useMemo } from 'react'
 import { isExperimentResult } from '../api/client'
-import { useAssets, useExample, usePresets, useRunResult } from '../api/hooks'
-import { HeroStage } from '../components/hero/HeroStage'
-import { Badge, ButtonLink, Card, CardHeader, EmptyState, ErrorState, IconArrowRight, IconClock, IconLayers, IconSpark, LoadingBlock, Metric, StatusChip } from '../components/ui'
-import { DASH, SOLVER_LABEL, formatDateTime, formatInrCompact, formatNum, formatPct } from '../lib/format'
-import { bestClassical, solver, weightsOf } from '../lib/result'
-import { useLab } from '../state/lab'
+import { useAssets, useCapabilities, useDataStatus, useExample, usePresets, useRunResult } from '../api/hooks'
+import { QuantumSphere, type QubitStock } from '../components/hero/QuantumSphere'
+import { Badge, ButtonLink, IconArrowRight, IconCheck, IconShield } from '../components/ui'
+import { DASH, SOLVER_LABEL, formatDate, formatDateTime, formatInt, formatPct } from '../lib/format'
+import { guardrailFamilies, liveLimits } from '../lib/guardrails'
+import { solver, weightsOf } from '../lib/result'
+import { FAMILY_ICON } from './shared/guardIcons'
+import { RunSummaryCard } from './shared/RunSummaryCard'
 
 const STEPS = [
   {
-    title: 'Choose the universe',
-    body: 'Pick from the 50 NIFTY constituents with their sectors and data coverage, then set risk appetite, holdings count, sector caps, lots and costs.',
+    title: 'Pick stocks and rules',
+    body: 'Choose some of the 50 NIFTY stocks, then say how many to hold, how much risk is fine, your budget and how much to allow per sector.',
   },
   {
     title: 'Check it fits',
-    body: 'A live preflight shows decision and slack bits, total qubits, circuit depth, shots and evaluation budget, and explains any conflict before you run.',
+    body: 'Before anything runs, a live check shows how many qubits the problem needs and explains any rule that cannot be met.',
   },
   {
-    title: 'Run QAOA and the baselines',
-    body: 'A QAOA circuit is optimised on a simulator while exact, relaxation, annealing and greedy solvers answer the same constrained problem.',
+    title: 'Quantum and classical solve it',
+    body: 'A QAOA quantum circuit (on a simulator) and four classical methods solve exactly the same problem, so the comparison is fair.',
   },
   {
-    title: 'Compare, then export',
-    body: 'Holdings in rupees, costs, feasibility residuals, the frontier, held-out test returns and runtimes, with HTML, JSON and CSV downloads.',
+    title: 'Read the answer',
+    body: 'See what each method bought, in rupees, how close QAOA came to the best answer and how the picks did on later prices. Download a report.',
   },
 ]
 
-export default function Overview() {
+function HeroStat({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: 'gain' | 'loss' }) {
+  return (
+    <div className="min-w-0 px-3 py-3 sm:px-4">
+      <dt className="text-[0.7rem] leading-tight font-medium text-muted sm:text-xs">{label}</dt>
+      <dd className={`mt-1 text-base font-semibold tabular sm:text-lg ${tone === 'loss' ? 'text-danger' : tone === 'gain' ? 'text-teal' : 'text-ink'}`}>{value}</dd>
+      {hint ? <dd className="mt-0.5 truncate text-[0.7rem] text-muted sm:text-xs">{hint}</dd> : null}
+    </div>
+  )
+}
+
+export default function Landing() {
   const assets = useAssets()
   const presets = usePresets()
-  const { config, seed, hoverSymbol } = useLab()
+  const caps = useCapabilities()
+  const data = useDataStatus()
   const example = useExample()
   const exampleId = example.data?.run_id ?? undefined
   const exResult = useRunResult(exampleId, !!exampleId)
+  const exRun = exResult.data && !isExperimentResult(exResult.data) ? exResult.data : null
 
-  useEffect(() => {
-    if (presets.data) seed(presets.data.default_config)
-  }, [presets.data, seed])
+  const hero = useMemo(() => {
+    const info = new Map((assets.data?.assets ?? []).map((a) => [a.symbol, a]))
+    const stock = (s: string, weight?: number): QubitStock => ({ symbol: s, sector: info.get(s)?.sector, weight })
+    const q = exRun ? solver(exRun, 'qaoa') : undefined
+    const w = weightsOf(q)
+    // The recorded example when it has a QAOA answer; otherwise the default selection, not yet measured.
+    if (exRun && q && w) {
+      const exact = solver(exRun, 'exact')
+      const g = q.gap
+      const same = !!g && (Math.abs(g.absolute) <= 1e-9 || (g.relative !== null && Math.abs(g.relative) < 5e-5))
+      const t = q.portfolio?.test
+      const ret = t && !t.insufficient ? t.total_return : null
+      return {
+        source: 'example' as const,
+        measured: true,
+        stocks: exRun.encoded_symbols.map((s) => stock(s, w[s] ?? 0)),
+        qubits: exRun.qaoa?.circuit.n_qubits ?? exRun.qubo.n_variables,
+        footer: (
+          <dl className="grid grid-cols-3 divide-x divide-line">
+            <HeroStat
+              label={exact?.status === 'ok' ? 'Gap to the best possible' : 'Gap to the best known'}
+              value={g ? (g.relative !== null ? formatPct(g.relative, 2) : DASH) : DASH}
+              hint={same ? 'a perfect match' : g ? `vs ${SOLVER_LABEL[g.reference_solver] ?? g.reference_solver}` : undefined}
+              tone={same ? 'gain' : undefined}
+            />
+            <HeroStat
+              label="Return on later prices"
+              value={formatPct(ret, 1, { sign: true })}
+              hint={t ? `to ${formatDate(t.end)}` : undefined}
+              tone={ret === null ? undefined : ret < 0 ? 'loss' : 'gain'}
+            />
+            <HeroStat label="Ran on" value="Qiskit Aer" hint={`depth-${exRun.config.qaoa.depth} QAOA simulator`} />
+          </dl>
+        ),
+        caption: `A real run stored on this server${example.data?.recorded_at ? ` (${formatDateTime(example.data.recorded_at)})` : ''}, not a mock-up. Each stock is a qubit: measuring it gives 1 (buy) or 0 (skip).`,
+      }
+    }
+    const symbols = presets.data?.default_config.symbols ?? []
+    return {
+      source: 'selection' as const,
+      measured: false,
+      stocks: symbols.map((s) => stock(s)),
+      qubits: symbols.length,
+      footer: <p className="px-4 py-3 text-sm text-muted sm:px-5">No run recorded yet. Open the dashboard and run the Quick preset to see which qubits read 1.</p>,
+      caption: 'Each stock is a qubit. Measuring it gives 1 (buy) or 0 (skip).',
+    }
+  }, [assets.data, presets.data, exRun, example.data])
 
-  const heroAssets = useMemo(() => (assets.data?.assets ?? []).map((a) => ({ symbol: a.symbol, sector: a.sector })), [assets.data])
-  const selected = config?.symbols ?? []
+  const L = liveLimits(caps.data)
+  const families = guardrailFamilies(L)
+  const active = data.data?.active
 
   return (
     <>
       <section className="relative overflow-hidden border-b border-line bg-gradient-to-b from-mist to-canvas">
         <div className="grid-paper pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" aria-hidden="true" />
-        <div className="relative mx-auto grid grid-cols-1 max-w-[1320px] items-center gap-8 px-4 pt-10 pb-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-6 lg:pt-12 lg:pb-14">
+        <div className="relative mx-auto grid max-w-[1320px] grid-cols-1 items-center gap-10 px-4 pt-10 pb-14 sm:px-6 lg:pt-14 lg:pb-16 xl:grid-cols-2 xl:gap-14">
           <div className="max-w-xl">
-            <p className="eyebrow">NIFTY 50 · QAOA versus classical solvers</p>
-            <h1 className="mt-3 font-display text-[2.35rem] leading-[1.06] font-semibold tracking-tight text-ink sm:text-5xl lg:text-[3.5rem]">
-              Build a portfolio. Examine every trade-off.
+            <Badge tone="cobalt" icon={<span className="h-1.5 w-1.5 rounded-full bg-cobalt" aria-hidden="true" />}>
+              NIFTY 50 · Quantum versus classical
+            </Badge>
+            <h1 className="mt-4 text-[2.35rem] leading-[1.06] font-bold tracking-[-0.03em] text-ink sm:text-5xl lg:text-[3.4rem]">
+              Quantum stock picks you can check.
             </h1>
             <p className="mt-5 text-[1.05rem] leading-relaxed text-ink-2">
-              Select a constrained portfolio from the NIFTY 50: a fixed number of holdings, sector caps, lot sizes and trading costs. QuantFolio encodes the
-              problem for a QAOA circuit on a simulator and checks every answer against exact and classical baselines, with held-out test results in plain
-              view.
+              Choose a few of India&apos;s 50 largest stocks and set simple rules. QuantFolio turns the choice into a quantum circuit, measures which stocks to
+              buy, then checks the answer against proven classical methods and against later prices it never saw.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <ButtonLink to="/lab" size="lg" iconRight={<IconArrowRight />} data-testid="cta-optimiser">
-                Open the optimiser
+              <ButtonLink to="/dashboard" size="lg" iconRight={<IconArrowRight />} data-testid="cta-dashboard">
+                Open dashboard
               </ButtonLink>
               {exampleId ? (
                 <ButtonLink to={`/runs/${exampleId}`} size="lg" variant="secondary" data-testid="cta-example">
-                  View a completed example
+                  See a finished example
                 </ButtonLink>
-              ) : (
-                <span className="inline-flex min-h-12 items-center text-sm text-muted">{example.isPending ? 'Looking for a recorded example…' : 'No recorded example on this server yet.'}</span>
-              )}
+              ) : null}
             </div>
-            <p className="mt-4 text-xs text-muted">Research demonstration — not investment advice. Simulated circuits; no live trading.</p>
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+              {['Real NSE closing prices', 'Runs on your own computer', 'Not investment advice'].map((t) => (
+                <li key={t} className="flex items-center gap-1.5">
+                  <IconCheck size={15} className="text-teal" />
+                  {t}
+                </li>
+              ))}
+            </ul>
           </div>
-          <HeroStage className="aspect-[4/3] w-full" assets={heroAssets} selected={selected} hover={hoverSymbol} />
+          <QuantumSphere
+            className="w-full xl:max-w-[35rem] xl:justify-self-end"
+            source={hero.source}
+            measured={hero.measured}
+            stocks={hero.stocks}
+            qubits={hero.qubits}
+            footer={hero.footer}
+            caption={hero.caption}
+          />
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1320px] px-4 pt-14 sm:px-6" aria-labelledby="how">
-        <p className="eyebrow">Workflow</p>
-        <h2 id="how" className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          From a universe to an auditable answer
+      <section className="border-b border-line bg-canvas" aria-label="At a glance">
+        <dl className="mx-auto grid max-w-[1320px] grid-cols-2 md:grid-cols-4">
+          {[
+            { v: active ? formatInt(active.n_symbols) : '50', l: 'NIFTY 50 stocks', h: active ? `Prices to ${formatDate(active.last_date)}` : 'Daily NSE closes' },
+            { v: L.qubits, l: 'Qubits on the simulator', h: `${L.noiseQubits} with hardware noise` },
+            { v: '5', l: 'Methods compared', h: 'QAOA and 4 classical solvers' },
+            { v: String(families.length), l: 'Kinds of guardrails', h: 'Checked on every run' },
+          ].map((s, i) => (
+            <div key={s.l} className={`px-4 py-6 sm:px-6 ${i % 2 ? 'border-l border-line' : ''} ${i > 1 ? 'border-t border-line md:border-t-0' : ''} ${i === 2 ? 'md:border-l' : ''}`}>
+              <dt className="text-sm text-muted">{s.l}</dt>
+              <dd className="mt-1 text-3xl font-semibold tracking-tight text-ink tabular">{s.v}</dd>
+              <dd className="mt-1 text-xs text-muted">{s.h}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className="mx-auto max-w-[1320px] px-4 pt-16 sm:px-6" aria-labelledby="how">
+        <p className="eyebrow">How it works</p>
+        <h2 id="how" className="mt-2 scroll-mt-24 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          Four steps, no maths needed
         </h2>
-        <ol className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {STEPS.map((s, i) => (
-            <li key={s.title} className="rounded-lg border border-line bg-canvas p-5 shadow-card">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-cobalt-50 text-sm font-semibold text-cobalt-800 tabular">{i + 1}</span>
+            <li key={s.title} className="rounded-xl border border-line bg-canvas p-5 shadow-card">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-cobalt text-sm font-semibold text-white tabular">{i + 1}</span>
               <h3 className="mt-3 text-base font-semibold text-ink">{s.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.body}</p>
             </li>
@@ -92,8 +180,17 @@ export default function Overview() {
         </ol>
       </section>
 
-      <section className="mx-auto max-w-[1320px] px-4 pt-14 sm:px-6" aria-labelledby="example-h">
-        <ExampleSummary
+      <section id="example" className="mx-auto max-w-[1320px] scroll-mt-24 px-4 pt-16 sm:px-6" aria-labelledby="example-h">
+        <RunSummaryCard
+          headingId="example-h"
+          eyebrow="Recorded example"
+          title={example.data?.label ?? 'A completed run, replayed from disk'}
+          description={
+            example.data?.recorded_at
+              ? `Recorded ${formatDateTime(example.data.recorded_at)} on this server and shown as stored. It is a real run of the pipeline, not live market advice.`
+              : 'A completed run stored on this server, shown exactly as recorded.'
+          }
+          badge={<Badge tone="cobalt">Recorded run</Badge>}
           loading={example.isPending || (!!exampleId && exResult.isPending)}
           error={example.error ?? exResult.error}
           onRetry={() => {
@@ -101,143 +198,59 @@ export default function Overview() {
             if (exampleId) void exResult.refetch()
           }}
           runId={exampleId}
-          label={example.data?.label ?? null}
-          recordedAt={example.data?.recorded_at ?? null}
-          detail={example.data?.detail ?? null}
-          result={exResult.data && !isExperimentResult(exResult.data) ? exResult.data : null}
+          result={exRun}
+          emptyTitle="No recorded example yet"
+          emptyBody={example.data?.detail ?? 'Once a run has been recorded as the example it appears here with its real numbers.'}
+          testId="example-summary"
         />
       </section>
 
-      <section className="mx-auto max-w-[1320px] px-4 pt-14 sm:px-6" aria-labelledby="ws-h">
-        <h2 id="ws-h" className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Workspace
-        </h2>
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <EntryCard to="/lab" icon={<IconSpark size={18} />} title="Portfolio Lab" body="Build one constrained portfolio, preflight it and run QAOA with every baseline." />
-          <EntryCard to="/experiments" icon={<IconLayers size={18} />} title="Experiment Lab" body="Sweep depth, optimiser, initialisation, universe size and seeds with a visible budget." />
-          <EntryCard to="/history" icon={<IconClock size={18} />} title="History and reports" body="Reopen completed, failed, cancelled and timed-out runs; download their reports." />
+      <section id="guardrails" className="mx-auto max-w-[1320px] scroll-mt-24 px-4 pt-16 sm:px-6" aria-labelledby="guardrails-h">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-2xl">
+            <p className="eyebrow">Guardrails</p>
+            <h2 id="guardrails-h" className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              Built-in safety checks
+            </h2>
+            <p className="mt-2 text-muted">Automatic checks stop runs that cannot work, keep the quantum-versus-classical comparison fair and protect your data.</p>
+          </div>
+          <ButtonLink to="/guardrails" variant="secondary" iconRight={<IconArrowRight />}>
+            See every guardrail
+          </ButtonLink>
+        </div>
+        <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {families.map((f) => {
+            const Icon = FAMILY_ICON[f.id] ?? IconShield
+            return (
+              <li key={f.id} className="flex gap-4 rounded-xl border border-line bg-canvas p-5 shadow-card">
+                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-cobalt-50 text-cobalt">
+                  <Icon size={20} />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-base font-semibold text-ink">{f.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted">{f.short}</p>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-[1320px] px-4 pt-16 sm:px-6">
+        <div className="relative overflow-hidden rounded-xl bg-ink px-6 py-10 text-white sm:px-10">
+          <div className="pointer-events-none absolute -top-16 -right-10 h-56 w-56 rounded-full bg-cobalt/40 blur-3xl" aria-hidden="true" />
+          <div className="pointer-events-none absolute -bottom-20 left-10 h-48 w-48 rounded-full bg-teal/30 blur-3xl" aria-hidden="true" />
+          <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-xl">
+              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Ready to try it?</h2>
+              <p className="mt-2 text-white/75">Open the dashboard, keep the Quick preset and press Run. The checks guide you the whole way.</p>
+            </div>
+            <ButtonLink to="/dashboard" size="lg" variant="secondary" iconRight={<IconArrowRight />} className="shrink-0">
+              Open dashboard
+            </ButtonLink>
+          </div>
         </div>
       </section>
     </>
-  )
-}
-
-function EntryCard({ to, icon, title, body }: { to: string; icon: React.ReactNode; title: string; body: string }) {
-  return (
-    <Link to={to} className="group flex min-h-11 flex-col rounded-lg border border-line bg-canvas p-5 shadow-card transition-colors hover:border-cobalt-200 hover:bg-cobalt-50/40">
-      <span className="flex items-center gap-2 text-cobalt">
-        {icon}
-        <span className="text-base font-semibold text-ink">{title}</span>
-        <IconArrowRight className="ml-auto text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-cobalt" />
-      </span>
-      <span className="mt-2 text-sm leading-relaxed text-muted">{body}</span>
-    </Link>
-  )
-}
-
-function ExampleSummary({
-  loading,
-  error,
-  onRetry,
-  runId,
-  label,
-  recordedAt,
-  detail,
-  result,
-}: {
-  loading: boolean
-  error: unknown
-  onRetry: () => void
-  runId: string | undefined
-  label: string | null
-  recordedAt: string | null
-  detail: string | null
-  result: RunResult | null
-}) {
-  const heading = (
-    <CardHeader
-      id="example-h"
-      eyebrow="Recorded example"
-      title={label ?? 'A completed run, replayed from disk'}
-      description={
-        recordedAt
-          ? `Recorded ${formatDateTime(recordedAt)} on this server and served as stored. It is a real run of the pipeline, not live market advice.`
-          : 'A completed run stored on this server, shown exactly as recorded.'
-      }
-      aside={runId ? <Badge tone="cobalt">Recorded run</Badge> : null}
-    />
-  )
-  if (loading)
-    return (
-      <Card>
-        {heading}
-        <LoadingBlock label="Loading the recorded example" rows={3} />
-      </Card>
-    )
-  if (error)
-    return (
-      <Card>
-        {heading}
-        <ErrorState error={error} title="The recorded example could not be loaded" onRetry={onRetry} />
-      </Card>
-    )
-  if (!runId || !result)
-    return (
-      <Card>
-        {heading}
-        <EmptyState title="No recorded example yet" action={<ButtonLink to="/lab">Run the Quick preset</ButtonLink>}>
-          {detail ?? 'Once a run has been recorded as the example it appears here with its real numbers.'}
-        </EmptyState>
-      </Card>
-    )
-
-  const q = solver(result, 'qaoa')
-  const ref = bestClassical(result)
-  const exact = solver(result, 'exact')
-  const qp = q?.portfolio
-  const w = weightsOf(q)
-  return (
-    <Card data-testid="example-summary">
-      {heading}
-      <dl className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-6">
-        <Metric label="Assets encoded" value={result.encoded_symbols.length} />
-        <Metric label="Qubits" value={result.qaoa?.circuit.n_qubits ?? result.qubo.n_variables} hint={`depth p=${result.qaoa?.depth ?? DASH}`} />
-        <Metric label="QAOA outcome" value={q ? <StatusChip status={q.status} /> : DASH} />
-        <Metric label="QAOA objective" value={formatNum(qp?.objective, 5)} hint="lower is better" />
-        <Metric
-          label={exact?.status === 'ok' ? 'Gap to exact optimum' : 'Gap to best known'}
-          value={q?.gap ? (q.gap.relative !== null ? formatPct(q.gap.relative, 2) : formatNum(q.gap.absolute, 5)) : DASH}
-          hint={q?.gap ? `vs ${SOLVER_LABEL[q.gap.reference_solver] ?? q.gap.reference_solver}` : ref ? `best classical: ${SOLVER_LABEL[ref.solver]}` : undefined}
-        />
-        <Metric
-          label="Held-out test return"
-          value={formatPct(qp?.test?.total_return, 2, { sign: true })}
-          tone={(qp?.test?.total_return ?? 0) < 0 ? 'loss' : undefined}
-          hint={qp?.test ? `${qp.test.start ?? ''} to ${qp.test.end ?? ''}` : undefined}
-        />
-      </dl>
-      {w ? (
-        <div className="mt-6">
-          <p className="text-sm font-medium text-ink-2">QAOA portfolio ({formatInrCompact(result.config.budget_inr)} budget)</p>
-          <ul className="mt-2 flex flex-wrap gap-2" aria-label="QAOA holdings">
-            {Object.entries(w)
-              .sort((a, b) => b[1] - a[1])
-              .map(([s, v]) => (
-                <li key={s}>
-                  <Badge tone="teal">
-                    <span className="font-semibold">{s}</span> {formatPct(v, 1)}
-                  </Badge>
-                </li>
-              ))}
-          </ul>
-        </div>
-      ) : null}
-      <p className="mt-5 text-xs leading-relaxed text-muted">{result.dataset.survivorship_note}</p>
-      <div className="mt-5">
-        <ButtonLink to={`/runs/${runId}`} variant="secondary" iconRight={<IconArrowRight />}>
-          Open the full result
-        </ButtonLink>
-      </div>
-    </Card>
   )
 }
