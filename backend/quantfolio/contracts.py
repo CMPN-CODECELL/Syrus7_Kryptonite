@@ -633,9 +633,12 @@ class AssetInfo(_Model):
     last_date: date | None = None
     n_obs: int = 0
     coverage: float = 0.0  # fraction of dataset dates with a valid price
-    last_price_inr: float | None = None
+    last_price_inr: float | None = None  # closing price on last_date, rupees per share
+    change_1y: float | None = None  # adjusted-close change over the year to last_date (fraction; includes dividends)
+    trend: list[float] = Field(default_factory=list)  # about one year of adjusted closes, sampled weekly, for a sparkline
     data_ok: bool = True
     data_note: str | None = None
+    price_note: str | None = None  # load-time correction or large one-day move in this asset's prices
 
 
 class Preset(_Model):

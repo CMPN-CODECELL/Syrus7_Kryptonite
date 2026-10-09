@@ -182,3 +182,58 @@ def test_upload_rejects_malformed_input(payload):
 def test_upload_rejects_unsafe_file_names(name):
     with pytest.raises(PipelineError):
         safe_display_name(name)
+
+
+# --------------------------------------------------------------------------- #
+# load-time corrections and price-jump reports
+# --------------------------------------------------------------------------- #
+def _bonus_frame(step: float) -> pd.DataFrame:
+    idx = pd.bdate_range("2025-12-24", "2026-01-08")
+    before = (idx < pd.Timestamp("2026-01-01")).sum()
+    vals = [300.0] * before + [300.0 * step] * (len(idx) - before)
+    return pd.DataFrame({"TRENT": vals, "TCS": 100.0}, index=idx)
+
+
+def test_partial_bonus_adjustment_is_repaired_at_load():
+    from quantfolio.data.corrections import apply_known_corrections, price_jumps
+
+    raw = _bonus_frame(1 / 1.5)
+    assert price_jumps(raw)["TRENT"][0].on == date(2026, 1, 1)
+    fixed, close, applied = apply_known_corrections(raw, raw * 1.01)
+    assert "TRENT" in applied and "bonus" in applied["TRENT"]
+    assert price_jumps(fixed) == {}
+    np.testing.assert_allclose(fixed["TRENT"], 200.0)
+    np.testing.assert_allclose(close["TRENT"], 202.0)
+    assert raw["TRENT"].iloc[0] == 300.0  # input left untouched
+    assert fixed["TCS"].equals(raw["TCS"])
+
+
+def test_correction_skipped_when_source_is_already_consistent():
+    from quantfolio.data.corrections import apply_known_corrections
+
+    raw = _bonus_frame(1.0)
+    fixed, _, applied = apply_known_corrections(raw, None)
+    assert applied == {} and fixed is raw
+
+
+def test_price_jump_descriptions_explain_known_events():
+    from quantfolio.data.corrections import PriceJump
+
+    known = PriceJump("TMPV", date(2025, 10, 14), -0.40).describe()
+    assert "−40 %" in known and "demerger" in known
+    unknown = PriceJump("TCS", date(2024, 1, 2), 0.5).describe()
+    assert "+50 %" in unknown and "split, bonus or demerger" in unknown
+
+
+def test_asset_infos_report_close_trend_and_change():
+    from quantfolio.data.store import asset_infos
+
+    ds = get_dataset(SYNTHETIC_ID)
+    infos = {a.symbol: a for a in asset_infos(ds) if a.data_ok}
+    a = infos["TCS"]
+    assert a.last_price_inr == round(a.last_price_inr, 2)
+    assert 2 <= len(a.trend) <= 48
+    s = ds.prices["TCS"].dropna()
+    assert a.trend[-1] == round(float(s.iloc[-1]), 2)
+    year = s.loc[s.index[-1] - pd.DateOffset(years=1) :]
+    assert a.change_1y == pytest.approx(year.iloc[-1] / year.iloc[0] - 1, abs=1e-6)

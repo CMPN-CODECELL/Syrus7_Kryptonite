@@ -121,6 +121,12 @@ def assemble(cfg: RunConfig, *, dataset: Dataset | None = None) -> Assembled:
     a.usable, a.dropped = usable, dropped
     for s, why in dropped.items():
         a.issues.append(_issue("warning", "insufficient_history", f"{s} excluded: {why}.", suggestions=["Move the training start later", "Choose another asset"]))
+    for s in usable:
+        if s in ds.corrections:
+            a.issues.append(_issue("info", "data_corrected", f"{s}: {ds.corrections[s]}."))
+        for j in ds.jumps.get(s, []):
+            if d.train_start <= j.on <= d.test_end:
+                a.issues.append(_issue("warning", "price_jump", f"{s}: {j.describe()}.", suggestions=[f"Leave {s} out", "Move the windows so they do not cross this date"]))
     if len(usable) < 2:
         a.issues.append(_issue("error", "too_few_assets", "Fewer than two assets have enough training history."))
         return a

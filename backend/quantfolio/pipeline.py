@@ -258,14 +258,15 @@ def preflight(config: RunConfig) -> PreflightReport:
     )
 
 
-def _dataset_sha(config: RunConfig) -> str:
+def _dataset_identity(config: RunConfig) -> tuple[str, dict[str, str]]:
+    """(stored sha256, load-time corrections that touch the configured symbols)."""
     from .data import get_dataset
 
     try:
         ds = get_dataset(config.dataset_id)
     except KeyError as exc:
         raise PipelineError("unknown_dataset", "The selected dataset does not exist on the server.") from exc
-    return ds.info.sha256
+    return ds.info.sha256, {s: ds.corrections[s] for s in sorted(ds.corrections) if s in config.symbols}
 
 
 def cache_key(config: RunConfig) -> tuple[str, str]:
@@ -276,15 +277,18 @@ def cache_key(config: RunConfig) -> tuple[str, str]:
     cfg = config.model_dump(mode="json")
     config_hash = hashlib.sha256(_canonical(cfg).encode("utf-8")).hexdigest()
     sw = software_versions()
+    sha, corrections = _dataset_identity(config)
     material = {
         "config": cfg,
-        "dataset_sha256": _dataset_sha(config),
+        "dataset_sha256": sha,
         "implementation_version": IMPLEMENTATION_VERSION,
         "schema_version": SCHEMA_VERSION,
         "simulator": {"primitive": "qiskit_aer.primitives.SamplerV2", "method": "statevector", "qiskit": sw.get("qiskit"), "qiskit-aer": sw.get("qiskit-aer")},
         "noise": {"fake_backend": _fake_backend_name(config), "qiskit-ibm-runtime": sw.get("qiskit-ibm-runtime")} if _uses_noise(config) else None,
         "numerics": {k: sw.get(k) for k in ("numpy", "scipy", "cvxpy", "clarabel", "scikit-learn", "pandas")},
     }
+    if corrections:  # only when relevant, so keys of runs without corrected symbols are unchanged
+        material["data_corrections"] = corrections
     key = hashlib.sha256(_canonical(material).encode("utf-8")).hexdigest()
     return config_hash, key
 

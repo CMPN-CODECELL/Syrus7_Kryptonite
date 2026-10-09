@@ -30,6 +30,7 @@ import numpy as np
 import pandas as pd
 
 from ..contracts import AssetInfo, DatasetInfo
+from .corrections import PriceJump, apply_known_corrections, price_jumps
 from .paths import atomic_write_bytes, atomic_write_text, datasets_dir, find_data_file
 from .universe import SURVIVORSHIP_NOTE, Universe, load_universe
 
@@ -58,10 +59,19 @@ class Dataset:
     prices: pd.DataFrame  # adjusted close, DatetimeIndex 'Date', float64, NaN = missing
     close: pd.DataFrame | None = None  # unadjusted close (indicative share counts), same shape
     issues: list[str] = field(default_factory=list)
+    corrections: dict[str, str] = field(default_factory=dict)  # symbol -> load-time correction applied
+    _jumps: dict[str, list[PriceJump]] | None = field(default=None, repr=False)
 
     @property
     def symbols(self) -> list[str]:
         return list(self.prices.columns)
+
+    @property
+    def jumps(self) -> dict[str, list[PriceJump]]:
+        """Large one-day moves left in the (corrected) prices, by symbol."""
+        if self._jumps is None:
+            self._jumps = price_jumps(self.prices)
+        return self._jumps
 
     def price_for_shares(self, symbol: str, on: date) -> float | None:
         """Last unadjusted close on or before `on` (falls back to adjusted)."""
@@ -179,7 +189,20 @@ def _read_dataset(did: str) -> Dataset | None:
     close = pd.read_parquet(close_p, engine="pyarrow").astype(np.float64) if close_p.is_file() else None
     if content_sha256(prices, close) != info.sha256:
         raise ValueError(f"dataset {did} failed its integrity check")
-    return Dataset(info=info, prices=prices, close=close, issues=list(meta.get("issues", [])))
+    return _corrected(Dataset(info=info, prices=prices, close=close, issues=list(meta.get("issues", []))))
+
+
+def _corrected(ds: Dataset) -> Dataset:
+    """Apply known source corrections after the integrity check (stored values are never changed)
+    and list each correction and each remaining large one-day move in the dataset issues."""
+    prices, close, applied = apply_known_corrections(ds.prices, ds.close)
+    out = Dataset(info=ds.info, prices=prices, close=close, issues=list(ds.issues), corrections=applied)
+    extra = [f"{sym}: corrected at load: {note}" for sym, note in applied.items()]
+    extra += [f"{sym}: {j.describe()}" for sym, js in out.jumps.items() for j in js]
+    if extra:
+        out.issues = out.issues + extra
+        out.info = ds.info.model_copy(update={"issues": list(ds.info.issues) + extra})
+    return out
 
 
 def _normalise_frame(frame: pd.DataFrame) -> pd.DataFrame:
@@ -234,7 +257,7 @@ def make_dataset(
     ds = Dataset(info=info, prices=prices, close=close, issues=issues)
     if persist and _read_dataset(info.dataset_id) is None:
         _write_dataset(ds)
-    return ds
+    return _corrected(ds)
 
 
 # --------------------------------------------------------------------------- #
@@ -284,7 +307,7 @@ def _with_dynamic_fields(ds: Dataset, today: date | None = None) -> Dataset:
     if stale == ds.info.stale and label == ds.info.label:
         return ds
     info = ds.info.model_copy(update={"stale": stale, "stale_reason": reason, "label": label})
-    return Dataset(info=info, prices=ds.prices, close=ds.close, issues=ds.issues)
+    return Dataset(info=info, prices=ds.prices, close=ds.close, issues=ds.issues, corrections=ds.corrections, _jumps=ds._jumps)
 
 
 def get_dataset(dataset_id: str | None = None) -> Dataset:
@@ -347,6 +370,13 @@ def asset_infos(ds: Dataset, universe: Universe | None = None) -> list[AssetInfo
         if interior:
             notes.append(f"{interior} missing day(s) inside history")
         price = ds.price_for_shares(a.symbol, lv.date())
+        price_notes = [f"corrected: {ds.corrections[a.symbol]}"] if a.symbol in ds.corrections else []
+        price_notes += [j.describe() for j in ds.jumps.get(a.symbol, [])]
+        year = valid.loc[lv - pd.DateOffset(years=1) :]
+        change = float(year.iloc[-1] / year.iloc[0] - 1.0) if year.index[0] <= lv - pd.DateOffset(days=358) else None
+        if any(year.index[0].date() < j.on for j in ds.jumps.get(a.symbol, [])):
+            change = None  # a 1-year change across an unadjusted event would mislead
+
         out.append(
             AssetInfo(
                 symbol=a.symbol,
@@ -357,12 +387,24 @@ def asset_infos(ds: Dataset, universe: Universe | None = None) -> list[AssetInfo
                 last_date=lv.date(),
                 n_obs=int(valid.size),
                 coverage=round(valid.size / n_dates, 6) if n_dates else 0.0,
-                last_price_inr=round(price, 4) if price is not None else None,
+                # Sources store prices as float32 (2311.6001); the exchange quotes to the paisa.
+                last_price_inr=round(price, 2) if price is not None else None,
+                change_1y=round(change, 6) if change is not None else None,
+                trend=_trend(year),
                 data_ok=start_lag <= MAX_START_LAG_DAYS,
                 data_note="; ".join(notes) or None,
+                price_note="; ".join(price_notes) or None,
             )
         )
     return out
+
+
+def _trend(s: pd.Series, points: int = 48) -> list[float]:
+    """Evenly sampled closes ending at the last one (for a sparkline)."""
+    if len(s) < 2:
+        return []
+    idx = np.unique(np.linspace(0, len(s) - 1, num=min(points, len(s))).round().astype(int))
+    return [round(float(v), 2) for v in s.iloc[idx]]
 
 
 def list_assets(dataset_id: str | None = None) -> tuple[list[AssetInfo], DatasetInfo]:
