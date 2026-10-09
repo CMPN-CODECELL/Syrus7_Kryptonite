@@ -1,0 +1,28 @@
+﻿........................................................................ [ 46%]
+........................................................................ [ 93%]
+..........                                                               [100%]
+============================== warnings summary ===============================
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[random-COBYLA-4]
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-4]
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-5]
+  E:\All projects\QuantFolio\backend\.venv\Lib\site-packages\scipy\_external\pyprima\common\preproc.py:68: UserWarning: COBYLA: Invalid MAXFUN; it should be at least num_vars + 2; it is set to 10
+    warn(f'{solver}: Invalid MAXFUN; it should be at least {min_maxfun_str}; it is set to {maxfun}')
+
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[random-COBYLA-5]
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-5]
+  E:\All projects\QuantFolio\backend\.venv\Lib\site-packages\scipy\_external\pyprima\common\preproc.py:68: UserWarning: COBYLA: Invalid MAXFUN; it should be at least num_vars + 2; it is set to 12
+    warn(f'{solver}: Invalid MAXFUN; it should be at least {min_maxfun_str}; it is set to {maxfun}')
+
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-3]
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-4]
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-5]
+  E:\All projects\QuantFolio\backend\.venv\Lib\site-packages\scipy\_external\pyprima\common\preproc.py:68: UserWarning: COBYLA: Invalid MAXFUN; it should be at least num_vars + 2; it is set to 6
+    warn(f'{solver}: Invalid MAXFUN; it should be at least {min_maxfun_str}; it is set to {maxfun}')
+
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-4]
+tests/core/test_qaoa.py::test_qaoa_bookkeeping_and_provenance[warm_interp-COBYLA-5]
+  E:\All projects\QuantFolio\backend\.venv\Lib\site-packages\scipy\_external\pyprima\common\preproc.py:68: UserWarning: COBYLA: Invalid MAXFUN; it should be at least num_vars + 2; it is set to 8
+    warn(f'{solver}: Invalid MAXFUN; it should be at least {min_maxfun_str}; it is set to {maxfun}')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+154 passed, 10 warnings in 65.74s (0:01:05)
