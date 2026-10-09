@@ -144,3 +144,57 @@ export const IconFilter = (p: IconProps) => (
     <path d="M4 5h16l-6 7.5V19l-4-2v-4.5z" />
   </Svg>
 )
+export const IconHome = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 10.5L12 4l8 6.5V19a1 1 0 01-1 1h-4.5v-5.5h-5V20H5a1 1 0 01-1-1z" />
+  </Svg>
+)
+export const IconHelp = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M9.6 9.4a2.5 2.5 0 014.8.9c0 1.7-2.4 2.1-2.4 3.6M12 16.9v.1" />
+  </Svg>
+)
+export const IconShield = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z" />
+    <path d="M8.8 12.2l2.2 2.2 4.4-4.6" />
+  </Svg>
+)
+export const IconScale = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 4v16M7 20h10M5 7h14M5 7l-2.5 6a2.5 2.5 0 005 0zM19 7l-2.5 6a2.5 2.5 0 005 0z" />
+  </Svg>
+)
+export const IconCpu = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="6" y="6" width="12" height="12" rx="2" />
+    <path d="M9.5 9.5h5v5h-5zM9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+  </Svg>
+)
+export const IconLock = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="5" y="10.5" width="14" height="10" rx="2" />
+    <path d="M8 10.5V8a4 4 0 018 0v2.5" />
+  </Svg>
+)
+export const IconMonitor = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3.5" y="4.5" width="17" height="12" rx="1.5" />
+    <path d="M9 20h6M12 16.5V20" />
+  </Svg>
+)
+export const IconGrid = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="4" y="4" width="7" height="7" rx="1.5" />
+    <rect x="13" y="4" width="7" height="7" rx="1.5" />
+    <rect x="4" y="13" width="7" height="7" rx="1.5" />
+    <rect x="13" y="13" width="7" height="7" rx="1.5" />
+  </Svg>
+)
+export const IconCalendar = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="4" y="5.5" width="16" height="14.5" rx="2" />
+    <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />
+  </Svg>
+)

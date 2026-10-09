@@ -1,13 +1,27 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { IconChevronDown, IconInfo, IconX } from './icons'
 
 /**
  * Tooltip on a real button: opens on hover and focus, closes on Escape/blur.
  * The tip text is also exposed via aria-describedby so screen readers get it.
+ * The bubble is centred on the button and nudged sideways to stay inside the viewport.
  */
 export function Tooltip({ content, label = 'More information', children }: { content: ReactNode; label?: string; children?: ReactNode }) {
   const [open, setOpen] = useState(false)
+  const [shift, setShift] = useState(0)
   const id = useId()
+  const bubble = useRef<HTMLSpanElement>(null)
+  useLayoutEffect(() => {
+    const el = bubble.current
+    if (!open || !el) return
+    const r = el.getBoundingClientRect()
+    const left = r.left - shift
+    const right = r.right - shift
+    const vw = document.documentElement.clientWidth
+    setShift(left < 8 ? 8 - left : right > vw - 8 ? vw - 8 - right : 0)
+    // `shift` is read only to undo the previous nudge; measuring again when it changes would loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
@@ -29,8 +43,10 @@ export function Tooltip({ content, label = 'More information', children }: { con
         {children ?? <IconInfo size={15} />}
       </button>
       <span
+        ref={bubble}
         id={id}
         role="tooltip"
+        style={shift ? { marginLeft: shift } : undefined}
         className={`absolute bottom-full left-1/2 z-30 mb-1 w-64 max-w-[78vw] -translate-x-1/2 rounded-md bg-ink px-3 py-2 text-xs leading-relaxed font-normal text-white shadow-float ${
           open ? 'block' : 'hidden'
         }`}

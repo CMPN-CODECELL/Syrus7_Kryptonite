@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Tooltip } from './overlay'
 
 export function Card({
   children,
@@ -30,11 +31,30 @@ export function CardHeader({ title, eyebrow, aside, description, id, level = 2 }
   )
 }
 
-/** A labelled metric with explicit units. */
-export function Metric({ label, value, unit, hint, tone, className = '' }: { label: ReactNode; value: ReactNode; unit?: ReactNode; hint?: ReactNode; tone?: 'loss' | 'gain'; className?: string }) {
+/** A labelled metric with explicit units; `help` adds a plain-language (i) explanation next to the label. */
+export function Metric({
+  label,
+  value,
+  unit,
+  hint,
+  tone,
+  help,
+  className = '',
+}: {
+  label: ReactNode
+  value: ReactNode
+  unit?: ReactNode
+  hint?: ReactNode
+  tone?: 'loss' | 'gain'
+  help?: ReactNode
+  className?: string
+}) {
   return (
     <div className={`min-w-0 ${className}`}>
-      <dt className="text-xs font-medium text-muted">{label}</dt>
+      <dt className="flex items-center gap-1.5 text-xs font-medium text-muted">
+        <span className="min-w-0">{label}</span>
+        {help ? <Tooltip content={help} label={typeof label === 'string' ? `What does "${label}" mean?` : 'What does this mean?'} /> : null}
+      </dt>
       <dd className={`mt-1 text-xl font-semibold tracking-tight tabular ${tone === 'loss' ? 'text-danger' : 'text-ink'}`}>
         {value}
         {unit ? <span className="ml-1 text-xs font-medium text-muted">{unit}</span> : null}

@@ -2,7 +2,7 @@ import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { Link, type LinkProps } from 'react-router'
 import { IconSpinner } from './icons'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'quiet'
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'quiet' | 'dark'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const base =
@@ -15,6 +15,7 @@ const variants: Record<ButtonVariant, string> = {
   ghost: 'bg-transparent text-ink hover:bg-mist-2 active:bg-line disabled:text-faint',
   quiet: 'bg-transparent text-cobalt hover:bg-cobalt-50 active:bg-cobalt-100 disabled:text-faint',
   danger: 'bg-canvas text-danger border border-danger-200 hover:bg-danger-50 active:bg-danger-50 disabled:text-faint disabled:border-line',
+  dark: 'bg-ink text-white shadow-[0_1px_2px_rgb(11_18_32/0.18)] hover:bg-ink-2 active:bg-ink disabled:bg-line-strong',
 }
 
 // Every size keeps a >=44px target on touch screens; 'sm' tightens to 36px only for fine (mouse) pointers.
