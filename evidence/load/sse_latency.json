@@ -1,0 +1,50 @@
+{
+ "pipeline": "fake (~0.02 s per evaluation)",
+ "started": "2026-10-09T00:34:17",
+ "fanout": [
+  {
+   "clients": 1,
+   "job_status": "succeeded",
+   "events_received": 34,
+   "lag_ms_p50": 180.2,
+   "lag_ms_p95": 303.3,
+   "lag_ms_max": 312.7,
+   "first_event_ms_p50": 6.9,
+   "first_event_ms_p95": 6.9
+  },
+  {
+   "clients": 10,
+   "job_status": "succeeded",
+   "events_received": 340,
+   "lag_ms_p50": 128.9,
+   "lag_ms_p95": 312.1,
+   "lag_ms_max": 325.3,
+   "first_event_ms_p50": 49.7,
+   "first_event_ms_p95": 58.3
+  },
+  {
+   "clients": 40,
+   "job_status": "succeeded",
+   "events_received": 1400,
+   "lag_ms_p50": 129.9,
+   "lag_ms_p95": 320.0,
+   "lag_ms_max": 347.6,
+   "first_event_ms_p50": 141.6,
+   "first_event_ms_p95": 235.1
+  }
+ ],
+ "cancel_running": {
+  "n": 10,
+  "ack_ms_p50": 4.3,
+  "ack_ms_max": 6.1,
+  "cancelled_ms_p50": 934.5,
+  "cancelled_ms_max": 940.3,
+  "poll_interval_ms": 150
+ },
+ "stop": {
+  "graceful": true,
+  "stop_s": 1.39,
+  "orphans_killed": [],
+  "exit_code": 0
+ }
+}
