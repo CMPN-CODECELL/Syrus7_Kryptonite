@@ -65,3 +65,12 @@ blob-report/
 .vscode/
 .idea/
 *.swp
+
+# Screenshots and loose images
+evidence/screenshots/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+
