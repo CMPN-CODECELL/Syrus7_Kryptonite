@@ -29,7 +29,7 @@ const TARGETS = [
   { id: 'api-served', base: API_BASE, enforced: false, sameOriginStart: false },
   { id: 'api-served-same-origin-start', base: API_BASE, enforced: false, sameOriginStart: true },
 ]
-const ROUTES = ['/', '/lab']
+const ROUTES = ['/', '/dashboard', '/lab']
 
 interface Vitals {
   lcpMs: number

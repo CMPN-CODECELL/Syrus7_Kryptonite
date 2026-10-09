@@ -51,7 +51,7 @@ export function ErrorState({
         <h3 className="text-sm font-semibold text-ink">{title ?? (offline ? 'Cannot reach the API' : 'Something went wrong')}</h3>
         {message ? <p className="mt-1 text-sm break-words text-ink-2">{message}</p> : null}
         {isApiError(error) && error.code && !error.isNetwork ? (
-          <p className="mt-1 font-mono text-xs text-muted">
+          <p className="mt-1 text-xs text-muted tabular">
             code {error.code}
             {error.requestId ? ` · request ${error.requestId}` : ''}
           </p>

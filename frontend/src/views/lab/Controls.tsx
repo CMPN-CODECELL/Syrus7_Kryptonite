@@ -311,7 +311,7 @@ export function CostControls({ config, update, errors }: { config: RunConfig; up
               {config.symbols.length ? (
                 <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {config.symbols.map((s) => (
-                    <Field key={s} label={<span className="font-mono">{s}</span>}>
+                    <Field key={s} label={s}>
                       {({ id }) => (
                         <NumberInput
                           id={id}

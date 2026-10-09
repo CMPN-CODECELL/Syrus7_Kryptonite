@@ -49,8 +49,8 @@ export interface Guard {
 const CANCELLED = /ERR_ABORTED|NS_BINDING_ABORTED|NS_ERROR_ABORT|cancelled|Load request cancelled/i
 
 // Diagnostics a browser's own WebGL implementation prints, not errors in the page. Firefox logs "WebGL context was
-// lost" when react-three-fiber releases the hero's context on unmount (WEBGL_lose_context, on purpose, so GPU memory
-// is freed on navigation), and once per session warns that a frame was drawn while the canvas was being resized.
+// lost" when the three.js hero releases its context on unmount (forceContextLoss, on purpose, so GPU memory is
+// freed on navigation), and once per session warns that a frame was drawn while the canvas was being resized.
 // Nothing else is allowed for any browser, and Chromium needs no entry (it runs on SwiftShader).
 const BROWSER_NOISE: Record<string, Allowance[]> = {
   firefox: [

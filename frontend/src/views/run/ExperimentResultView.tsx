@@ -5,7 +5,7 @@ import { FACTOR_LABEL, INIT_LABEL, METRIC_LABEL, levelOf, type ExpMetric } from 
 import { Card, CardHeader, Notice, Segmented, StatusChip, Table } from '../../components/ui'
 import { DASH, formatDateTime, formatInt, formatNum, formatPct } from '../../lib/format'
 import { formatUnknown, humanKey } from '../../lib/result'
-import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Mono, SoftwareCard } from './shared'
+import { ConfigDump, DatasetCard, DictTable, Downloads, KV, Literal, SoftwareCard } from './shared'
 
 export function ExperimentResultView({ result }: { result: ExperimentResult }) {
   const [metric, setMetric] = useState<ExpMetric>('approximation_ratio')
@@ -119,7 +119,7 @@ export function ExperimentResultView({ result }: { result: ExperimentResult }) {
           software={result.software}
           timings={result.timings_s}
           extra={[
-            ['Experiment id', <Mono key="r">{result.run_id}</Mono>],
+            ['Experiment id', <Literal key="r">{result.run_id}</Literal>],
             ['Created', formatDateTime(result.created_at)],
             ['Implementation', `${result.implementation_version} · schema ${result.schema_version}`],
             ['Sweeps', `depths ${cfg.depths.join(', ') || DASH}; optimisers ${cfg.optimizers.join(', ') || DASH}; inits ${cfg.init_strategies.map((s) => INIT_LABEL[s] ?? s).join(', ') || DASH}; sizes ${cfg.universe_sizes.join(', ') || DASH}`],
