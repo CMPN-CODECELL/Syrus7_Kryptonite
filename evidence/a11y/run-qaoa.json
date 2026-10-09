@@ -1,0 +1,19 @@
+{
+  "name": "run-qaoa",
+  "note": "Real pipeline, desktop 1280 px, tab \"QAOA details\"",
+  "url": "http://127.0.0.1:5201/runs/run-20261008-f29dc129",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "passes": 30,
+  "incomplete": 1,
+  "violations": []
+}

@@ -1,0 +1,19 @@
+{
+  "name": "overview",
+  "note": "Real pipeline, desktop 1280 px",
+  "url": "http://127.0.0.1:5201/",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "passes": 20,
+  "incomplete": 1,
+  "violations": []
+}
